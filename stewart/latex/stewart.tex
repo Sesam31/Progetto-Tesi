@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amscd, amsthm, amsfonts}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\usepackage[italian]{babel}
+
+\oddsidemargin 0pt
+\evensidemargin 0pt
+\marginparwidth 40pt
+\marginparsep 10pt
+\topmargin -20pt
+\headsep 10pt
+\textheight 8.7in
+\textwidth 6.65in
+\linespread{1.2}
+
+\title{Piattaforma di Gough-Stewart}
+\author{Daniele Facco}
+\date{}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\newcommand{\rr}{\mathbb{R}}
+
+\newcommand{\al}{\alpha}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\aff}{aff}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Studio della piattaforma di Stewart e dei suoi componenti.
+\end{abstract}
+
+\section{Servomotori}\label{servomotori}
+I servomotori sono l'elemento principale nella realizzazione della piattaforma di Stewart.
+
+\includegraphics[scale=0.3]{Schematic-of-an-RC-servo-motor.png}
+
+Questi motori sono controllati in modalità PWM dalla scheda Arduino tramite un'apposita libreria. Il segnale inviato ai servomotori è periodico, di periodo 20ms, e presenta uno stato on/off a livello logico per un tempo prefissato a seconda della posizione richiesta. Ad esempio la posizione 0° prevede un livello logico alto di 1ms, 90° di 1,5ms e 180° di 2ms.
+
+Il controllo di questi elementi è gestito dalla scheda Arduino tramite uno shield che ne facilita l'installazione. Una nota particolare va fatta in merito alla potenza richiesta dai servomotori, nonostante il loro consumo in stato 'idle' sia di circa 10mW, durante il movimento questo può raggiungere oltre 300mW. É quindi necessaria una alimentazione esterna che sia in grado di fornire almeno 2A a 5V in quanto la scheda alimentata tramite usb dalla presa del computer può rivevere al massimo 1A.
+
+\section{Piattaforma di Stewart}\label{piattaformastewart}
+La piattaforma di Stewart è un particolare sistema meccanico costituito da una base su cui sono posizionati 6 attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune sono gli attuatori prismatici, questi sono ad esempio pistoni lineari che presentano un solo grado di libertà. Nel progetto vengono invece impiegati servomotori, questi presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è però possibile risalire ad un modello equivalente che ci garantisce un range di movimento ottimale.
+
+\section{Robot seriali e paralleli}\label{robotserialiparalleli}
+È utile enunciare la differenza tra robot di tipo seriale e parallelo per comprendere le successive implicazioni a livello matematico:
+
+I robot seriali prevedono una serie di giunti snodabili controllati da attuatori che spesso assumono le caratteristiche di un arto antropomorfo, questi tipi di robot prendono spesso il nome di braccio meccanico e sono vastamente impiegati nell'industria meccanica.
+
+Nei robot paralleli invece gli attuatori agiscono tutti sullo stesso elemento tramite giunti indipendenti, la piattaforma di Stewart ne è il principale esempio e le sue applicazioni sono principalmente incentrate nella realizzazione di simulatori avanzati di volo o per case automobilistiche.
+
+Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma il problema matematico che li caratterizza è fondamentalmente opposto.
+
+
+\section{Cinematica diretta e inversa}\label{cinematicadirettainversa}
+
+\section{Universal Tverberg partitions}\label{section-universal}
+
+\section{Applications of Tverberg's theorem}\label{section-applications}
+
+\section{Tverberg-type results in distinct settings}\label{section-spaces}
+
+\bibliographystyle{alpha}
+\bibliography{references} % see references.bib for bibliography management
+
+\end{document}
