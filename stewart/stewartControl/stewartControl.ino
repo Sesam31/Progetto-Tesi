@@ -1,4 +1,6 @@
 #include <Servo.h>
+#include<stdio.h>
+#include<stdlib.h>
 Servo servo[6];
 
 const float pi = 3.141592653;
@@ -11,15 +13,18 @@ int oriz[6] = {1500,1550,1500,1560,1560,1500};
 int usrad = (400/45)*(360/(2*pi));                        //CALCOLARE ANGOLO SPERIMENTALE
 // posizione richiesta {x,y,z,roll,pitch,yaw}
 float pos[6] = {0,0,0,0,0,0};
-// angolo manovella rispetto al piano xy
-float alfa[6] = {0,0,0,0,0,0};
-// angolo manovella rispetto all'asse x
-float beta[6] = {-pi/2,pi/6,pi/6,(5*pi)/6,(5*pi)/6};    // angolo disposizione servo
-// lunghezza manovella
-float lungman = 16;
+
 
 float Rg[3][3];   // matrice rotazione globale
 float T[3] = {0,0,114.5};       // vettore posizione {x,y,z} inizializzato con altezza riposo
+
+//DESCRIZIONE TOPOLOGICA SISTEMA
+// angolo manovella rispetto al piano xy
+float alfa[6] = {0,0,0,0,0,0};
+// angolo manovella rispetto all'asse x
+float beta[6] = {-pi/2,pi/6,pi/6,5*pi/6,5*pi/6,pi/2};
+// lunghezza manovella
+float lungman = 16;
 
 //angolo asse rotazione rispetto origine base
 float gamma = (13.38*2*pi)/360;
@@ -52,7 +57,8 @@ float piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2]},
                     {pd*cos(2*pi/3-tau),pd*sin(2*pi/3-tau),T[2]},
                     {pd*cos(2*pi/3+tau),pd*sin(2*pi/3+tau),T[2]}};
 
-
+// vettore origine base -> giunto piattaforma
+// CONTINUARE
 
 void setup() {
   Serial.begin(9600);
@@ -64,19 +70,33 @@ void setup() {
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
 
+  //inizializza matrice posizione giunto biella/manovella
   for(int n = 0; n < 6; n++){
     setJLoc(alfa[n],beta[n],n);
   }
-  // FINIRE DI CONTROLLARE VALORI GIUNTO
+
   
-  for(int i=0; i < 6; i++){
+  
+  /*for(int i=0; i < 6; i++){
     for(int j=0; j < 3; j++){
       Serial.print(giun[i][j]);
       Serial.print(" ");
     }
     Serial.println(" ");
-  }
-   
+  }*/
+
+  /*int a[3][3] = {{2,3,1}, {4,2,1}, {3,1,5} };
+  int b[3][1] = {1,2,3};
+  int c[3][1];
+
+  mult(a,b,c);
+   for(int i=0; i < 3; i++){
+    for(int j=0; j < 1; j++){
+      Serial.print(c[i][j]);
+      Serial.print(" ");
+    }
+    Serial.println(" ");
+  }*/
 }
 
 void loop() {
@@ -101,13 +121,30 @@ void setMRot(float rol,float pit,float yaw){
 // calcola la posizione del giunto biella/manovella
 void setJLoc(float alfa, float beta, int n){      // alfa: angolo rispetto al piano xy. beta: angolo rispetto all'asse x.
   if(n % 2){    //n dispari
-    giun[n][0] = lungman*cos(pi-alfa)*cos(pi+beta)+base[n][0];
-    giun[n][1] = lungman*cos(pi-alfa)*sin(pi+beta)+base[n][1];
-    giun[n][2] = lungman*sin(pi-alfa)+base[n][2];
+    giun[n][0] = lungman*cos(alfa)*cos(pi+beta)+base[n][0];     // per il sistema di angoli impiegato non è necessario indicare pi-alfa
+    giun[n][1] = lungman*cos(alfa)*sin(pi+beta)+base[n][1];
+    giun[n][2] = lungman*sin(alfa)+base[n][2];
   }
   else{
     giun[n][0] = lungman*cos(alfa)*cos(beta)+base[n][0];
     giun[n][1] = lungman*cos(alfa)*sin(beta)+base[n][1];
     giun[n][2] = lungman*sin(alfa)+base[n][2];
+  }
+}
+
+// calcola moltiplicazione matrici
+void mult(int a[3][3], int b[3][1], int c[3][1]){
+  for(int i=0; i < 3; i++){
+    c[i][0] = 0;
+    for (int j = 0; j < 3; j++){
+      c[i][0] += a[i][j]*b[j][0];
+    }
+  }
+}
+
+// calcola somma matrici
+void sum(int a[3][1], int b[3][1], int c[3][1]){
+  for(int i=0; i < 3; i++){
+    c[i][0] = a[i][0]+b[i][0];
   }
 }
