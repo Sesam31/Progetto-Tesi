@@ -6,10 +6,12 @@ const double pi = 3.141592653;
 // range movimento inferiore e superiore
 const int inf = 1800;
 const int sup = 900;
-// microsecondi per avere i bracci dei sevomotori orizzontali
-int oriz[6] = {1500,1550,1500,1560,1560,1500};
+// microsecondi per avere la manovella dei sevomotori orizzontali
+const int oriz[6] = {1500,1550,1500,1560,1560,1500};
+// microsecondi per avere la manovella dei servomotori in posizione di calibrazione
+//const int cali[6] = {1325,1375,1325,1385,1385,1385};
 // relazione tra microsecondi e radianti [us/rad]
-int usrad = (400/45)*(360/(2*pi));                        //CALCOLARE ANGOLO SPERIMENTALE
+const int usrad = (375/45)*(360/(2*pi));                        
 // posizione richiesta {x,y,z,roll,pitch,yaw}
 double pos[6] = {0,0,0,0,0,0};
 
@@ -17,7 +19,8 @@ double pos[6] = {0,0,0,0,0,0};
 // matrice rotazione globale
 double Rg[3][3];   
 // vettore posizione {x,y,z} inizializzato con altezza riposo
-double T[3][1] = {0,0,114.5};                                                                          // double T[3][1] = {0,0,114.5}; 
+//double T[3][1] = {0,0,114.5};
+double T[3][1] = {0,0,106.5};                                   // ALTEZZA OTTENUTA SPERIMENTALMENTE, TEST: ROTAZIONE ASSE X 5°, DEVE ESSERE SIMMETRICO!!!
 // coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
 double giun[6][3];
 // vettori origine base -> giunto piattaforma
@@ -26,20 +29,21 @@ double baseVec[6][3];
 double armVec[6][3];
 
 //DESCRIZIONE TOPOLOGICA SISTEMA
-double alfa0[6];
+const double alfa0[6];
 // angolo manovella rispetto al piano xy
-double alfa[6] = {0,0,0,0,0,0};
+//double alfa[6];
+double alfa[6] = {-0.34,-0.34,-0.34,-0.34,-0.34,-0.34};
 // angolo manovella rispetto all'asse x
-double beta[6] = {-pi/2,pi/6,pi/6,5*pi/6,5*pi/6,pi/2};
+const double beta[6] = {-pi/2,pi/6,pi/6,5*pi/6,5*pi/6,pi/2};
 // lunghezza manovella
-double lungman = 16;
+const double lungman = 16;
 // lunghezza biella
-double lungbie = 124;
+const double lungbie = 124;
 
 //angolo asse rotazione servo rispetto a origine base
-double gamma = (13.38*2*pi)/360;
+const double gamma = (13.38*2*pi)/360;
 // distanza tra centro riferimento e asse rotazione servo [mm]
-double rd = 87.63;    // rotation distance (base)
+const double rd = 87.63;    // rotation distance (base)
 // coordinate punti base
 double base[6][3] = {{-rd*cos(gamma),-rd*sin(gamma),0},
                     {rd*cos(pi/3+gamma),-rd*sin(pi/3+gamma),0},
@@ -49,8 +53,8 @@ double base[6][3] = {{-rd*cos(gamma),-rd*sin(gamma),0},
                     {-rd*cos(gamma),rd*sin(gamma),0}};
 
 //angolo asse giunto rispetto origine piattaforma
-double tau = (4.14*2*pi)/360;
-double pd = 80.52;    // pivot distance (piattaforma)
+const double tau = (4.14*2*pi)/360;
+const double pd = 80.52;    // pivot distance (piattaforma)
 //coordinate punti piattaforma (inizializzato con altezza homing)
 double piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2][0]},
                     {pd*cos(2*pi/3-tau),-pd*sin(2*pi/3-tau),T[2][0]},
@@ -62,9 +66,9 @@ double piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2][0]},
 // distanza^2 tra asse e giunto piattaforma
 double d2[6];
 // distanza^2 manovella
-double m2 = pow(lungman,2);
+const double m2 = pow(lungman,2);
 // distanza^2 manovella
-double b2 = pow(lungbie,2);
+const double b2 = pow(lungbie,2);
 
 // PARAMETRI EQUAZIONE ANGOLO
 double L[6],M[6],N[6],angServo[6];
@@ -75,9 +79,83 @@ void setup() {
   servo[0].attach(3, inf, sup);
   servo[1].attach(5, inf, sup);
   servo[2].attach(6, inf, sup);
-  servo[3].attach(9, inf, sup);
+  servo[3].attach(9, inf, sup);         //RIVEDERE LIMITATORI
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
+
+  for(int i = 0; i < 6; i++){
+    servo[i].writeMicroseconds(getAmpImp(alfa[i],i));
+    //Serial.println(getAmpImp(alfa[i],i));
+  }
+  delay(1000);
+  for(int n = 0; n < 6; n++){
+    alfa[n]=0;
+  }
+  for(int i = 0; i < 6; i++){
+    servo[i].writeMicroseconds(getAmpImp(alfa[i],i));
+  }
+  
+  delay(1000);
+  pos[3] = radians(5);
+  
+  //inizializza matrice posizione giunto biella/manovella
+  for(int n = 0; n < 6; n++){
+    setJLoc(alfa[n],beta[n],n);
+  }
+  setMRot(pos[3],pos[4],pos[5]);
+  
+  getBaseVec();
+  
+  getArmVec();
+  /*
+  for(int i=0; i < 6; i++){
+    for(int j=0; j < 3; j++){
+      Serial.print(armVec[i][j]);
+      Serial.print(" ");
+    }
+    Serial.println(" ");
+  }
+  */
+  for(int i = 0; i < 6; i++){
+    double inizio[3][1];
+    double fine[3][1];
+    getRow(inizio,baseVec,i);
+    getRow(fine,base,i);
+    d2[i] = quadVec(inizio,fine);
+    //Serial.print(d2[i]);
+    //Serial.println(" ");
+  }
+  /*for(int i=0; i < 6; i++){
+    for(int j=0; j < 3; j++){
+      Serial.print(piat[i][j]);
+      Serial.print(" ");
+    }
+    Serial.println(" ");
+  }
+  Serial.println("----------------");
+  for(int i=0; i < 6; i++){
+    for(int j=0; j < 3; j++){
+      Serial.print(base[i][j]);
+      Serial.print(" ");
+    }
+    Serial.println(" ");
+  }*/
+  Serial.println("Angoli servo:");
+  for(int i = 0; i < 6; i++){
+    L[i] = d2[i]-(b2-m2);
+    M[i] = 2*lungman*(piat[i][2]-base[i][2]);
+    N[i] = 2*lungman*(cos(beta[i]*(piat[i][0]-base[i][0])+sin(beta[i])*(piat[i][1]-base[i][1])));
+    alfa[i]=asin(L[i]/sqrt(pow(M[i],2)+pow(N[i],2)))-atan(N[i]/M[i]);
+    
+    Serial.println(alfa[i]);
+  }
+  for(int i = 0; i < 6; i++){
+    servo[i].writeMicroseconds(getAmpImp(alfa[i],i));
+    //Serial.println(getAmpImp(alfa[i],i));
+  }
+
+  
+  /*
 
   //inizializza matrice posizione giunto biella/manovella
   for(int n = 0; n < 6; n++){
@@ -104,11 +182,18 @@ void setup() {
     N[i] = 2*lungman*(cos(beta[i]*(piat[i][0]-base[i][0])+sin(beta[i])*(piat[i][1]-base[i][1])));
     angServo[i]=asin(L[i]/sqrt(pow(M[i],2)+pow(N[i],2)))-atan(N[i]/M[i]);
   }
+  
+  */
 
-  for(int j=0; j < 6; j++){
+
+  // FUNZIONI UTILI
+  
+  /*for(int j=0; j < 6; j++){
       Serial.print(angServo[j]);
       Serial.print(" ");
-   }
+   }*/
+
+  // Serial.println(sqrt(b2+m2-pow((piat[0][0]-base[0][0]),2)-pow((piat[0][1]-base[0][1]),2)));     // RIVEDERE EQ H0
     
   /*for(int i=0; i < 6; i++){
     for(int j=0; j < 3; j++){
@@ -200,7 +285,8 @@ void getBaseVec(){
     getSum(T,tempMult,tempSum);
     baseVec[i][0] = tempSum[0][0];
     baseVec[i][1] = tempSum[1][0];
-    baseVec[i][2] = tempSum[2][0];
+    baseVec[i][2] = tempMult[2][0];
+    //Serial.println(tempMult[2][0]);
   }
 }
 
@@ -221,12 +307,12 @@ double quadVec(double inizio[3][1], double fine[3][1]){
               pow((inizio[2][0]-fine[2][0]),2);
 }
 
-double getAmpImp(double angolo, int n){      //RIVEDERE VALORI DI ZERO
+double getAmpImp(double angolo, int n){     
   double pw;
   if(n % 2){
-    return pw = oriz[1]-(alfa-alfa0)*usrad;
+    return pw = oriz[n]-(alfa[n]-alfa0[n])*usrad;
   }
   else{
-    return pw = oriz[0]+(alfa-alfa0)*usrad;
+    return pw = oriz[n]+(alfa[n]-alfa0[n])*usrad;
   }
 }
