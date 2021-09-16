@@ -1,8 +1,8 @@
 #include <Servo.h>
-
+#include <math.h>
 Servo servo[6];
 
-const float pi = 3.141592653;
+const double pi = 3.141592653;
 // range movimento inferiore e superiore
 const int inf = 1800;
 const int sup = 900;
@@ -11,53 +11,63 @@ int oriz[6] = {1500,1550,1500,1560,1560,1500};
 // relazione tra microsecondi e radianti [us/rad]
 int usrad = (400/45)*(360/(2*pi));                        //CALCOLARE ANGOLO SPERIMENTALE
 // posizione richiesta {x,y,z,roll,pitch,yaw}
-float pos[6] = {0,0,0,0,0,0};
+double pos[6] = {0,0,0,0,0,0};
 
-
-float Rg[3][3];   // matrice rotazione globale
-float T[3][1] = {0,0,114.5};       // vettore posizione {x,y,z} inizializzato con altezza riposo
+// VETTORI DI SISTEMA
+// matrice rotazione globale
+double Rg[3][3];   
+// vettore posizione {x,y,z} inizializzato con altezza riposo
+double T[3][1] = {0,0,114.5};                                                                          // double T[3][1] = {0,0,114.5}; 
+// coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
+double giun[6][3];
+// vettori origine base -> giunto piattaforma
+double baseVec[6][3];
+// vettori asse servo -> giunto piattaforma
+double armVec[6][3];
 
 //DESCRIZIONE TOPOLOGICA SISTEMA
+double alfa0[6];
 // angolo manovella rispetto al piano xy
-float alfa[6] = {0,0,0,0,0,0};
+double alfa[6] = {0,0,0,0,0,0};
 // angolo manovella rispetto all'asse x
-float beta[6] = {-pi/2,pi/6,pi/6,5*pi/6,5*pi/6,pi/2};
+double beta[6] = {-pi/2,pi/6,pi/6,5*pi/6,5*pi/6,pi/2};
 // lunghezza manovella
-float lungman = 16;
+double lungman = 16;
 // lunghezza biella
-float lungbie = 124;
+double lungbie = 124;
 
-//angolo asse rotazione rispetto origine base
-float gamma = (13.38*2*pi)/360;
+//angolo asse rotazione servo rispetto a origine base
+double gamma = (13.38*2*pi)/360;
 // distanza tra centro riferimento e asse rotazione servo [mm]
-float rd = 87.63;    // rotation distance (base)
+double rd = 87.63;    // rotation distance (base)
 // coordinate punti base
-float base[6][3] = {{-rd*cos(gamma),-rd*sin(gamma),0},
+double base[6][3] = {{-rd*cos(gamma),-rd*sin(gamma),0},
                     {rd*cos(pi/3+gamma),-rd*sin(pi/3+gamma),0},
                     {rd*cos(pi/3-gamma),-rd*sin(pi/3-gamma),0},
                     {rd*cos(pi/3-gamma),rd*sin(pi/3-gamma),0},
                     {rd*cos(pi/3+gamma),rd*sin(pi/3+gamma),0},
                     {-rd*cos(gamma),rd*sin(gamma),0}};
 
-//angolo asse pivot rispetto origine piattaforma
-float tau = (4.14*2*pi)/360;
-float pd = 80.52;    // pivot distance (piattaforma)
+//angolo asse giunto rispetto origine piattaforma
+double tau = (4.14*2*pi)/360;
+double pd = 80.52;    // pivot distance (piattaforma)
 //coordinate punti piattaforma (inizializzato con altezza homing)
-float piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2][1]},
-                    {pd*cos(2*pi/3-tau),-pd*sin(2*pi/3-tau),T[2][1]},
-                    {pd*cos(tau),-pd*sin(tau),T[2][1]},
-                    {pd*cos(tau),pd*sin(tau),T[2][1]},                        
-                    {pd*cos(2*pi/3-tau),pd*sin(2*pi/3-tau),T[2][1]},
-                    {pd*cos(2*pi/3+tau),pd*sin(2*pi/3+tau),T[2][1]}};
-                    
-// coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
-float giun[6][3];
+double piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2][0]},
+                    {pd*cos(2*pi/3-tau),-pd*sin(2*pi/3-tau),T[2][0]},
+                    {pd*cos(tau),-pd*sin(tau),T[2][0]},
+                    {pd*cos(tau),pd*sin(tau),T[2][0]},                        
+                    {pd*cos(2*pi/3-tau),pd*sin(2*pi/3-tau),T[2][0]},
+                    {pd*cos(2*pi/3+tau),pd*sin(2*pi/3+tau),T[2][0]}};
 
-// vettori origine base -> giunto piattaforma
-float baseVec[6][3];
+// distanza^2 tra asse e giunto piattaforma
+double d2[6];
+// distanza^2 manovella
+double m2 = pow(lungman,2);
+// distanza^2 manovella
+double b2 = pow(lungbie,2);
 
-// vettori asse servo -> giunto piattaforma
-float armVec[6][3];
+// PARAMETRI EQUAZIONE ANGOLO
+double L[6],M[6],N[6],angServo[6];
 
 void setup() {
   Serial.begin(9600);
@@ -73,19 +83,40 @@ void setup() {
   for(int n = 0; n < 6; n++){
     setJLoc(alfa[n],beta[n],n);
   }
+  
   setMRot(0,0,0);
   getBaseVec();
   getArmVec();
 
-  
-  
-  for(int i=0; i < 6; i++){
+  // cacola distanza^2 tra asse servo e giunto piattaforma
+  for(int i = 0; i < 6; i++){
+    double inizio[3][1];
+    double fine[3][1];
+    getRow(inizio,piat,i);
+    getRow(fine,base,i);
+    d2[i] = quadVec(inizio,fine);
+  }
+
+  // inizializza valori L
+  for(int i = 0; i < 6; i++){
+    L[i] = d2[i]-(b2-m2);
+    M[i] = 2*lungman*(piat[i][2]-base[i][2]);
+    N[i] = 2*lungman*(cos(beta[i]*(piat[i][0]-base[i][0])+sin(beta[i])*(piat[i][1]-base[i][1])));
+    angServo[i]=asin(L[i]/sqrt(pow(M[i],2)+pow(N[i],2)))-atan(N[i]/M[i]);
+  }
+
+  for(int j=0; j < 6; j++){
+      Serial.print(angServo[j]);
+      Serial.print(" ");
+   }
+    
+  /*for(int i=0; i < 6; i++){
     for(int j=0; j < 3; j++){
       Serial.print(armVec[i][j]);
       Serial.print(" ");
     }
     Serial.println(" ");
-  }
+  }*/
 
   /*int a[3][3] = {{2,3,1}, {4,2,1}, {3,1,5} };
   int b[3][1] = {1,2,3};
@@ -106,7 +137,7 @@ void loop() {
 }
 
 // costruisci matrice rotazione globale
-void setMRot(float rol,float pit,float yaw){
+void setMRot(double rol,double pit,double yaw){
   Rg[0][0] = cos(yaw)*cos(pit);
   Rg[0][1] = -sin(yaw)*cos(rol)+cos(yaw)*sin(pit)*sin(rol);
   Rg[0][2] = sin(yaw)*sin(rol)+cos(yaw)*sin(pit)*cos(rol);
@@ -121,7 +152,7 @@ void setMRot(float rol,float pit,float yaw){
 }
 
 // calcola la posizione del giunto biella/manovella
-void setJLoc(float alfa, float beta, int n){      // alfa: angolo rispetto al piano xy. beta: angolo rispetto all'asse x.
+void setJLoc(double alfa, double beta, int n){      // alfa: angolo rispetto al piano xy. beta: angolo rispetto all'asse x.
   if(n % 2){    //n dispari
     giun[n][0] = lungman*cos(alfa)*cos(pi+beta)+base[n][0];     // per il sistema di angoli impiegato non è necessario indicare pi-alfa
     giun[n][1] = lungman*cos(alfa)*sin(pi+beta)+base[n][1];
@@ -135,7 +166,7 @@ void setJLoc(float alfa, float beta, int n){      // alfa: angolo rispetto al pi
 }
 
 // calcola moltiplicazione matrici
-void getMult(float a[3][3], float b[3][1], float c[3][1]){
+void getMult(double a[3][3], double b[3][1], double c[3][1]){
   for(int i=0; i < 3; i++){
     c[i][0] = 0;
     for (int j = 0; j < 3; j++){
@@ -145,25 +176,24 @@ void getMult(float a[3][3], float b[3][1], float c[3][1]){
 }
 
 // calcola somma matrici
-void getSum(float a[3][1], float b[3][1], float c[3][1]){
+void getSum(double a[3][1], double b[3][1], double c[3][1]){
   for(int i=0; i < 3; i++){
     c[i][0] = a[i][0]+b[i][0];
   }
 }
 
 // estrae una riga dalla matrice e la converte in colonna per semplificare moltiplicazione
-void getRow(float a[3][1], float b[6][3], int n){
+void getRow(double a[3][1], double b[6][3], int n){
   for(int i = 0; i < 3; i++){
     a[i][0] = b[n][i];
-    
   }
 }
 
 // costruisce matrice vettori origine base -> giunto piattaforma
 void getBaseVec(){
-  float tempMult[3][1];
-  float tempSum[3][1];
-  float piatVec[3][1];
+  double tempMult[3][1];
+  double tempSum[3][1];
+  double piatVec[3][1];
   for(int i = 0; i < 6; i++){
     getRow(piatVec, piat, i);
     getMult(Rg,piatVec,tempMult);
@@ -180,5 +210,23 @@ void getArmVec(){
     for(int j=0; j < 3; j++){
       armVec[i][j] = baseVec[i][j] - base[i][j];
     }
+  }
+}
+
+// calcola il valore del quadrato del vettore fornito (come differenza tra inizio e fine)
+double quadVec(double inizio[3][1], double fine[3][1]){
+  double v2;
+  return v2 = pow((inizio[0][0]-fine[0][0]),2)+
+              pow((inizio[1][0]-fine[1][0]),2)+
+              pow((inizio[2][0]-fine[2][0]),2);
+}
+
+double getAmpImp(double angolo, int n){      //RIVEDERE VALORI DI ZERO
+  double pw;
+  if(n % 2){
+    return pw = oriz[1]-(alfa-alfa0)*usrad;
+  }
+  else{
+    return pw = oriz[0]+(alfa-alfa0)*usrad;
   }
 }
