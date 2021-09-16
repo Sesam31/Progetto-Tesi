@@ -1,6 +1,5 @@
 #include <Servo.h>
-#include<stdio.h>
-#include<stdlib.h>
+
 Servo servo[6];
 
 const float pi = 3.141592653;
@@ -16,7 +15,7 @@ float pos[6] = {0,0,0,0,0,0};
 
 
 float Rg[3][3];   // matrice rotazione globale
-float T[3] = {0,0,114.5};       // vettore posizione {x,y,z} inizializzato con altezza riposo
+float T[3][1] = {0,0,114.5};       // vettore posizione {x,y,z} inizializzato con altezza riposo
 
 //DESCRIZIONE TOPOLOGICA SISTEMA
 // angolo manovella rispetto al piano xy
@@ -25,6 +24,8 @@ float alfa[6] = {0,0,0,0,0,0};
 float beta[6] = {-pi/2,pi/6,pi/6,5*pi/6,5*pi/6,pi/2};
 // lunghezza manovella
 float lungman = 16;
+// lunghezza biella
+float lungbie = 124;
 
 //angolo asse rotazione rispetto origine base
 float gamma = (13.38*2*pi)/360;
@@ -38,27 +39,25 @@ float base[6][3] = {{-rd*cos(gamma),-rd*sin(gamma),0},
                     {rd*cos(pi/3+gamma),rd*sin(pi/3+gamma),0},
                     {-rd*cos(gamma),rd*sin(gamma),0}};
 
-// coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
-float giun[6][3] = {{0,0,0},
-                    {0,0,0},
-                    {0,0,0},
-                    {0,0,0},
-                    {0,0,0},
-                    {0,0,0}};
-
 //angolo asse pivot rispetto origine piattaforma
 float tau = (4.14*2*pi)/360;
 float pd = 80.52;    // pivot distance (piattaforma)
 //coordinate punti piattaforma (inizializzato con altezza homing)
-float piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2]},
-                    {pd*cos(2*pi/3-tau),-pd*sin(2*pi/3-tau),T[2]},
-                    {pd*cos(tau),-pd*sin(tau),T[2]},
-                    {pd*cos(tau),pd*sin(tau),T[2]},                        
-                    {pd*cos(2*pi/3-tau),pd*sin(2*pi/3-tau),T[2]},
-                    {pd*cos(2*pi/3+tau),pd*sin(2*pi/3+tau),T[2]}};
+float piat[6][3] = {{pd*cos(2*pi/3+tau),-pd*sin(2*pi/3+tau),T[2][1]},
+                    {pd*cos(2*pi/3-tau),-pd*sin(2*pi/3-tau),T[2][1]},
+                    {pd*cos(tau),-pd*sin(tau),T[2][1]},
+                    {pd*cos(tau),pd*sin(tau),T[2][1]},                        
+                    {pd*cos(2*pi/3-tau),pd*sin(2*pi/3-tau),T[2][1]},
+                    {pd*cos(2*pi/3+tau),pd*sin(2*pi/3+tau),T[2][1]}};
+                    
+// coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
+float giun[6][3];
 
-// vettore origine base -> giunto piattaforma
-// CONTINUARE
+// vettori origine base -> giunto piattaforma
+float baseVec[6][3];
+
+// vettori asse servo -> giunto piattaforma
+float armVec[6][3];
 
 void setup() {
   Serial.begin(9600);
@@ -74,16 +73,19 @@ void setup() {
   for(int n = 0; n < 6; n++){
     setJLoc(alfa[n],beta[n],n);
   }
+  setMRot(0,0,0);
+  getBaseVec();
+  getArmVec();
 
   
   
-  /*for(int i=0; i < 6; i++){
+  for(int i=0; i < 6; i++){
     for(int j=0; j < 3; j++){
-      Serial.print(giun[i][j]);
+      Serial.print(armVec[i][j]);
       Serial.print(" ");
     }
     Serial.println(" ");
-  }*/
+  }
 
   /*int a[3][3] = {{2,3,1}, {4,2,1}, {3,1,5} };
   int b[3][1] = {1,2,3};
@@ -133,7 +135,7 @@ void setJLoc(float alfa, float beta, int n){      // alfa: angolo rispetto al pi
 }
 
 // calcola moltiplicazione matrici
-void mult(int a[3][3], int b[3][1], int c[3][1]){
+void getMult(float a[3][3], float b[3][1], float c[3][1]){
   for(int i=0; i < 3; i++){
     c[i][0] = 0;
     for (int j = 0; j < 3; j++){
@@ -143,8 +145,40 @@ void mult(int a[3][3], int b[3][1], int c[3][1]){
 }
 
 // calcola somma matrici
-void sum(int a[3][1], int b[3][1], int c[3][1]){
+void getSum(float a[3][1], float b[3][1], float c[3][1]){
   for(int i=0; i < 3; i++){
     c[i][0] = a[i][0]+b[i][0];
+  }
+}
+
+// estrae una riga dalla matrice e la converte in colonna per semplificare moltiplicazione
+void getRow(float a[3][1], float b[6][3], int n){
+  for(int i = 0; i < 3; i++){
+    a[i][0] = b[n][i];
+    
+  }
+}
+
+// costruisce matrice vettori origine base -> giunto piattaforma
+void getBaseVec(){
+  float tempMult[3][1];
+  float tempSum[3][1];
+  float piatVec[3][1];
+  for(int i = 0; i < 6; i++){
+    getRow(piatVec, piat, i);
+    getMult(Rg,piatVec,tempMult);
+    getSum(T,tempMult,tempSum);
+    baseVec[i][0] = tempSum[0][0];
+    baseVec[i][1] = tempSum[1][0];
+    baseVec[i][2] = tempSum[2][0];
+  }
+}
+
+// costruisce matrice vettori asse servo -> giunto piattaforma
+void getArmVec(){
+  for(int i=0; i < 6; i++){
+    for(int j=0; j < 3; j++){
+      armVec[i][j] = baseVec[i][j] - base[i][j];
+    }
   }
 }
