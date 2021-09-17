@@ -5,7 +5,7 @@ Servo servo[6];
 const double pi = 3.141592653;
 // range movimento inferiore e superiore
 const int inf = 900;
-const int sup = 1800;
+const int sup = 2000;
 // microsecondi per avere la manovella dei sevomotori orizzontali
 const int oriz[6] = {1500,1550,1500,1560,1560,1500};
 // microsecondi per avere la manovella dei servomotori in posizione di calibrazione
@@ -13,14 +13,14 @@ const int oriz[6] = {1500,1550,1500,1560,1560,1500};
 // relazione tra microsecondi e radianti [us/rad]
 const int usrad = (375/45)*(360/(2*pi));                        
 // posizione richiesta {x,y,z,roll,pitch,yaw}
-double pos[6] = {0,0,106.5,0,0,0};
 
 // VETTORI DI SISTEMA
 // matrice rotazione globale
 double Rg[3][3];   
+// altezza piattaforma a riposo
+double h0 = 106.5;                                                // ALTEZZA OTTENUTA SPERIMENTALMENTE, TEST: ROTAZIONE ASSE X 5°, DEVE ESSERE SIMMETRICO!!!
 // vettore posizione {x,y,z} inizializzato con altezza riposo
-//double T[3][1] = {0,0,114.5};
-double T[3][1] = {0,0,106.5};                                   // ALTEZZA OTTENUTA SPERIMENTALMENTE, TEST: ROTAZIONE ASSE X 5°, DEVE ESSERE SIMMETRICO!!!
+double T[3][1] = {0,0,h0};
 // vettore rotazione {roll,pitch,yaw}
 double R[3][1] = {0,0,0};
 // coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
@@ -87,27 +87,19 @@ void setup() {
   servo[3].attach(9, inf, sup);
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
+
   
-  delay(1000);
-  setPosition(0,0,106.5,radians(0),radians(0),radians(0));
-  delay(1000);
-  setPosition(0,0,106.5,radians(2),radians(0),radians(0));
-  delay(1000);
-  setPosition(0,0,106.5,radians(0),radians(2),radians(0));
-  delay(1000);
-  setPosition(0,0,106.5,radians(0),radians(0),radians(2));
-  delay(1000);
-  setPosition(3,0,106.5,radians(0),radians(0),radians(0));
-  delay(1000);
-  setPosition(3,0,106.5,radians(0),radians(0),radians(0));
-  delay(1000);
-  setPosition(0,3,106.5,radians(0),radians(0),radians(0));
-  delay(1000);
-  setPosition(-3,0,106.5,radians(0),radians(0),radians(0));
-  delay(1000);
-  setPosition(0,-3,106.5,radians(0),radians(0),radians(0));
-  delay(1000);
-  setPosition(0,0,106.5,radians(0),radians(0),radians(0));
+  while(true){
+    for(float t = 0; t < 2*pi; t+=0.2){
+    //setPosition(10*cos(t),10*sin(t),115+5*sin(t),radians(0),radians(0),radians(0));
+    setPosition(10*cos(t),10*sin(t),110+3*sin(t),radians(0),radians(0),radians(0));
+    Serial.println("valore sin");
+    Serial.println(115+5*sin(t));   
+
+    }
+  }
+  
+
   
   /*
   /for(int i = 0; i < 6; i++){
@@ -248,6 +240,7 @@ void setup() {
 
 void loop() {
   
+
 }
 
 // costruisci matrice rotazione globale
@@ -314,8 +307,9 @@ void getBaseVec(){
     getSum(T,tempMult,tempSum);
     baseVec[i][0] = tempSum[0][0];
     baseVec[i][1] = tempSum[1][0];
-    baseVec[i][2] = tempMult[2][0];
-    //Serial.println(tempMult[2][0]);
+    baseVec[i][2] = tempSum[2][0]-h0;
+    Serial.println("altezza");
+    Serial.println(tempSum[2][0]);
   }
 }
 
@@ -393,17 +387,17 @@ void setPosition(double x, double y, double z, double rol, double pit, double ya
   // controllo microsecondi se ho raggiunto il limite
   int emergenza = 0;
   for(int i = 0; i < 6; i++){
-    Serial.println(constrain(getAmpImp(alfa[i],i),inf,sup));
+    //Serial.println(constrain(getAmpImp(alfa[i],i),inf,sup));
     if(constrain(getAmpImp(alfa[i],i),inf,sup) == sup || constrain(getAmpImp(alfa[i],i),inf,sup) == inf){
       emergenza++;
     }
   }
   // assegnazione angolo servomotori
   if(emergenza == 0){
-    Serial.println("Microsecondi:");
+    //Serial.println("Microsecondi:");
     for(int i = 0; i < 6; i++){
         servo[i].writeMicroseconds(constrain(getAmpImp(alfa[i],i),inf,sup));
-        Serial.println(constrain(getAmpImp(alfa[i],i),inf,sup));
+        //Serial.println(constrain(getAmpImp(alfa[i],i),inf,sup));
     }
   }
   else{
