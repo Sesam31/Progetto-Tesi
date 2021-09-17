@@ -4,8 +4,8 @@ Servo servo[6];
 
 const double pi = 3.141592653;
 // range movimento inferiore e superiore
-const int inf = 1800;
-const int sup = 900;
+const int inf = 900;
+const int sup = 1800;
 // microsecondi per avere la manovella dei sevomotori orizzontali
 const int oriz[6] = {1500,1550,1500,1560,1560,1500};
 // microsecondi per avere la manovella dei servomotori in posizione di calibrazione
@@ -13,7 +13,7 @@ const int oriz[6] = {1500,1550,1500,1560,1560,1500};
 // relazione tra microsecondi e radianti [us/rad]
 const int usrad = (375/45)*(360/(2*pi));                        
 // posizione richiesta {x,y,z,roll,pitch,yaw}
-double pos[6] = {0,0,0,0,0,0};
+double pos[6] = {0,0,106.5,0,0,0};
 
 // VETTORI DI SISTEMA
 // matrice rotazione globale
@@ -21,6 +21,8 @@ double Rg[3][3];
 // vettore posizione {x,y,z} inizializzato con altezza riposo
 //double T[3][1] = {0,0,114.5};
 double T[3][1] = {0,0,106.5};                                   // ALTEZZA OTTENUTA SPERIMENTALMENTE, TEST: ROTAZIONE ASSE X 5°, DEVE ESSERE SIMMETRICO!!!
+// vettore rotazione {roll,pitch,yaw}
+double R[3][1] = {0,0,0};
 // coordinate giunto biella/manovella al variare di alfa e beta (inizializzata durante il setup)
 double giun[6][3];
 // vettori origine base -> giunto piattaforma
@@ -75,16 +77,41 @@ double L[6],M[6],N[6],angServo[6];
 
 void setup() {
   Serial.begin(9600);
+
+  // LED usato in caso di emergenza
+  pinMode(LED_BUILTIN, OUTPUT);
   
   servo[0].attach(3, inf, sup);
   servo[1].attach(5, inf, sup);
   servo[2].attach(6, inf, sup);
-  servo[3].attach(9, inf, sup);         //RIVEDERE LIMITATORI
+  servo[3].attach(9, inf, sup);
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
-
-  for(int i = 0; i < 6; i++){
-    servo[i].writeMicroseconds(getAmpImp(alfa[i],i));
+  
+  delay(1000);
+  setPosition(0,0,106.5,radians(0),radians(0),radians(0));
+  delay(1000);
+  setPosition(0,0,106.5,radians(2),radians(0),radians(0));
+  delay(1000);
+  setPosition(0,0,106.5,radians(0),radians(2),radians(0));
+  delay(1000);
+  setPosition(0,0,106.5,radians(0),radians(0),radians(2));
+  delay(1000);
+  setPosition(3,0,106.5,radians(0),radians(0),radians(0));
+  delay(1000);
+  setPosition(3,0,106.5,radians(0),radians(0),radians(0));
+  delay(1000);
+  setPosition(0,3,106.5,radians(0),radians(0),radians(0));
+  delay(1000);
+  setPosition(-3,0,106.5,radians(0),radians(0),radians(0));
+  delay(1000);
+  setPosition(0,-3,106.5,radians(0),radians(0),radians(0));
+  delay(1000);
+  setPosition(0,0,106.5,radians(0),radians(0),radians(0));
+  
+  /*
+  /for(int i = 0; i < 6; i++){
+    servo[i].writeMicroseconds(constrain(getAmpImp(alfa[i],i),inf,sup));
     //Serial.println(getAmpImp(alfa[i],i));
   }
   delay(1000);
@@ -107,7 +134,7 @@ void setup() {
   getBaseVec();
   
   getArmVec();
-  /*
+  
   for(int i=0; i < 6; i++){
     for(int j=0; j < 3; j++){
       Serial.print(armVec[i][j]);
@@ -115,7 +142,7 @@ void setup() {
     }
     Serial.println(" ");
   }
-  */
+  
   for(int i = 0; i < 6; i++){
     double inizio[3][1];
     double fine[3][1];
@@ -125,7 +152,7 @@ void setup() {
     //Serial.print(d2[i]);
     //Serial.println(" ");
   }
-  /*for(int i=0; i < 6; i++){
+  for(int i=0; i < 6; i++){
     for(int j=0; j < 3; j++){
       Serial.print(piat[i][j]);
       Serial.print(" ");
@@ -139,7 +166,7 @@ void setup() {
       Serial.print(" ");
     }
     Serial.println(" ");
-  }*/
+  }
   Serial.println("Angoli servo:");
   for(int i = 0; i < 6; i++){
     L[i] = d2[i]-(b2-m2);
@@ -153,6 +180,8 @@ void setup() {
     servo[i].writeMicroseconds(getAmpImp(alfa[i],i));
     //Serial.println(getAmpImp(alfa[i],i));
   }
+
+  */
 
   
   /*
@@ -307,6 +336,7 @@ double quadVec(double inizio[3][1], double fine[3][1]){
               pow((inizio[2][0]-fine[2][0]),2);
 }
 
+// calcola ampiezza impulso per ottenere l'angolo richiesto
 double getAmpImp(double angolo, int n){     
   double pw;
   if(n % 2){
@@ -314,5 +344,81 @@ double getAmpImp(double angolo, int n){
   }
   else{
     return pw = oriz[n]+(alfa[n]-alfa0[n])*usrad;
+  }
+}
+
+// svolge i dovuti calcoli e imposta l'angolo dei servomotori
+void setPosition(double x, double y, double z, double rol, double pit, double yaw){
+  // imposta posizione desiderata
+  T[0][0] = x;
+  T[0][1] = y;
+  T[0][2] = z;
+  R[0][0] = rol;
+  R[0][1] = pit;
+  R[0][2] = yaw;
+  // inizializza matrice posizione giunto biella/manovella
+  for(int n = 0; n < 6; n++){
+    setJLoc(alfa[n],beta[n],n);
+  }
+  // inizializza matrice rotazione globale
+  setMRot(R[0][0],R[0][1],R[0][2]);
+  // inizializza matrice vettori base -> giunto piattaforma
+  getBaseVec();
+  // inizializza matrice vettori asse -> giunto piattaforma
+  getArmVec();
+  /*for(int i=0; i < 6; i++){
+    for(int j=0; j < 3; j++){
+      Serial.print(armVec[i][j]);
+      Serial.print(" ");
+    }
+    Serial.println(" ");
+  }*/
+  // calcola distanza^2 tra asse e giunto piattaforma
+  for(int i = 0; i < 6; i++){
+    double inizio[3][1];
+    double fine[3][1];
+    getRow(inizio,baseVec,i);
+    getRow(fine,base,i);
+    d2[i] = quadVec(inizio,fine);
+  }
+  // calcolo angoli servomotori
+  Serial.println("Angoli servo:");
+  for(int i = 0; i < 6; i++){
+    L[i] = d2[i]-(b2-m2);
+    M[i] = 2*lungman*(piat[i][2]-base[i][2]);
+    N[i] = 2*lungman*(cos(beta[i]*(piat[i][0]-base[i][0])+sin(beta[i])*(piat[i][1]-base[i][1])));
+    alfa[i]=asin(L[i]/sqrt(pow(M[i],2)+pow(N[i],2)))-atan(N[i]/M[i]);
+    Serial.println(alfa[i]);
+  }
+  // controllo microsecondi se ho raggiunto il limite
+  int emergenza = 0;
+  for(int i = 0; i < 6; i++){
+    Serial.println(constrain(getAmpImp(alfa[i],i),inf,sup));
+    if(constrain(getAmpImp(alfa[i],i),inf,sup) == sup || constrain(getAmpImp(alfa[i],i),inf,sup) == inf){
+      emergenza++;
+    }
+  }
+  // assegnazione angolo servomotori
+  if(emergenza == 0){
+    Serial.println("Microsecondi:");
+    for(int i = 0; i < 6; i++){
+        servo[i].writeMicroseconds(constrain(getAmpImp(alfa[i],i),inf,sup));
+        Serial.println(constrain(getAmpImp(alfa[i],i),inf,sup));
+    }
+  }
+  else{
+    Serial.println("Limite raggiunto, arresto motori.");
+    fermoEmergenza();
+  }
+  
+}
+
+// in caso di emergenza non muoverti, entra in loop infinito lampeggiante allarme
+void fermoEmergenza(){
+  while(true){
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(500);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(500);
   }
 }
