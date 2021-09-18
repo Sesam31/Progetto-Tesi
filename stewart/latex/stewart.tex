@@ -89,7 +89,7 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma i
     minimum width=3.5cm,
     minimum height=1cm,
     text width=3cm, text centered
-] (block3) { Riceve posizione $x,y,z,\phi,\theta,\psi$};
+] (block3) { Riceve posizione $x,y,z,\varphi,\vartheta,\psi$};
 
 \node[draw,
     below=of block3,
@@ -106,37 +106,51 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma i
 ] (block5) { Calcolo distanza $l$};
 
 \node[draw,
-    right=of block5,
+    below=of block5,
     minimum width=3.5cm,
     minimum height=1cm,
-    text width=3cm, text centered, xshift=1cm
+    text width=3cm, text centered
 ] (block6) { Calcolo $\alpha$ e il corrispettivo $w$};
+
+\node[draw,
+    diamond,
+    right=of block6,
+    minimum width=3.5cm,
+    inner sep=2, aspect=2, xshift= 1cm] (block7) {C'é collisione?};
+    
+\node[draw,
+    right=of block7,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3.2cm, text centered, xshift=1cm
+] (blocco) { Blocco sistema e accendo lampeggiate};
 
 \node[draw,
     trapezium, 
     trapezium left angle = 120,
     trapezium right angle = 120,
     trapezium stretches,
-    above=of block6,
+    above=of block7,
     minimum width=3.5cm,
     minimum height=1cm,
-    text width=3cm, text centered
-] (block7) {Imposta $w$ ai servomotori};
+    text width=3cm, text centered, yshift= 0.75cm
+] (block8) {Imposta $w$ ai servomotori};
  
 % Conditions test
 \node[draw,
     diamond,
-    above=of block7,
-    minimum width=2.5cm,
-    inner sep=2, aspect=2, yshift= -0.3cm] (block8) { Nuova posizione?};
+    above=of block8,
+    minimum width=3.5cm,
+    inner sep=2, aspect=2, yshift= 0.75cm] (block9) { Nuova posizione?};
     
 \node[draw,
-    above right=of block8,
+    above right=of block9,
     minimum width=3.5cm,
     minimum height=1cm,
     text width=3cm, text centered
-] (block9) { Mantieni posizione};
+] (block10) { Mantieni posizione};
  
+
 % Arrows
 \draw[-latex] (block1) edge (block2)
 			  (block2) edge (block3)
@@ -144,13 +158,17 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma i
 			  (block4) edge (block5)
 			  (block5) edge (block6)
    			  (block6) edge (block7)
-   			  (block7) edge (block8);
+   			  (block8) edge (block9);
    
-\draw[-latex] (block8) -- (block3) node[pos=0.2,fill=white,inner sep=2]{Sì};
+\draw[-latex] (block7) -- (blocco) node[pos=0.2,fill=white,inner sep=2]{Sì};
  
-\draw[-latex] (block8) |- (block9) node[pos=0.2,fill=white,inner sep=2]{No};
+\draw[-latex] (block7) -- (block8) node[pos=0.2,fill=white,inner sep=2]{No};
+
+\draw[-latex] (block9) -- (block3) node[pos=0.2,fill=white,inner sep=2]{Sì};
+ 
+\draw[-latex] (block9) |- (block10) node[pos=0.2,fill=white,inner sep=2]{No};
     
-\draw[-latex] (block9) |- (block8);
+\draw[-latex] (block10) |- (block9);
 
 
 \end{tikzpicture}
@@ -159,7 +177,7 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma i
 \scalebox{0.6}{
 \begin{tikzpicture}
 
-\filldraw[fill=blue!50,rotate around={-10:(0,7cm)},xshift=2cm,yshift=1cm] (0,7cm) ellipse (4cm and 2cm);
+\filldraw[fill=yellow!50,rotate around={-10:(0,7cm)},xshift=2cm,yshift=1cm] (0,7cm) ellipse (4cm and 2cm);
 \filldraw [fill=red!50](0,0) ellipse (5cm and 2.5cm);
 \draw [-latex, thick] (0,0) -- node[anchor=south]{$\hat b_i$}(5cm,0);
 \draw [-latex, thick] (0,0) -- node[anchor=east]{$\hat T$}(2.15cm,7.65cm);
@@ -186,11 +204,11 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma i
 \filldraw [fill=black!30](0,0) rectangle (2,4);
 \filldraw [fill=black] (1cm,3cm) circle (10pt);
 \draw [line width=2pt] (1cm,3cm) -- node[anchor=east, xshift= 0.5cm,yshift=-0.35cm]{$m$}(4cm,2cm);
-\filldraw [fill=black] (4cm,2cm) circle (3pt) node[anchor=east, xshift= -0.35cm,yshift=0.65cm]{$\alpha$};
+\filldraw [fill=black] (4cm,2cm) circle (3pt);
 \filldraw [fill=black] (2cm,12cm) circle (3pt);
 \draw [line width=2pt] (4cm,2cm) -- node[anchor=west]{$b$}(2cm,12cm);
 \draw [line width=2pt,dashed] (1cm,3cm) -- node[anchor=east]{$l$}(2cm,12cm);
-\draw [<->] (3.5cm,2.2cm) arc (150:125:33.7pt);
+%\draw [<->] (3.5cm,2.2cm) arc (150:125:33.7pt);
 \end{tikzpicture}
 }
 
