@@ -4,6 +4,8 @@
 \graphicspath{ {./images/} }
 \usepackage{hyperref}
 \usepackage[italian]{babel}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning}
 
 \oddsidemargin 0pt
 \evensidemargin 0pt
@@ -61,11 +63,138 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF ma i
 
 \section{Cinematica diretta e inversa}\label{cinematicadirettainversa}
 
-\section{Universal Tverberg partitions}\label{section-universal}
+\section{Schema logico funzionamento}\label{schema}
+\begin{tikzpicture}[font=\small,thick]
+ 
+% Start block
+\node[draw,
+    rounded rectangle,
+    minimum width=2.5cm,
+    minimum height=1cm, text width=5cm, text centered] (block1) {Caratteristiche piattaforma e servomotori};
+    
+    % Power and voltage variation
+\node[draw,
+    below=of block1,
+    minimum width=3.5cm,
+    minimum height=1cm
+] (block2) { Calcolo $h_0$ e $\alpha_0$};
+    
+% Voltage and Current Measurement
+\node[draw,
+    trapezium, 
+    trapezium left angle = 120,
+    trapezium right angle = 120,
+    trapezium stretches,
+    below=of block2,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered
+] (block3) { Riceve posizione $x,y,z,\phi,\theta,\psi$};
 
-\section{Applications of Tverberg's theorem}\label{section-applications}
+\node[draw,
+    below=of block3,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered
+] (block4) {  Calcolo matrice rotazione $R_g$};
 
-\section{Tverberg-type results in distinct settings}\label{section-spaces}
+\node[draw,
+    below=of block4,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=2.5cm, text centered
+] (block5) { Calcolo distanza $l$};
+
+\node[draw,
+    right=of block5,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered, xshift=1cm
+] (block6) { Calcolo $\alpha$ e il corrispettivo $w$};
+
+\node[draw,
+    trapezium, 
+    trapezium left angle = 120,
+    trapezium right angle = 120,
+    trapezium stretches,
+    above=of block6,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered
+] (block7) {Imposta $w$ ai servomotori};
+ 
+% Conditions test
+\node[draw,
+    diamond,
+    above=of block7,
+    minimum width=2.5cm,
+    inner sep=2, aspect=2, yshift= -0.3cm] (block8) { Nuova posizione?};
+    
+\node[draw,
+    above right=of block8,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered
+] (block9) { Mantieni posizione};
+ 
+% Arrows
+\draw[-latex] (block1) edge (block2)
+			  (block2) edge (block3)
+			  (block3) edge (block4)
+			  (block4) edge (block5)
+			  (block5) edge (block6)
+   			  (block6) edge (block7)
+   			  (block7) edge (block8);
+   
+\draw[-latex] (block8) -- (block3) node[pos=0.2,fill=white,inner sep=2]{Sì};
+ 
+\draw[-latex] (block8) |- (block9) node[pos=0.2,fill=white,inner sep=2]{No};
+    
+\draw[-latex] (block9) |- (block8);
+
+
+\end{tikzpicture}
+
+\section{Modellizzazione problema piattaforma}\label{modello piattaforma}
+\scalebox{0.6}{
+\begin{tikzpicture}
+
+\filldraw[fill=blue!50,rotate around={-10:(0,7cm)},xshift=2cm,yshift=1cm] (0,7cm) ellipse (4cm and 2cm);
+\filldraw [fill=red!50](0,0) ellipse (5cm and 2.5cm);
+\draw [-latex, thick] (0,0) -- node[anchor=south]{$\hat b_i$}(5cm,0);
+\draw [-latex, thick] (0,0) -- node[anchor=east]{$\hat T$}(2.15cm,7.65cm);
+\draw [-latex, thick] (0,0) -- node[anchor=north]{$\hat q_i$}(6.1cm,6.95cm);
+\draw [-latex, thick] (5cm,0) -- node[anchor=west]{$\hat l_i$}(6.1cm,6.95cm);
+\draw[-latex, thick,rotate around={-10:(0,7cm)},xshift=2cm,yshift=1cm] (0cm,7cm) -- node[anchor=south]{$\hat p_i$}(4cm,7cm);
+\filldraw [fill=black] (0,0) circle (2pt) node[yshift= -0.25cm] {$O$} node[xshift= -2cm] {Base};
+\filldraw [fill=black] (5cm,0) circle (2pt) ;
+\filldraw [fill=black] (2.15cm,7.65cm) circle (2pt) node[yshift= 0.25cm] {$O'$} node[xshift= -2cm] {Piattaforma};
+\filldraw [fill=black] (6.1cm,6.95cm) circle (2pt);
+\draw [-latex, thick] (-1,-1.5) -- node[anchor=north]{$\hat i$}(0cm,-1.5cm);
+\draw [-latex, thick] (-1,-1.5) -- node[anchor=east]{$\hat k$}(-1cm,-0.5cm);
+\draw [-latex, thick,rotate around={-120:(-1,-1.5cm)}] (-1,-1.5) -- node[anchor=east]{$\hat j$}(-0.5cm,-1.5cm);
+
+\draw [-latex, thick,rotate around={-10:(0,8.5cm)}] (0,8.5) -- node[anchor=north]{$\hat {i'}$}(1cm,8.5cm);
+\draw [-latex, thick,rotate around={-10:(0,8.5cm)}] (0,8.5) -- node[anchor=east]{$\hat {k'}$}(0cm,9.5cm);
+\draw [-latex, thick,rotate around={-130:(0,8.5cm)}] (0,8.5) -- node[anchor=east]{$\hat {j'}$}(0.5cm,8.5cm);
+
+\end{tikzpicture}
+}
+\section{Modellizzazione problema servomotori}\label{modello servo}
+\scalebox{0.6}{
+\begin{tikzpicture}
+\filldraw [fill=black!30](0,0) rectangle (2,4);
+\filldraw [fill=black] (1cm,3cm) circle (10pt);
+\draw [line width=2pt] (1cm,3cm) -- node[anchor=east, xshift= 0.5cm,yshift=-0.35cm]{$m$}(4cm,2cm);
+\filldraw [fill=black] (4cm,2cm) circle (3pt) node[anchor=east, xshift= -0.35cm,yshift=0.65cm]{$\alpha$};
+\filldraw [fill=black] (2cm,12cm) circle (3pt);
+\draw [line width=2pt] (4cm,2cm) -- node[anchor=west]{$b$}(2cm,12cm);
+\draw [line width=2pt,dashed] (1cm,3cm) -- node[anchor=east]{$l$}(2cm,12cm);
+\draw [<->] (3.5cm,2.2cm) arc (150:125:33.7pt);
+\end{tikzpicture}
+}
+
+
 
 \bibliographystyle{alpha}
 \bibliography{references} % see references.bib for bibliography management
