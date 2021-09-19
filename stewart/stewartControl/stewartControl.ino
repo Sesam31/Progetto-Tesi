@@ -76,7 +76,7 @@ const float b2 = pow(lungbie,2);
 float L[6],M[6],N[6],angServo[6];
 
 void setup() {
-  Serial.begin(2000000);      // tenere alto per evitare rallentamento processi
+  //Serial.begin(2000000);      // tenere alto per evitare rallentamento processi
 
   // LED usato in caso di emergenza
   pinMode(LED_BUILTIN, OUTPUT);
@@ -88,33 +88,38 @@ void setup() {
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
 
-  
-  /*while(true){
-    for(float t = -2; t < 0; t+=0.01){
-      setPosition(0,0,110,radians(t),radians(t+2),radians(0)); 
-    }
-    for(float t = 0; t < 2; t+=0.01){
-      setPosition(0,0,110,radians(t),radians(2-t),radians(0)); 
-    }
-    for(float t = 2; t > 0; t-=0.01){
-      setPosition(0,0,110,radians(t),radians(t-2),radians(0)); 
-    }
-    for(float t = 0; t > -2; t-=0.01){
-      setPosition(0,0,110,radians(t),radians(-2-t),radians(0)); 
-    }
-  }*/
   /*
   while(true){
-  for(float t = 0; t < 5; t+=0.01){
-    setPosition(0,0,110,radians(t),radians(0),radians(0));
+    for(float t = -5; t < 0; t+=0.3){
+      setPosition(0,0,110,radians(t),radians(t+5),radians(0)); 
+    }
+    for(float t = 0; t < 5; t+=0.3){
+      setPosition(0,0,110,radians(t),radians(5-t),radians(0)); 
+    }
+    for(float t = 5; t > 0; t-=0.3){
+      setPosition(0,0,110,radians(t),radians(t-5),radians(0)); 
+    }
+    for(float t = 0; t > -5; t-=0.3){
+      setPosition(0,0,110,radians(t),radians(-5-t),radians(0)); 
+    }
+  }*/
+  
+  while(true){
+  for(float t = -8; t < 8; t+=0.25){
+    setPosition(0,0,110,radians(0),radians(0),radians(t));
     Serial.println(t);
   }
-  }*/
+  for(float t = 8; t > -8; t-=0.25){
+    setPosition(0,0,110,radians(0),radians(0),radians(t));
+    Serial.println(t);
+  }
+  }
+  /*
   while(true){
-    for(float t = 0; t < 2*pi; t+=0.01){
+    for(float t = 0; t < 2*pi; t+=0.07){
       setPosition(10*cos(t),10*sin(t),110+5*sin(t),radians(0),radians(0),radians(0)); 
     }
-  }
+  }*/
   
 }
 
