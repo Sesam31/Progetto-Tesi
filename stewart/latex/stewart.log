@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.9.3)  19 SEP 2021 15:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/Arch Linux) (preloaded format=pdflatex 2021.9.3)  19 SEP 2021 21:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -659,7 +659,14 @@ File: tikzlibrarypositioning.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count306
 \l__pdf_internal_box=\box80
-) (./stewart.aux)
+) (./stewart.aux
+
+LaTeX Warning: Label `fig:rv' multiply defined.
+
+
+LaTeX Warning: Label `passaggio' multiply defined.
+
+)
 \openout1 = `stewart.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
@@ -779,77 +786,82 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-<./images//Schematic-of-an-RC-servo-motor.png, id=67, 853.1875pt x 302.12875pt>
+) (./stewart.toc)
+\tf@toc=\write5
+\openout5 = `stewart.toc'.
+
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<./images//Schematic-of-an-RC-servo-motor.png, id=84, 853.1875pt x 302.12875pt>
 
 File: ./images//Schematic-of-an-RC-servo-motor.png Graphic file (type png)
 <use ./images//Schematic-of-an-RC-servo-motor.png>
 Package pdftex.def Info: ./images//Schematic-of-an-RC-servo-motor.png  used on 
-input line 46.
+input line 50.
 (pdftex.def)             Requested size: 255.95822pt x 90.63931pt.
- [1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images//Schematic-of-an-
-RC-servo-motor.png>]
-[2]
+ [2 <./images//Schematic-of-an-RC-servo-motor.png>] [3] [4]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 186.
+(hyperref)                removing `math shift' on input line 111.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 186.
+(hyperref)                removing `math shift' on input line 111.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 189.
+(hyperref)                removing `math shift' on input line 114.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\varphi' on input line 189.
+(hyperref)                removing `\varphi' on input line 114.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\vartheta' on input line 189.
+(hyperref)                removing `\vartheta' on input line 114.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\psi' on input line 189.
+(hyperref)                removing `\psi' on input line 114.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 189.
+(hyperref)                removing `math shift' on input line 114.
 
-[3] [4]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 290.
-
+[5] [6]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\alpha' on input line 290.
+(hyperref)                removing `math shift' on input line 233.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 290.
+(hyperref)                removing `\alpha' on input line 233.
 
-[5]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 233.
+
+[7] [8]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 No file stewart.bbl.
-[6] [7] (./stewart.aux)
+[9] [10] (./stewart.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `stewart.out' has not changed.
-(rerunfilecheck)             Checksum: 1FE73F9915D79ADA61DCECB56D77C126;3044.
+(rerunfilecheck)             Checksum: 4F83A1FCDB819E0EA6FEFB072A894DC6;2691.
  ) 
 Here is how much of TeX's memory you used:
- 23381 strings out of 478994
- 438222 string characters out of 5864752
- 781136 words of memory out of 5000000
- 40417 multiletter control sequences out of 15000+600000
+ 23409 strings out of 478994
+ 438497 string characters out of 5864752
+ 782577 words of memory out of 5000000
+ 40422 multiletter control sequences out of 15000+600000
  413490 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 87i,14n,89p,1065b,706s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 87i,14n,89p,1178b,831s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/publi
@@ -863,10 +875,10 @@ s/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><
 -dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/cm-s
 uper/sfrm1095.pfb>
-Output written on stewart.pdf (7 pages, 200880 bytes).
+Output written on stewart.pdf (10 pages, 211035 bytes).
 PDF statistics:
- 202 PDF objects out of 1000 (max. 8388607)
- 175 compressed objects within 2 object streams
- 41 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 250 PDF objects out of 1000 (max. 8388607)
+ 219 compressed objects within 3 object streams
+ 61 named destinations out of 1000 (max. 500000)
+ 122 words of extra memory for PDF output out of 10000 (max. 10000000)
 
