@@ -112,17 +112,43 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 Le variazioni in $(x,y,z)$ comportano una semplice traslazione dei punti del piano, questa viene indicata con un vettore $\hat T$ che adrà poi a sommarsi alla variazione dovuta a $(\varphi,\vartheta,\psi)$.
 
 \subsubsection{Analisi rotazione $(\varphi,\vartheta,\psi)$}\label{ftp}
-Per semplificare l'analisi si considerano, separatamente, gli effetti dovuti a queste tre componenti. Si studia il caso di solo rollio $(\varphi,0,0)$ per risalire alle coordinate di un punto $P$ rispetto alla base in seguito a una rotazione di $\varphi$ gradi. Per fare ciò, è necessario ottenere un'applicazione lineare che permetta di passare dal sistema di coordinate della piattaforma al sistema di coordinate della base.
+Per semplificare l'analisi si considerano, separatamente, gli effetti dovuti a queste tre componenti. Si studia il caso di solo rollio $(\varphi,0,0)$ per risalire alle coordinate di un punto $P:(x,y,z)$ rispetto alla base in seguito a una rotazione di $\varphi$ gradi che lo ha traslato nel punto $(x',y',z')$. Per fare ciò, è necessario ottenere un'applicazione lineare che permetta di passare dal sistema di coordinate della piattaforma al sistema di coordinate della base.
 
-% INSERIRE DISEGNO CAMBIO COORDINATE
+\begin{figure}[h!]
+\centering
+\scalebox{0.8}{
+\begin{tikzpicture}
+\draw [-latex](0,0) -- (4cm,0)node[anchor=north]{$\hat{j}$};
+\draw [-latex](0,0) -- (0,4cm)node[anchor=east]{$\hat{k}$};
+
+\draw [-latex,rotate around={30:(0,0cm)}](0,0) -- (4cm,0)node[anchor=south]{$\hat{j'}$};
+\draw [-latex,rotate around={30:(0,0cm)}](0,0) -- (0,4cm)node[anchor=east]{$\hat{k'}$};
+
+\draw [rotate around={60:(0,0cm)}](0,0) -- (3cm,0)node[anchor=south]{$\hat{P}$};
+
+\draw (0,0)node[xshift= 1.25cm,yshift= 0.25cm]{$\varphi$} -- (10mm,0mm) arc  (0:30:10mm)-- cycle;
+\filldraw [-latex,fill=black] (0cm,0cm) circle (2pt) node[xshift=-0.25cm,yshift=-0.25cm]{$\hat{i}$};
+\filldraw [-latex,fill=black] (1.5cm,2.6cm) circle (2pt);
+\draw [dashed,rotate around={30:(0,0cm)}](2.6cm,0cm) -- (2.6cm,1.5cm);
+\draw [dashed,rotate around={30:(0,0cm)}](0cm,1.5cm) -- (2.6cm,1.5cm);
+
+\draw (1.5cm,2.6cm)node[xshift= 0.5cm,yshift= -0.3cm]{$\varphi$} -- (1.5cm,2.1cm) arc  (270: 300:5mm)-- cycle;
+
+\draw [dashed](1.5cm,0cm) -- (1.5cm,2.6cm);
+\draw [dashed](0cm,2.6cm) -- (1.5cm,2.6cm);
+
+\end{tikzpicture}
+}
+\caption{Vettore $\hat{P}$ ruotato di $\varphi$ gradi rispetto alla base.} \label{fig:rot}
+\end{figure}
 
 Dallo studio della variazione troviamo che:
 
 \begin{equation}\label{sistema1}
 \begin{cases} 
 x=x' \\ 
-y=OA-CB=y'cos(\varphi)-z'sin(\varphi) \\ 
-z=AB+CP=y'sin(\varphi)-z'cos(\varphi)
+y=y'cos(\varphi)-z'sin(\varphi) \\ 
+z=y'sin(\varphi)-z'cos(\varphi)
 \end{cases} 
 \end{equation}
 
