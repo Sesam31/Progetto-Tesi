@@ -13,3 +13,4 @@
 \contentsline {subsubsection}{\numberline {5.2.1}Posizione del giunto biella manovella}{7}{subsubsection.5.2.1}%
 \contentsline {subsubsection}{\numberline {5.2.2}Determinazione angolo $\alpha $}{7}{subsubsection.5.2.2}%
 \contentsline {subsubsection}{\numberline {5.2.3}Controllo servomotori}{9}{subsubsection.5.2.3}%
+\contentsline {section}{\numberline {6}Controllore PID}{10}{section.6}%

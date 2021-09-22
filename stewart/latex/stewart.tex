@@ -76,7 +76,7 @@ Uno relativo alla determinazione delle lunghezze dei vettori che collegano la ba
 
 \subsection{Analisi problema piattaforma}
 
-Si definiscono due sistemi di riferimento cartesiani che caratterizzano il sistema, mostrati nella figura \ref{fig:rv}, uno fisso per la base centrato in $O$ di versori $\hat{i},\hat{j},\hat{k}$ e uno variabile per la piattaforma centrato in $O'$ di versori $\hat{i'},\hat{j'},\hat{k'}$. Sono note le coordinate in tre dimensioni dei punti degli assi di rotazione dei servomotori $({B_i})$ e dei giunti della piattaforma $(P_i)$, quando questa è in posizione orizzontale a riposo rispetto al sistema di riferimento centrato nella base. Il problema consiste nel definire la posizione dei giunti della piattaforma nello spazio al variare di un set di valori $(x,y,z,\varphi,\vartheta,\psi)$ rispetto al riferimento fisso della base. I valori $(x,y,z,\varphi,\vartheta,\psi)$ precedentemente enunciati, si riferiscono alla posizione e rotazione nello spazio della piattaforma rispetto alla base; $(x,y,z)$ sono i valori del centro della piattaforma mentre $(\varphi,\vartheta,\psi)$ sono le rotazioni, rispettivamente roll, pitch e yaw (rollio, beccheggio e imbardata). Nell'analisi, si considerano separatamente gli effetti traslativi e rotativi.
+Si definiscono due sistemi di riferimento cartesiani che caratterizzano il sistema, mostrati nella figura \ref{fig:sistema}, uno fisso per la base centrato in $O$ di versori $\hat{i},\hat{j},\hat{k}$ e uno variabile per la piattaforma centrato in $O'$ di versori $\hat{i'},\hat{j'},\hat{k'}$. Sono note le coordinate in tre dimensioni dei punti degli assi di rotazione dei servomotori $({B_i})$ e dei giunti della piattaforma $(P_i)$, quando questa è in posizione orizzontale a riposo rispetto al sistema di riferimento centrato nella base. Il problema consiste nel definire la posizione dei giunti della piattaforma nello spazio al variare di un set di valori $(x,y,z,\varphi,\vartheta,\psi)$ rispetto al riferimento fisso della base. I valori $(x,y,z,\varphi,\vartheta,\psi)$ precedentemente enunciati, si riferiscono alla posizione e rotazione nello spazio della piattaforma rispetto alla base; $(x,y,z)$ sono i valori del centro della piattaforma mentre $(\varphi,\vartheta,\psi)$ sono le rotazioni, rispettivamente roll, pitch e yaw (rollio, beccheggio e imbardata). Nell'analisi, si considerano separatamente gli effetti traslativi e rotativi.
 
 \begin{figure}[h!]
 \centering
@@ -105,7 +105,7 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 
 \end{tikzpicture}
 }
-\caption{Sistemi di rifermento e vettori nel piano di Stewart.} \label{fig:rv}
+\caption{Sistemi di rifermento e vettori nel piano di Stewart.} \label{fig:sistema}
 \end{figure}
 
 \subsubsection{Analisi traslazione $(x,y,z)$}\label{xyz}
@@ -316,10 +316,10 @@ Al fine di controllare i servomotori in modo ottimale è necessario effettuare a
 É necessario definire un'altezza $h_0$ e un angolo $\alpha_0$ di riposo dei servomotori, questo è scelto in modo che le manovelle dei servomotori siano orizziontali, quindi $\alpha_0=0^\circ$, l'altezza è ricavata sperimentalemente valutando a quale valore di $h$ i servomotori lavorano specularmente rispetto all'asse $x$.
 Siccome i servomotori hanno caratteristiche variabili a seconda del produttore bisogna definire una relazione tra la variazione in $\mu s$ del segnale PWM e la variazione dell'angolo $\alpha$ in radianti. Notare inoltre come questa relazione non valga quando il servomotore si trova vicino alla massima escursione, per avere una misura accurata analizziamo quanti $\mu s$ sono necessari per variare $\alpha$ dalla posizione orizzontale a 45°, questo è svolto nel rapporto:
 \begin{align}\label{rel}
-r &=\frac{t}{\Delta\alpha}\cdot \frac{360^\circ}{2 \pi}\\
+r &=\frac{\Delta t}{\Delta\alpha}\cdot \frac{360^\circ}{2 \pi}\\
 	&= \frac{375}{45^\circ}\cdot \frac{360^\circ}{2 \pi} \quad [\mu s/rad]
 \end{align}
-In questo modo moltiplicando un angolo $\alpha$ per la \eqref{rel} otteniamo i corrispettivi $\mu s$ da assegnare al servomotore. Si possono quindi scrivere le equazioni di controllo per i servomotori, distinguendo sempre tra pari e dispari.
+Dopo essere risaliti sperimentalmente al valore $\Delta t = 375 \mu s$. In questo modo moltiplicando un angolo $\alpha$ per la \eqref{rel} otteniamo i corrispettivi $\mu s$ da assegnare al servomotore. Si possono quindi scrivere le equazioni di controllo per i servomotori, distinguendo sempre tra pari e dispari.
 \begin{equation}\label{w}
     \begin{cases}
       w_i=w_i^0 +(\alpha_i-\alpha_0)\cdot r	\quad pari \\
@@ -447,7 +447,23 @@ Se le condizioni sono rispettate procede assegnando i valori, altrimenti entra i
 \caption{Schema logico piattaforma di Stewart.} \label{fig:ps}
 \end{figure}
 
+
+\newpage
+\section{Controllore PID}\label{pid}
+
+\begin{equation}\label{pidtc}
+    u(t)=K_p \cdot e(t) + K_i \cdot \int_0^t e(\tau)d\tau + K_d\cdot \frac{de(t)}{dt}
+\end{equation}
+
+
+
+\begin{equation}\label{pidtd}
+    u(t_k)=K_p \cdot e(t_k) + K_i \cdot \sum_{i=1}^{t_k} e(t_i)\cdot \Delta t + K_d\cdot \frac{e(t_k)-e(t_{k-1})}{\Delta t}
+\end{equation}
+
 \bibliographystyle{alpha}
 \bibliography{references} % see references.bib for bibliography management
 
 \end{document}
+
+
