@@ -75,11 +75,35 @@ const float b2 = pow(lungbie,2);
 // PARAMETRI EQUAZIONE ANGOLO
 float L[6],M[6],N[6],angServo[6];
 
+
+// PARAMETRI PIANO RESISTIVO
+#define sensePin A0
+// min 100 max 920, piatto 0.34x0.27m
+float x, xOld;
+float y, yOld;
+float xorig,yorig;
+#define in1 12  
+#define in2 13 
+
+// PARAMETRI PID
+float Kp =22.5;
+float Ki = 0;
+float Kd;// = 100; //0.1
+double oldTime, newTime, deltaTime;
+double sumErrX, sumErrY;
+float setX = 0.17, setY = 0.135, errX, errY; // setpoint centrato 26.95 21.90
+float xVel, yVel;
+double pidX, pidY;
+
 void setup() {
-  //Serial.begin(2000000);      // tenere alto per evitare rallentamento processi
+  Serial.begin(115200);      // tenere alto per evitare rallentamento processi
 
   // LED usato in caso di emergenza
   pinMode(LED_BUILTIN, OUTPUT);
+
+  // pin output controllo piano
+  pinMode(in1,OUTPUT);
+  pinMode(in2,OUTPUT);
   
   servo[0].attach(3, inf, sup);
   servo[1].attach(5, inf, sup);
@@ -88,23 +112,32 @@ void setup() {
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
 
-  /*
-  while(true){
-    for(float t = -5; t < 0; t+=0.3){
-      setPosition(0,0,110,radians(t),radians(t+5),radians(0)); 
-    }
-    for(float t = 0; t < 5; t+=0.3){
-      setPosition(0,0,110,radians(t),radians(5-t),radians(0)); 
-    }
-    for(float t = 5; t > 0; t-=0.3){
-      setPosition(0,0,110,radians(t),radians(t-5),radians(0)); 
-    }
-    for(float t = 0; t > -5; t-=0.3){
-      setPosition(0,0,110,radians(t),radians(-5-t),radians(0)); 
-    }
+
+  getSense();
+  oldTime = millis();
+  xOld = x;
+  yOld = y;
+  
+  /*while(true){
+    setPosition(0,0,110,radians(0),radians(-5),radians(0)); 
   }*/
   
-  while(true){
+  /*while(true){
+    for(float t = -3; t < 0; t+=0.1){
+      setPosition(0,0,110,radians(t),radians(t+3),radians(0)); 
+    }
+    for(float t = 0; t < 3; t+=0.1){
+      setPosition(0,0,110,radians(t),radians(3-t),radians(0)); 
+    }
+    for(float t = 3; t > 0; t-=0.1){
+      setPosition(0,0,110,radians(t),radians(t-3),radians(0)); 
+    }
+    for(float t = 0; t > -3; t-=0.1){
+      setPosition(0,0,110,radians(t),radians(-3-t),radians(0)); 
+    }
+  }
+  */
+  /*while(true){
   for(float t = -8; t < 8; t+=0.25){
     setPosition(0,0,110,radians(0),radians(0),radians(t));
     Serial.println(t);
@@ -113,9 +146,9 @@ void setup() {
     setPosition(0,0,110,radians(0),radians(0),radians(t));
     Serial.println(t);
   }
-  }
-  /*
-  while(true){
+  }*/
+  
+  /*while(true){
     for(float t = 0; t < 2*pi; t+=0.07){
       setPosition(10*cos(t),10*sin(t),110+5*sin(t),radians(0),radians(0),radians(0)); 
     }
@@ -125,8 +158,104 @@ void setup() {
 
 void loop() {
   
-  
+  getSense();
+  delay(30);
 
+  newTime = millis();
+  deltaTime = (newTime - oldTime)/1000;
+  oldTime = newTime;
+
+  // velocità pallina in m/s
+  xVel = (x - xOld)/(deltaTime);
+  yVel = (y - yOld)/(deltaTime);
+
+  float maxVel = 0.25;
+  if(abs(xVel) > maxVel){
+    if(xVel > 0){
+      x = xOld + maxVel*(deltaTime);
+    }
+    else{
+      x = xOld - maxVel*(deltaTime);
+    }
+  }
+  if(abs(yVel) > maxVel){
+    if(yVel > 0){
+      y = yOld + maxVel*(deltaTime);
+    }
+    else{
+      y = yOld - maxVel*(deltaTime);
+    }
+  }
+  
+  xOld = x;
+  yOld = y;
+  
+  Serial.print(x*100);
+  Serial.print(" ");
+  Serial.print(y*100);
+  
+  /*Serial.print(xVel*100);
+  Serial.print(" ");
+  Serial.println(yVel*100);*/
+  
+  int errXold = errX;
+  int errYold = errY;
+  errX = setX - x;
+  errY = setY - y;
+  sumErrX += errX * deltaTime;
+  sumErrY += errY * deltaTime;
+  
+  pidX = Kp * errX +  Ki * sumErrX + Kd * (errX-errXold)/deltaTime;
+  pidY = Kp * errY +  Ki * sumErrY + Kd * (errY-errYold)/deltaTime;
+  Serial.print(" ");
+  Serial.print(setX*100);
+  Serial.print(" ");
+  Serial.println(Kp*errX*100);
+
+  float maxangle = 0.9;
+  float tiltX;
+  float tiltY;
+  if(abs(pidY) > maxangle){
+    if(-pidY > 0){
+      tiltX = maxangle;
+    }
+    if(-pidY < 0){
+      tiltX = -maxangle;
+    }
+  }
+  else{
+    tiltX = -pidY;
+  }
+
+  if(abs(pidX) > maxangle){
+    if(pidX > 0){
+      tiltY = maxangle;
+    }
+    if(pidX < 0){
+      tiltY = -maxangle;
+    }
+  }
+  else{
+    tiltY = pidX;
+  }
+  
+  setPosition(0,0,110,radians(tiltX),radians(tiltY),radians(0));
+  
+  // AGGIUNGERE ANTI WINDUP
+  /*
+  Serial.println("valori pid:");
+  //Serial.println(errX);
+  //Serial.println(errY);
+  Serial.println(sumErrX);
+  Serial.println(sumErrY);
+  Serial.println(pidX);
+  Serial.println(pidY);
+  //Serial.println(x);
+  //Serial.println(sumErrX);
+  */
+
+  // worst case (non proprio)
+  //7° su 60cm => 1m/s
 }
 
 // costruisci matrice rotazione globale
@@ -255,13 +384,13 @@ void setPosition(float x, float y, float z, float rol, float pit, float yaw){
     d2[i] = quadVec(inizio,fine);
   }
   // calcolo angoli servomotori
-  Serial.println("Angoli servo:");
+  //Serial.println("Angoli servo:");
   for(int i = 0; i < 6; i++){
     L[i] = d2[i]-(b2-m2);
     M[i] = 2*lungman*(piat[i][2]-base[i][2]);
     N[i] = 2*lungman*(cos(beta[i]*(piat[i][0]-base[i][0])+sin(beta[i])*(piat[i][1]-base[i][1])));
     alfa[i]=asin(L[i]/sqrt(pow(M[i],2)+pow(N[i],2)))-atan(N[i]/M[i]);
-    Serial.println(alfa[i]);
+    //Serial.println(alfa[i]);
   }
   // controllo microsecondi se ho raggiunto il limite
   int emergenza = 0;
@@ -294,4 +423,19 @@ void fermoEmergenza(){
     digitalWrite(LED_BUILTIN, LOW);
     delay(500);
   }
+}
+
+void getSense(){
+  digitalWrite(in1,HIGH);
+  digitalWrite(in2,LOW);
+  delay(1);               // RIVEDERE DELAY
+  x = (analogRead(sensePin)-100)*(0.34/820);
+  //Serial.print("x orig: "); //segnale ingresso non filtrato
+  //Serial.print(" ");
+  //Serial.println(x*100);
+
+  digitalWrite(in1,LOW);
+  digitalWrite(in2,HIGH);
+  delay(1);               // RIVEDERE DELAY
+  y = (analogRead(sensePin)-100)*(0.27/820);
 }

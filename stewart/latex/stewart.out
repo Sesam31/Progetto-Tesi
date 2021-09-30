@@ -1,14 +1,17 @@
-\BOOKMARK [1][-]{section.1}{Servomotori}{}% 1
+\BOOKMARK [1][-]{section.1}{Introduzione}{}% 1
 \BOOKMARK [1][-]{section.2}{Piattaforma di Stewart}{}% 2
-\BOOKMARK [1][-]{section.3}{Robot seriali e paralleli}{}% 3
-\BOOKMARK [1][-]{section.4}{Cinematica diretta e inversa}{}% 4
-\BOOKMARK [1][-]{section.5}{Analisi della piattaforma di Stewart con attuatori rotativi}{}% 5
-\BOOKMARK [2][-]{subsection.5.1}{Analisi problema piattaforma}{section.5}% 6
-\BOOKMARK [3][-]{subsubsection.5.1.1}{Analisi traslazione \(x,y,z\)}{subsection.5.1}% 7
-\BOOKMARK [3][-]{subsubsection.5.1.2}{Analisi rotazione \(,,\)}{subsection.5.1}% 8
-\BOOKMARK [3][-]{subsubsection.5.1.3}{Conclusione problema piattaforma}{subsection.5.1}% 9
-\BOOKMARK [2][-]{subsection.5.2}{Analisi problema attuatori rotativi}{section.5}% 10
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Posizione del giunto biella manovella}{subsection.5.2}% 11
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Determinazione angolo }{subsection.5.2}% 12
-\BOOKMARK [3][-]{subsubsection.5.2.3}{Controllo servomotori}{subsection.5.2}% 13
-\BOOKMARK [1][-]{section.6}{Controllore PID}{}% 14
+\BOOKMARK [2][-]{subsection.2.1}{Piattaforma di Stewart}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Robot seriali e paralleli}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Servomotori}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Analisi della piattaforma di Stewart con attuatori rotativi}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Analisi problema piattaforma}{subsection.2.4}% 7
+\BOOKMARK [3][-]{subsubsection.2.4.2}{Analisi traslazione \(x,y,z\)}{subsection.2.4}% 8
+\BOOKMARK [3][-]{subsubsection.2.4.3}{Analisi rotazione \(,,\)}{subsection.2.4}% 9
+\BOOKMARK [3][-]{subsubsection.2.4.4}{Conclusione problema piattaforma}{subsection.2.4}% 10
+\BOOKMARK [2][-]{subsection.2.5}{Analisi problema attuatori rotativi}{section.2}% 11
+\BOOKMARK [3][-]{subsubsection.2.5.1}{Posizione del giunto biella manovella}{subsection.2.5}% 12
+\BOOKMARK [3][-]{subsubsection.2.5.2}{Determinazione angolo }{subsection.2.5}% 13
+\BOOKMARK [3][-]{subsubsection.2.5.3}{Controllo servomotori}{subsection.2.5}% 14
+\BOOKMARK [2][-]{subsection.2.6}{Schema a blocchi}{section.2}% 15
+\BOOKMARK [1][-]{section.3}{Piano resistivo}{}% 16
+\BOOKMARK [1][-]{section.4}{Controllore PID}{}% 17
