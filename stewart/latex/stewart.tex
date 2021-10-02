@@ -43,19 +43,58 @@ Studio della piattaforma di Stewart e dei suoi componenti.
 \end{abstract}
 
 \section{Introduzione}\label{intro}
+
+
+\section{Tecnologie impiegate}\label{tecnologie}
+
+\subsection{Piattaforma Arduino}\label{arduino}
+
+
+\subsection{Servomotori}\label{servomotori}
+I servomotori sono l'elemento principale nella realizzazione della piattaforma di Stewart.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.3]{Schematic-of-an-RC-servo-motor.png}
+\end{figure}
+
+Questi attuatori sono controllati in modalità PWM dalla scheda Arduino tramite un'apposita libreria. Il segnale inviato ai servomotori è periodico, di periodo 20ms e presenta uno stato on/off a livello logico per un tempo prefissato a seconda della posizione richiesta; ad esempio la posizione 0° prevede un livello logico alto di 1ms, 90° di 1,5ms e 180° di 2ms. Il controllo di questi elementi è svolto dal processore tramite uno shield che ne facilita l'installazione. Una nota particolare va fatta in merito alla potenza richiesta dai servomotori, nonostante il loro consumo in stato 'idle' sia di circa 10mW, durante il movimento questo può raggiungere oltre 300mW. É quindi necessaria una alimentazione esterna che sia in grado di fornire almeno 2A a 5V in quanto la scheda alimentata, tramite usb dalla presa del computer, può ricevere al massimo 1A.
+
+\subsection{Piano resistivo}\label{pianoresistivo}
+Per attuare correttamente la stabilizzazione del piano è fondamentale l'impiego di un sistema resistente ai disturbi che sia in grado determinare, con la massima precisione possibile, la posizione della sfera da bilanciare. Questo può essere svolto impiegando diverse tecniche come matrici di laser, rilevazione video o per l'appunto tramite l'uso di un piano resistivo.
+É stato scelto di impiegare un digitalizzatore resistivo per il tracking della pallina in quanto è meno soggetto a disturbi ambientali, in particolare da effetti ottici, rispetto alla matrice laser e alla rilevazione video.
+Il tracking video avrebbe inoltre richiesto un notevole incremento della complessità del sistema, necessitando di un SOC completo e di software dedicato come OpenCV.
+\subsubsection{Tipologie e funzionamento di un piano resistivo}\label{tipofunz}
+I piani resistivi sono generalmente caratterizzati dal numero di cavi in uscita, questo può essere generalmente 4, 5 o 8. La versione a 8 cavi è una semplice evoluzione della variante a 4 e non sarà trattata in dettaglio. Questi dispositivi sono costituiti da 2 strati, di vetro o plastica, ricoperti da un sottile strato di ossido di indio-stagno\footnote{Materiale scelto appositamente per le ottime proprietà di trasparenza e conduzione.} e separati da minuscoli spaziatori. 
+
+// Inserire immagine sezione piano resistivo.
+
+La resistenza del conduttore è uniforme su tutta la superficie e alla pressione si forma un contatto tra i due strati che permette un passaggio di corrente.
+Nella versione a 4 fili su entrambi i piani si forma un gradiente di potenziale nelle direzioni rispettivamente \emph{x} e \emph{y} e ogniuno dei due misura il potenziale dell'altro. Nella versione a 5 invece si ha un piano su cui viene alternata la direzione del gradiente mentre l'altro effettua la misura.
+Nella realizzazione del progetto è stata impiegata la variante a 5 fili.
+
+// inserire immagine piano 4 e 5 fili.
+
+\subsection{Ponte ad H}\label{hbridge}
+
+É emersa la necessità di impiegare un ponte ad H in seguito ad una analisi preliminare delle specifiche del digitalizzatore resistivo. Si è infatti notato in seguito a una misura di resistenza, che questa fosse di soli $100 \Omega$, quindi non compatibile con le periferiche dell'arduino UNO, in quanto, a $5V$ richiama una corrente di $50mA$ mentre la scheda ne supporta solo $20$. L'impiego del ponte ad H evita questo richiamo di corrente eccessivo impiegando dispositivi come BJT o MOSFET ed una sorgente esterna per controllare il piano. Nella scelta della tecnologia da impiegare sono stati scelti i MOSFET in quanto meno sensibili a fattori ambientali e più adatti alla commutazione di segnali digitali rispetto ai BJT. Non disponendo del componente finito si è sceto di realizzarlo a partire dai singoli componenti in seguito ad un'analisi accurata tramite software SPICE e basandosi sul datasheet del chip L298N.
+I MOSFET scelti sono degli AO3400 e A03401, rispettivamente nella configurazione n e p in quanto forniscono ottime prestazioni. Da un analisi del sistema di controllo rischiesto dal piano resistivo si è deciso di rinunciare alla capacità di gestire individualmente i singoli MOSFET favorendo due linee di controllo che possano commutare tra gli stati High/Low. Sono state inoltre impiegate delle porte logiche NAND con lo scopo di migliorare il segnale di ingresso proveniente da Arduino ed evitare eventuali problemi di ritardo di commutazione, questa pratica è comune anche nel caso dell'L298N. Come chip per le porte NAND si è scelto un TC4011BP, questo fornisce in un singolo package quattro porte logiche che sono state configurate come invertenti in cascata, principalmente per una questione di convenienza, nel caso in cui sia necessario impiegare il segnale negato.
+ 
+
+\newpage
 \section{Piattaforma di Stewart}\label{pianostewart}
 
 
 
-\subsection{Piattaforma di Stewart}\label{piattaformastewart}
-La piattaforma di Stewart è un particolare sistema meccanico, costituito da una base su cui sono posizionati 6 attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune sono gli attuatori prismatici: pistoni lineari che presentano un solo grado di libertà. Nel progetto vengono impiegati servomotori che presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è possibile risalire ad un modello equivalente a quello degli attuatori prismatici che garantisce un range di movimento ottimale.
+\subsection{Descrizione}\label{piattaformastewart}
+La piattaforma di Stewart è un particolare sistema meccanico, costituito da una base su cui sono posizionati sei attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune sono gli attuatori prismatici: pistoni lineari che presentano un solo grado di libertà. Nel progetto vengono impiegati servomotori che presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è possibile risalire ad un modello equivalente a quello degli attuatori prismatici che garantisce un range di movimento ottimale.
 
 \subsection{Robot seriali e paralleli}\label{robotserialiparalleli}
 È utile enunciare la differenza tra robot di tipo seriale e parallelo per comprendere le successive implicazioni a livello matematico.
 I robot seriali prevedono una serie di giunti snodabili controllati da attuatori, che spesso assumono le caratteristiche di un arto antropomorfo. 
 Questi tipi di robot prendono spesso il nome di braccio meccanico e trovano ampia applicazione nell'industria meccanica.
 Nei robot paralleli invece, gli attuatori agiscono tutti sullo stesso elemento tramite giunti indipendenti. 
-La piattaforma di Stewart ne è il principale esempio e trova applicazione soprattutto nella realizzazione di simulatori avanzati di volo o per testare veicoli nelle case automobilistiche.
+La piattaforma di Stewart ne è il principale esempio e trova applicazione soprattutto nella realizzazione di simulatori avanzati di volo o per testare veicoli nelle case automobilistiche.\footnote{Si nota come i delta-robot siano sostanzialmente delle versioni "limitate" della piattaforma di Stewart a soli 3 gradi di libertà.}
 Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF, ma il problema matematico che li caratterizza è fondamentalmente opposto.
 
 
@@ -83,7 +122,7 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF, ma 
 \caption{Problemi diretti e inversi.} \label{fig:direttoinverso}
 \end{figure}
 
-Se nei robot seriali, noto l'orientamento degli attuatori, è facile risalire alla posizione dell'end effector; lo stesso non si può dire del problema inverso. Nota la posizione dell'end effector è infatti estremamente difficile risalire all'orientamento degli attuatori che permette raggiungere quella determinata locazione. Il problema di Stewart è esattamente l'opposto, è molto difficile ottenere equazioni che ci permettano di descrivere le coordinate e la rotazione del piano al variare dell'angolo dell'attuatore rotativo (18 equazioni differenziali non lineari con 40 possibili soluzioni). É invece molto facile risalire all'angolo dei servomotori a partire dalla posizione nota del piano nello spazio impiegando semplici nozioni di trigonometria. Queste nozioni di cinematica sono riassunte nella tabella \ref{fig:tabella}.
+Se nei robot seriali, noto l'orientamento degli attuatori, è facile risalire alla posizione dell'end effector; lo stesso non si può dire del problema inverso. Nota la posizione dell'end effector è infatti estremamente difficile risalire all'orientamento degli attuatori che permette raggiungere quella determinata locazione. Il problema di Stewart è esattamente l'opposto, è molto difficile ottenere equazioni che ci permettano di descrivere le coordinate e la rotazione del piano al variare dell'angolo dell'attuatore rotativo\footnote{Prevede la risoluzione di un sistema di 18 equazioni differenziali non lineari con 40 possibili soluzioni.}, è invece molto facile risalire all'angolo dei servomotori a partire dalla posizione nota del piano nello spazio impiegando semplici nozioni di trigonometria. Queste nozioni di cinematica sono riassunte nella tabella \ref{fig:tabella}.
 
 \begin{table}[h!]
 \centering
@@ -101,31 +140,20 @@ Inverso & Difficile & Facile
 Nello svolgimento successivo si è preferito risalire alle equazioni della cinematica inversa della piattaforma di Stewart in quanto le dirette non sono necessarie ai fini dello svolgimento e richiederebbero inoltre un carico eccessivo da parte del microprocessore.
 
 
-\subsection{Servomotori}\label{servomotori}
-I servomotori sono l'elemento principale nella realizzazione della piattaforma di Stewart.
 
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.3]{Schematic-of-an-RC-servo-motor.png}
-\end{figure}
-
-
-Questi attuatori sono controllati in modalità PWM dalla scheda Arduino tramite un'apposita libreria. Il segnale inviato ai servomotori è periodico, di periodo 20ms e presenta uno stato on/off a livello logico per un tempo prefissato a seconda della posizione richiesta; ad esempio la posizione 0° prevede un livello logico alto di 1ms, 90° di 1,5ms e 180° di 2ms. Il controllo di questi elementi è svolto dal processore tramite uno shield che ne facilita l'installazione. Una nota particolare va fatta in merito alla potenza richiesta dai servomotori, nonostante il loro consumo in stato 'idle' sia di circa 10mW, durante il movimento questo può raggiungere oltre 300mW. É quindi necessaria una alimentazione esterna che sia in grado di fornire almeno 2A a 5V in quanto la scheda alimentata, tramite usb dalla presa del computer, può ricevere al massimo 1A.
-
-\newpage
-\subsection{Analisi della piattaforma di Stewart con attuatori rotativi}\label{analisi}
+\subsection{Analisi piattaforma di Stewart con attuatori rotativi}\label{analisi}
 
 Il problema della piattaforma di Stewart controllata da attuatori rotativi è fondamentalmente costituito da due sottoproblemi.
-Uno relativo alla determinazione delle lunghezze dei vettori che collegano la base alla piattaforma per ogni possibile posizione e l'altro relativo all'implementazione stessa dei servomotori, per via della complessità di descrizione del sistema biella manovella impiegato. 
+Il primo relativo alla determinazione delle lunghezze dei vettori che collegano la base alla piattaforma per ogni possibile posizione, trattato nella sezione \ref{platform}. Il secondo tratta invece dell'implementazione stessa dei servomotori, per via della complessità di descrizione del sistema biella manovella impiegato, trattato nella sezione \ref{rotation}. 
 
-\subsubsection{Analisi problema piattaforma}
+\subsection{Analisi problema piattaforma}\label{platform}
 
 Si definiscono due sistemi di riferimento cartesiani che caratterizzano il sistema, mostrati nella figura \ref{fig:sistema}, uno fisso per la base centrato in $O$ di versori $\hat{i},\hat{j},\hat{k}$ e uno variabile per la piattaforma centrato in $O'$ di versori $\hat{i'},\hat{j'},\hat{k'}$. Sono note le coordinate in tre dimensioni dei punti degli assi di rotazione dei servomotori $({B_i})$ e dei giunti della piattaforma $(P_i)$, quando questa è in posizione orizzontale a riposo rispetto al sistema di riferimento centrato nella base. Il problema consiste nel definire la posizione dei giunti della piattaforma nello spazio al variare di un set di valori $(x,y,z,\varphi,\vartheta,\psi)$ rispetto al riferimento fisso della base. I valori $(x,y,z,\varphi,\vartheta,\psi)$ precedentemente enunciati, si riferiscono alla posizione e rotazione nello spazio della piattaforma rispetto alla base; $(x,y,z)$ sono i valori del centro della piattaforma mentre $(\varphi,\vartheta,\psi)$ sono le rotazioni, rispettivamente roll, pitch e yaw (rollio, beccheggio e imbardata). Nell'analisi, si considerano separatamente gli effetti traslativi e rotativi.
 
 \begin{figure}[h!]
 \centering
 
-\scalebox{0.83}{
+\scalebox{0.75}{
 \begin{tikzpicture}
 
 \filldraw[fill=yellow!50,rotate around={-10:(0,7cm)},xshift=2cm,yshift=1cm] (0,7cm) ellipse (4cm and 2cm);
@@ -152,10 +180,11 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 \caption{Sistemi di rifermento e vettori nel piano di Stewart.} \label{fig:sistema}
 \end{figure}
 
-\subsubsection{Analisi traslazione $(x,y,z)$}\label{xyz}
+\newpage
+\subsubsection{Analisi traslazione \boldmath$(x,y,z)$}\label{xyz}
 Le variazioni in $(x,y,z)$ comportano una semplice traslazione dei punti del piano, questa viene indicata con un vettore $\hat T$ che adrà poi a sommarsi alla variazione dovuta a $(\varphi,\vartheta,\psi)$.
 
-\subsubsection{Analisi rotazione $(\varphi,\vartheta,\psi)$}\label{ftp}
+\subsubsection{Analisi rotazione \boldmath$(\varphi,\vartheta,\psi)$}\label{ftp}
 Per semplificare l'analisi si considerano, separatamente, gli effetti dovuti a queste tre componenti. Si studia il caso di solo rollio $(\varphi,0,0)$ per risalire alle coordinate di un punto $P:(x,y,z)$ rispetto alla base in seguito a una rotazione di $\varphi$ gradi che lo ha traslato nel punto $(x',y',z')$. Per fare ciò, è necessario ottenere un'applicazione lineare che permetta di passare dal sistema di coordinate della piattaforma al sistema di coordinate della base.
 
 \begin{figure}[h!]
@@ -268,7 +297,7 @@ Le singole matrici possono essere viste come applicazioni lineari, si procede qu
 			\end{bmatrix}
 \end{align}
 
-Moltiplicando il vettore $\hat{p_i}$ per la matrice di rotazione \eqref{rg} si ottengono le coordinate del punto $P_i$ nel sistema di riferimento della base. 
+Moltiplicando il vettore $\hat{p_i}$ per la matrice di rotazione \eqref{rg} si ottengono le coordinate del punto $P_i$ relative al sistema di riferimento della base. 
 
 \subsubsection{Conclusione problema piattaforma}
 Grazie ai risultati ottenuti nelle sezioni \ref{xyz} e \ref{ftp} si possono definire i vettori $\hat{q_i}$ che descrivono la posizione dei punti $P_i$ rispetto al centro del sistema di riferimento della base $O$ per ogni operazione rototraslativa.
@@ -281,26 +310,42 @@ Una volta ottenuto questo vettore, con una semplice operazione vettoriale, si pu
 \hat{l_i}=\hat{T}+R_g\cdot \hat{p_i}-\hat{b_i}
 \end{align}
 Nel caso della piattaforma di Stewart, sei equazioni \eqref{li} permettono di descrivere la posizione della piattaforma al variare di $(x,y,z,\varphi,\vartheta,\psi)$.
-Notare come con l'impiego di attuatori lineari, il problema si risolve assegnando queste lunghezze per ottenere la posizione desiderata. 
+Notare come, nel caso di impiego di attuatori lineari, il problema si risolve assegnando direttamente queste lunghezze per ottenere la posizione desiderata. 
 
-\subsection{Analisi problema attuatori rotativi}
+\subsection{Analisi problema attuatori rotativi}\label{rotation}
 L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessario un numero di variabili superiore per descrivere in modo appropriato il sistema. Ogni servomotore controllando un giunto biella manovella collegato alla piattaforma regola la lunghezza del vettore $\hat{l_i}$. Si rende quindi fondamentale trovare una relazione tra l'angolo del servomotore e il vettore $\hat{l_i}$. Anche in questo caso il problema può essere separato in due parti: la determinazione della posizione del giunto biella manovella e la ricerca dell'angolo di rotazione $\alpha$.
 
 \begin{figure}[h!]
 \centering
-\scalebox{0.67}{
+\scalebox{1}{
 \begin{tikzpicture}
-\filldraw [fill=blue!50](0,0) rectangle (2,4);
-\filldraw [fill=black] (1cm,3cm) circle (10pt);
-\draw [line width=2pt] (1cm,3cm) -- node[anchor=east, xshift= 0.6cm,yshift=-0.45cm]{$m$}(3cm,2cm);
-\filldraw [fill=black] (3cm,2cm) circle (3pt);
-\filldraw [fill=black] (2cm,9cm) circle (3pt);
-\draw [line width=2pt] (3cm,2cm) -- node[anchor=west]{$b$}(2cm,9cm);
-\draw [line width=2pt,dashed] (1cm,3cm) -- node[anchor=east]{$l$}(2cm,9cm);
+\filldraw [fill=blue!50](1cm,0cm) rectangle (2,2);
+\filldraw [fill=black] (1.5cm,1.5cm) circle (3pt);
+\filldraw [fill=blue!50](-1cm,0cm) rectangle (-2,2);
+\filldraw [fill=black] (-1.5cm,1.5cm) circle (3pt);
+\filldraw  [fill=black!50](-3cm,0cm) rectangle (3cm,-0.25cm);
+\filldraw  [fill=black!50](-3cm,2cm) rectangle (3cm,2.25cm);
+\draw  (1.5cm,1.5cm) -- node[anchor=south, xshift= 0cm,yshift=-0.45cm]{$m$}(3cm,0.75cm);
+\draw  (3cm,0.75cm) -- node[anchor=west]{$b$}(4cm,7cm);
+\draw  (-1.5cm,1.5cm) -- (-3cm,0.75cm);
+\draw  (-3cm,0.75cm) -- (-4cm,7cm);
+\filldraw  [fill=black!50]  (-4cm,7cm) rectangle (4cm,7.25cm);
+%\draw [line width=2pt] (1cm,3cm) -- node[anchor=east, xshift= 0.6cm,yshift=-0.45cm]{$m$}(3cm,2cm);
+%\filldraw [fill=black] (3cm,2cm) circle (3pt);
+%\filldraw [fill=black] (2cm,9cm) circle (3pt);
+%\draw [line width=2pt] (3cm,2cm) -- node[anchor=west]{$b$}(2cm,9cm);
+\draw [dashed] (1.5cm,1.5cm) -- node[anchor=east]{$l$}(4cm,7cm);
+\draw [dashed] (-1.5cm,1.5cm) -- (-4cm,7cm);
 %\draw [<->] (3.5cm,2.2cm) arc (150:125:33.7pt);
+\filldraw [fill=black] (-3cm,0.75cm) circle (1.5pt);
+\filldraw [fill=black] (3cm,0.75cm) circle (1.5pt);
+\filldraw [fill=black] (-4cm,7cm) circle (1.5pt);
+\filldraw [fill=black] (4cm,7cm) circle (1.5pt);
+\draw (-2.5cm,1.5cm) arc (-180:-158:1.2cm)node[anchor=east, yshift=0.2cm, xshift=-0.1cm]{$\alpha$};
+\draw [dashed] (-1.5cm,1.5cm) -- (-2.5cm,1.5cm);
 \end{tikzpicture}
 }
-\caption{Sistema biella manovella con i servomotori.} \label{fig:rv}
+\caption{Sistema biella manovella con servomotori in proiezione frontale.} \label{fig:rv}
 \end{figure}
 
 \subsubsection{Posizione del giunto biella manovella}
@@ -322,8 +367,8 @@ Note le lunghezze della biella $b$ e della manovella $m$, si valuta l'angolo di 
 Applicando le nozioni trigonometriche: 
 $$cos(\alpha)=-cos(\alpha) \quad cos(\pi+\beta)=-cos(\beta) \quad sin(\pi+\beta)=-sin(\beta)$$
 ai sistemi \eqref{bmpari} e \eqref{bmdispari} risulta evidente che questi due sono equivalenti.
-\subsubsection{Determinazione angolo $\alpha$}
-Per la determinazione dell'angolo $\alpha$ ottimale esistono due tecniche principali. La prima consiste in una ricerca binaria (o dicotomica) del valore che meglio soddisfa le equazioni della posizione. La seconda prevede un approccio matematico più estensivo per determinare il valore \textbf{esatto} di $\alpha$ in base ad una $l$ fornita. Il primo approccio risulta più semplice dal punto di vista realizzativo ma a suo discapito è poco efficiente, in quanto richiede un numero arbitrario di iterazioni per raggiungere una determinata precisione di $\alpha$. Il secondo è invece più difficile da ottenere a causa dei calcoli non del tutto intuitivi ma garantisce di raggiungere la soluzione ottimale con una sola computazione. Per lo svolgimento del progetto è stata impiegata la seconda opzione.
+\subsubsection{Determinazione angolo \boldmath$\alpha$}
+Per la determinazione dell'angolo $\alpha$ ottimale esistono due tecniche principali. La prima consiste in una ricerca binaria (o dicotomica) del valore che meglio soddisfa le equazioni della posizione. La seconda prevede un approccio matematico più estensivo per determinare il valore \textbf{esatto} di $\alpha$ in base ad una $l$ fornita. Il primo approccio risulta più semplice dal punto di vista realizzativo ma a suo discapito è poco efficiente, in quanto richiede un numero arbitrario di iterazioni per raggiungere una determinata precisione di $\alpha$.\footnote{Mediamente un algoritmo di ricerca binaria assume una complessità \emph{O(log n)}, dove \emph{n} è direttamente correlato alla precisione del valore ottenuto.} Il secondo è invece più difficile da ottenere a causa dei calcoli non del tutto intuitivi ma garantisce di raggiungere la soluzione ottimale con una sola computazione. Per lo svolgimento del progetto è stata impiegata la seconda opzione.
 
 Per il teorema di Pitagora in tre dimensioni abbiamo che:
 \begin{align}\label{m2}
@@ -355,7 +400,7 @@ Si sostituiscono le equazioni dei valori noti $x_{bm}$, $y_{bm}$ e $z_{bm}$ calc
     				   =& 2m \cdot sin(\alpha)(z_q-z_b) +2m \cdot cos(\alpha)[cos(\beta)(x_q-x_b)+sin(\beta)(y_q-y_b)]   
 \end{align}
 
-L'equazione \eqref{passaggio} è nella forma $L=Mcos(\alpha)+Nsin(\alpha)$ e può essere ulteriormente compattata considerando la formula della somma di segnali sinusoidali di ampiezza diversa, secondo la quale un segnale $Acos(\alpha)+Bsin(\alpha)$ può essere riscritto come $Csin(\alpha + \nu)$, infatti:
+L'equazione \eqref{passaggio} è nella forma $L=Mcos(\alpha)+Nsin(\alpha)$ e può essere ulteriormente compattata considerando la formula della somma di segnali sinusoidali di diversa ampiezza, secondo la quale un segnale $Acos(\alpha)+Bsin(\alpha)$ può essere riscritto come $Csin(\alpha + \nu)$, infatti:
 \begin{equation}\label{c}
 Csin(\alpha + \nu)=Csin(\alpha)\cdot cos(\nu)+Ccos(\alpha)\cdot sin(\nu)
 \end{equation}
@@ -515,28 +560,33 @@ Questo schema logico descrive in modo riassuntivo il controllo della piattaforma
 \caption{Schema logico piattaforma di Stewart.} \label{fig:ps}
 \end{figure}
 
+\newpage
+\section{Controllo della pallina con piano stabilizzato}
+\subsection{Controllore PID}\label{pid}
+Il controllore PID è l'elemento chiave per il corretto funzionamento del sistema di stabilizzazione, esso riceve in ingresso la posizione della palla sul piano resistivo e si occupa di fornire opportuni parametri alla piattaforma di Stewart per fare in modo che sia raggiunto un determinato setpoint.
+Questa azione di controllo è svolta tramite la combinazione lineare di tre contributi fondamentali, il proporzionale, l'integrale e il derivativo, da cui prende il nome. Questi effetti sono gestiti da tre variabili indipendenti $K_p$, $K_i$ e $K_d$ che ne pesano il contributo. 
 
-\section{Piano resistivo}\label{pianoresistivo}
-Per attuare correttamente la stabilizzazione del piano è fondamentale l'impiego di un sistema resistente ai disturbi che sia in grado determinare, con la massima precisione possibile, la posizione della sfera da bilanciare. Questo può essere svolto impiegando diverse tecniche come matrici di laser, rilevazione video o per l'appunto tramite l'uso di un piano resistivo.
-É stato scelto di impiegare un digitalizzatore resistivo per il tracking della pallina in quanto è meno soggetto a disturbi ambientali rispetto alla matrice laser e non necessita di un SOC per eseguire la rilevazione video tramite software come OpenCV.
+\subsubsection{Equazione del controllore PID}
 
-// Continuare descrizione piano resistivo
+Segue un analisi delle tre equazioni che permettono il controllo del sistema:
 
-\section{Controllore PID}\label{pid}
+\begin{itemize}
+\item Il controllore proporzionale ha equazione $u(t)=K_p \cdot e(t)$ e come si può facilmente notare ha lo scopo di rispondere in modo lineare allo scostamento della palla dalla posizione desiderata, lavora al presente.
+\item Il controllore integrale ha equazione $u(t)=K_i \cdot \int_0^t e(\tau)d\tau$, il suo valore aumenta in relazione al tempo e alla distanza della pallina dal setpoint. Ha quindi lo scopo di annullare l'errore a riposo del sistema, lavora nel passato.
+\item Il controllore derivativo ha equazione $u(t)=K_d\cdot \frac{de(t)}{dt}$, si oppone quindi alla variazione dell'errore ed è fondamentale per la stabilità del problema, lavora nel futuro.
+\end{itemize}
+Questi tre elementi sommati restituiscono l'equazione tempo continua seguente:
 
 \begin{equation}\label{pidtc}
     u(t)=K_p \cdot e(t) + K_i \cdot \int_0^t e(\tau)d\tau + K_d\cdot \frac{de(t)}{dt}
 \end{equation}
 
-
-
-\begin{equation}\label{pidtd}
-    u(t_k)=K_p \cdot e(t_k) + K_i \cdot \sum_{i=1}^{t_k} e(t_i)\cdot \Delta t + K_d\cdot \frac{e(t_k)-e(t_{k-1})}{\Delta t}
-\end{equation}
+Si può quindi procedere rappresentando complessivamente il sistema da controllare
+e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
 
 \begin{figure}[h!]
 \centering
-\scalebox{1}{
+\scalebox{0.8}{
 \begin{tikzpicture}[font=\small,thick]
  
 % Start block
@@ -548,50 +598,188 @@ Per attuare correttamente la stabilizzazione del piano è fondamentale l'impiego
     % Power and voltage variation
 \node[draw,
     right=of block1,
-    minimum width=2cm,
-    minimum height=1cm
-] (block2) {PID};
-    
+    minimum width=1cm,
+    minimum height=1cm, xshift= 1cm
+] (block2) {$K_i$};
 
 \node[draw,
     right=of block2,
-    minimum width=3.5cm,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (int) {$\int_0^t$};
+
+
+
+\node[draw, right=of int, 
+    circle,
+    minimum width=1cm,
+     text centered] (S) {$\Sigma$};
+    
+
+\node[draw,
+    right=of S,
+    minimum width=2cm,
     minimum height=1cm,
     text width=3cm, text centered
 ] (block3) {Piattaforma Stewart};
 
 \node[draw,
-    below=of block3,
-    minimum width=3.5cm,
+    right=of block3,
+    minimum width=2cm,
     minimum height=1cm,
     text width=3cm, text centered
 ] (block4) {Piano resistivo};
  
+\node[draw,
+    above=of block2,
+    minimum width=1cm,
+    minimum height=1cm,yshift=-0.5cm
+] (P) {$K_p$};
+
+\node[draw,
+    below=of block2,
+    minimum width=1cm,
+    minimum height=1cm,yshift=0.5cm
+] (D) {$K_d$};
+
+\node[draw,
+    right=of D,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (der) {$\frac{d}{dt}$};
 
 % Arrows
-\draw [-latex] (-2cm,0cm) -- (block1)
-			  (block1) edge (block2)
-			  (block2) edge (block3)
-			  (block3) edge (10cm,0);
-			  
-\draw[-latex] (block4) -| (block1);
-%\draw[-latex] (block3) -| (block4);
-   
-%\draw[-latex] (block7) -- (blocco) node[pos=0.2,fill=white,inner sep=2]{Sì};
- 
-%\draw[-latex] (block7) -- (block8) node[pos=0.2,fill=white,inner sep=2]{No};
-
-%\draw[-latex] (block9) -- (block3) node[pos=0.2,fill=white,inner sep=2]{Sì};
- 
-%\draw[-latex] (block9) |- (block10) node[pos=0.2,fill=white,inner sep=2]{No};
-    
-%\draw[-latex] (block10) |- (block9);
+\draw [-latex] (-2cm,0cm) -- node[anchor=south]{$x(t)$}(block1)node[xshift=-0.75cm,yshift=-0.25cm]{$+$}node[xshift=0.25cm,yshift=-0.75cm]{$-$};
+\draw [-latex] (block1) edge (block2)node[anchor=south, xshift=1cm]{$e(t)$};
+\draw [-latex](1.5,0) |- (D);
+\draw [-latex](1.5,0) |- (P);
+\draw [-latex](D) edge (der);
+\draw [-latex](block2) edge (int);
+\draw [-latex](D) edge (der);
+\draw [-latex](int) -- (S);
+\draw [-latex](P) -| (S)node[xshift=0.25cm,yshift=0.75cm]{$+$}node[xshift=-0.75cm,yshift=0.25cm]{$+$}node[xshift=-0.25cm,yshift=-0.75cm]{$+$};
+\draw [-latex]	(der) -| (S);
+\draw [-latex]	(S) edge (block3);	
+\draw [-latex]	(block3) edge (block4);
+\draw [-latex]	(block4) -- (18,0);	
+\draw 	(17,0)node[anchor=south]{$u(t)$} -- (17,-3);		  
+\draw [-latex]	(17,-3) -| (block1);	
 
 
 \end{tikzpicture}
 }
-\caption{Schema logico controllore PID.} \label{fig:ps}
+\caption{Schema logico controllore PID applicato al problema.} \label{fig:ps}
 \end{figure}
+
+
+Lavorando con sistemi digitali tempo discreti non è però possibile impiegare la formula \ref{pidtc}, sarà necessario procedere ad una discretizzazione, questa viene in modo intuitivo applicando la nozione di differenze finite e considerando $\Delta t = t_k - t_{k-1}$ come periodo di campionamento. Il risultato è la seguente equazione:
+
+\begin{equation}\label{pidtd}
+    u(t_k)=K_p \cdot e(t_k) + K_i \cdot \sum_{i=1}^{t_k} e(t_i)\cdot \Delta t + K_d\cdot \frac{e(t_k)-e(t_{k-1})}{\Delta t}
+\end{equation}
+
+
+
+\subsection{Miglioramenti e ottimizzazioni del controllore PID}
+Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono necessari degli accorgimenti per evitare comportamenti erronei che possono compromettere la stabilità del sistema. Segue una lista delle migliorie impiegate.
+\begin{itemize}
+\item Filtraggio del segnale in ingresso: Passo fondamentale per ottenere un sistema di controllo performante, dati rumorosi in ingresso hanno ripercussioni catastrofiche sull'intero controllore.
+\item Filtraggio dell'azione derivativa: La derivata, per sua natura, si comporta come un amplificatore di segnali in alta frequenza. Questo induce un comportamento "nervoso" che va quanto più limitato. 
+\item Derivata sulla misura: Utile per evitare un brusco scatto al cambio del setpoint e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito.
+\item Anti-Windup dell'integrale: Il termine integrale può tendere a infinito nel caso l'errore non si annulli mantenendo sempre lo stesso segno, questo fenomento è noto come Windup e comporta il fallimento del sistema di controllo se prolungato per un tempo sufficientemene grande. Per evitare questo spiacevole effetto è utile limitare la somma del termine integrale in modo che questo si annulli rapidamente al cambio di segno dell'errore.
+\item Limitazione dell'uscita: Il controllore, non conoscendo i limiti fisici del progetto, può assegnare valori inammissibili al sistema da controllare, il che portebbe anche risultare in una rottura. Si devono quindi stabilire dei limiti al range di valori assegnabili dal controllore.
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\scalebox{1}{
+\begin{tikzpicture}[font=\small,thick]
+ 
+% Start block
+\node[draw,
+    rounded rectangle,
+    minimum width=2.5cm,
+    minimum height=1cm, text width=2cm, text centered] (start) {Accensione};
+    
+    
+% Voltage and Current Measurement
+\node[draw,
+    trapezium, 
+    trapezium left angle = 120,
+    trapezium right angle = 120,
+    trapezium stretches,
+    below=of block2,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered, below=of start
+] (lettura) {Lettura posizione palla};
+
+\node[draw,
+    below=of lettura,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered
+] (calcolo) {  Calcolo velocità e accelerazione};
+
+\node[draw,
+    below=of calcolo,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=2.5cm, text centered
+] (filtro) { Filtro limitando variazione};
+
+\node[draw,
+    below=of filtro,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered
+] (pid) { PID migliorato};
+
+\node[draw,
+    diamond,
+    right=of pid,
+    minimum width=3.5cm,
+    inner sep=2, aspect=2, xshift= 1.2cm] (acc) {Valore accettabile?};
+    
+\node[draw,
+    trapezium, 
+    trapezium left angle = 120,
+    trapezium right angle = 120,
+    trapezium stretches,
+    below=of block2,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered, above=of acc, yshift= 0.5cm
+] (piatt) {Assegna valore piattaforma};
+
+
+\node[draw,
+    right=of acc,
+    minimum width=3.5cm,
+    minimum height=1cm,
+    text width=3cm, text centered, xshift= 1.2cm
+] (max) { Usa valore massimo};
+ 
+
+% Arrows
+\draw 	[-latex](start) edge (lettura);		  
+\draw [-latex]	(lettura) edge (calcolo);
+\draw [-latex]	(calcolo) edge (filtro);	
+\draw [-latex]	(filtro) edge (pid);
+\draw [-latex]	(pid) edge (acc);
+\draw [-latex]	(acc) edge (max)node[fill=white,inner sep=2,xshift = 2.5cm]{No};
+\draw [-latex]	(max) |- (piatt);
+\draw [-latex]	(acc) edge (piatt) node[fill=white,inner sep=2, yshift=1.5cm]{Sì};
+\draw [-latex]	(piatt) |- (lettura);
+
+
+\end{tikzpicture}
+}
+\caption{Schema logico sistema di stabilizzazione.} \label{fig:ps}
+\end{figure}
+
 
 \bibliographystyle{alpha}
 \bibliography{references} % see references.bib for bibliography management

@@ -86,17 +86,21 @@ float xorig,yorig;
 #define in2 13 
 
 // PARAMETRI PID
-float Kp =22.5;
-float Ki = 0;
-float Kd;// = 100; //0.1
+float Kp = 22.5;   //22.5 con foglio carta
+float Ki = 20;
+float Kd = 50; //0.1
 double oldTime, newTime, deltaTime;
 double sumErrX, sumErrY;
+double oldDerivataX, oldDerivataY;
 float setX = 0.17, setY = 0.135, errX, errY; // setpoint centrato 26.95 21.90
-float xVel, yVel;
+float xVel, yVel, xVelOld, yVelOld;
+float xAcc, yAcc;
 double pidX, pidY;
+bool pause = false;
+char command;
 
 void setup() {
-  Serial.begin(115200);      // tenere alto per evitare rallentamento processi
+  Serial.begin(38400);      // tenere alto per evitare rallentamento processi
 
   // LED usato in caso di emergenza
   pinMode(LED_BUILTIN, OUTPUT);
@@ -112,7 +116,7 @@ void setup() {
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
 
-
+  
   getSense();
   oldTime = millis();
   xOld = x;
@@ -157,19 +161,55 @@ void setup() {
 }
 
 void loop() {
+  if(Serial.available()){
+    command = Serial.read();
+  }
+  
+  if(command == 'p'){
+    pause = true;
+    while(pause){
+      setPosition(0,0,110,radians(0),radians(0),radians(0));
+      delay(500);
+      if(Serial.read() == 'p'){
+        pause = false;
+      }
+    }
+  }
+  if(command == 'd'){ 
+    setX = 0.26;//0.17
+    setY = 0.135;
+  }
+  if(command == 's'){ 
+    setX = 0.09;//0.17
+    setY = 0.135;
+  }
+  
+  
+  xOld = x;
+  yOld = y;
+
+  xVelOld = xVel;
+  yVelOld = yVel;
   
   getSense();
-  delay(30);
+  delay(8);
 
   newTime = millis();
   deltaTime = (newTime - oldTime)/1000;
   oldTime = newTime;
 
   // velocità pallina in m/s
+  
   xVel = (x - xOld)/(deltaTime);
   yVel = (y - yOld)/(deltaTime);
+  
+  xAcc = (xVel - xVelOld)/(deltaTime);
+  yAcc = (yVel - yVelOld)/(deltaTime);
 
-  float maxVel = 0.25;
+
+  // filto spazio 
+  // aggiungere eq cinematica calcolo max vel
+  float maxVel = 0.25;//0.5;//0.25
   if(abs(xVel) > maxVel){
     if(xVel > 0){
       x = xOld + maxVel*(deltaTime);
@@ -186,33 +226,87 @@ void loop() {
       y = yOld - maxVel*(deltaTime);
     }
   }
+
+  // filto velocità (derivata)
+  // aggiungere eq cinematica calcolo max acc
   
-  xOld = x;
-  yOld = y;
+  float maxAcc = 0.30;//0.45;   // max per 5 gradi
+  if(abs(xAcc) > maxAcc){
+    if(xAcc > 0){
+      xVel = xVelOld + maxAcc*(deltaTime);
+    }
+    else{
+      xVel = xVelOld - maxAcc*(deltaTime);
+    }
+  }
+  if(abs(yAcc) > maxAcc){
+    if(yAcc > 0){
+      yVel = yVelOld + maxAcc*(deltaTime);
+    }
+    else{
+      yVel = yVelOld - maxAcc*(deltaTime);
+    }
+  }
+
   
-  Serial.print(x*100);
-  Serial.print(" ");
-  Serial.print(y*100);
+
+  
+  //Serial.print(10*xVel);
+  //Serial.print(" ");
+  //Serial.println(10*x);
+  //Serial.print(" ");
+  //Serial.print(xVel*100);
+  //Serial.print(y*100);
   
   /*Serial.print(xVel*100);
   Serial.print(" ");
   Serial.println(yVel*100);*/
   
-  int errXold = errX;
-  int errYold = errY;
+  float errXold = errX;
+  float errYold = errY;
   errX = setX - x;
   errY = setY - y;
+
+  float antiwindup = 0.02;
   sumErrX += errX * deltaTime;
   sumErrY += errY * deltaTime;
-  
-  pidX = Kp * errX +  Ki * sumErrX + Kd * (errX-errXold)/deltaTime;
-  pidY = Kp * errY +  Ki * sumErrY + Kd * (errY-errYold)/deltaTime;
-  Serial.print(" ");
-  Serial.print(setX*100);
-  Serial.print(" ");
-  Serial.println(Kp*errX*100);
+  if(abs(sumErrX) > antiwindup){
+    if(sumErrX > 0){
+      sumErrX = antiwindup;
+    }
+    else{
+      sumErrX = -antiwindup;
+    }
+  }
+  if(abs(sumErrY) > antiwindup){
+    if(sumErrY > 0){
+      sumErrY = antiwindup;
+    }
+    else{
+      sumErrY = -antiwindup;
+    }
+  }
 
-  float maxangle = 0.9;
+  //float tau = 30;
+
+  float proporzionaleX = Kp * errX;
+  float integraleX = Ki * sumErrX;
+  float derivativoX = -Kd * xVel; // - per il derivative o measurement
+  //float derivativoX = -(2*Kd *(x-xOld)+(2*tau-deltaTime)*oldDerivataX)/(2*tau+deltaTime); // errX-errXold derivata normale x-xOld derivative on measurement
+  oldDerivataX = derivativoX;
+
+  float proporzionaleY = Kp * errY;
+  float integraleY = Ki * sumErrY;
+  float derivativoY = -Kd * yVel;
+  //float derivativoY = -(2*Kd *(y-yOld)+(2*tau-deltaTime)*oldDerivataY)/(2*tau+deltaTime);
+  oldDerivataY = derivativoY;
+  
+  pidX = proporzionaleX + integraleX + derivativoX;   // errX-errXold derivata normale x-xOld derivative on measurement
+  pidY = proporzionaleY + integraleY + derivativoY;
+
+  Serial.println(sumErrX);
+
+  float maxangle = 5;
   float tiltX;
   float tiltY;
   if(abs(pidY) > maxangle){
@@ -240,22 +334,10 @@ void loop() {
   }
   
   setPosition(0,0,110,radians(tiltX),radians(tiltY),radians(0));
+
+  
   
   // AGGIUNGERE ANTI WINDUP
-  /*
-  Serial.println("valori pid:");
-  //Serial.println(errX);
-  //Serial.println(errY);
-  Serial.println(sumErrX);
-  Serial.println(sumErrY);
-  Serial.println(pidX);
-  Serial.println(pidY);
-  //Serial.println(x);
-  //Serial.println(sumErrX);
-  */
-
-  // worst case (non proprio)
-  //7° su 60cm => 1m/s
 }
 
 // costruisci matrice rotazione globale

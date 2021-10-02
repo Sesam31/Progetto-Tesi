@@ -1,17 +1,24 @@
 \BOOKMARK [1][-]{section.1}{Introduzione}{}% 1
-\BOOKMARK [1][-]{section.2}{Piattaforma di Stewart}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Piattaforma di Stewart}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Robot seriali e paralleli}{section.2}% 4
-\BOOKMARK [2][-]{subsection.2.3}{Servomotori}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{Analisi della piattaforma di Stewart con attuatori rotativi}{section.2}% 6
-\BOOKMARK [3][-]{subsubsection.2.4.1}{Analisi problema piattaforma}{subsection.2.4}% 7
-\BOOKMARK [3][-]{subsubsection.2.4.2}{Analisi traslazione \(x,y,z\)}{subsection.2.4}% 8
-\BOOKMARK [3][-]{subsubsection.2.4.3}{Analisi rotazione \(,,\)}{subsection.2.4}% 9
-\BOOKMARK [3][-]{subsubsection.2.4.4}{Conclusione problema piattaforma}{subsection.2.4}% 10
-\BOOKMARK [2][-]{subsection.2.5}{Analisi problema attuatori rotativi}{section.2}% 11
-\BOOKMARK [3][-]{subsubsection.2.5.1}{Posizione del giunto biella manovella}{subsection.2.5}% 12
-\BOOKMARK [3][-]{subsubsection.2.5.2}{Determinazione angolo }{subsection.2.5}% 13
-\BOOKMARK [3][-]{subsubsection.2.5.3}{Controllo servomotori}{subsection.2.5}% 14
-\BOOKMARK [2][-]{subsection.2.6}{Schema a blocchi}{section.2}% 15
-\BOOKMARK [1][-]{section.3}{Piano resistivo}{}% 16
-\BOOKMARK [1][-]{section.4}{Controllore PID}{}% 17
+\BOOKMARK [1][-]{section.2}{Tecnologie impiegate}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Piattaforma Arduino}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Servomotori}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Piano resistivo}{section.2}% 5
+\BOOKMARK [3][-]{subsubsection.2.3.1}{Tipologie e funzionamento di un piano resistivo}{subsection.2.3}% 6
+\BOOKMARK [2][-]{subsection.2.4}{Ponte ad H}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Piattaforma di Stewart}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Descrizione}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Robot seriali e paralleli}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Analisi piattaforma di Stewart con attuatori rotativi}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.4}{Analisi problema piattaforma}{section.3}% 12
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Analisi traslazione \(x,y,z\)}{subsection.3.4}% 13
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Analisi rotazione \(,,\)}{subsection.3.4}% 14
+\BOOKMARK [3][-]{subsubsection.3.4.3}{Conclusione problema piattaforma}{subsection.3.4}% 15
+\BOOKMARK [2][-]{subsection.3.5}{Analisi problema attuatori rotativi}{section.3}% 16
+\BOOKMARK [3][-]{subsubsection.3.5.1}{Posizione del giunto biella manovella}{subsection.3.5}% 17
+\BOOKMARK [3][-]{subsubsection.3.5.2}{Determinazione angolo }{subsection.3.5}% 18
+\BOOKMARK [3][-]{subsubsection.3.5.3}{Controllo servomotori}{subsection.3.5}% 19
+\BOOKMARK [2][-]{subsection.3.6}{Schema a blocchi}{section.3}% 20
+\BOOKMARK [1][-]{section.4}{Controllo della pallina con piano stabilizzato}{}% 21
+\BOOKMARK [2][-]{subsection.4.1}{Controllore PID}{section.4}% 22
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Equazione del controllore PID}{subsection.4.1}% 23
+\BOOKMARK [2][-]{subsection.4.2}{Miglioramenti e ottimizzazioni del controllore PID}{section.4}% 24
