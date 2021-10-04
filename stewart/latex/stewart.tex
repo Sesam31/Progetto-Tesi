@@ -18,7 +18,7 @@
 \textwidth 6.65in
 \linespread{1.2}
 
-\title{Piattaforma di Gough-Stewart}
+\title{Stabilizzazione nel piano di Gough-Stewart}
 \author{Daniele Facco}
 \date{}
 
@@ -38,9 +38,9 @@
 \tableofcontents
 \newpage
 
-\begin{abstract}
-Studio della piattaforma di Stewart e dei suoi componenti.
-\end{abstract}
+%\begin{abstract}
+%Studio della piattaforma di Stewart e dei suoi componenti.
+%\end{abstract}
 
 \section{Introduzione}\label{intro}
 
@@ -48,46 +48,132 @@ Studio della piattaforma di Stewart e dei suoi componenti.
 \section{Tecnologie impiegate}\label{tecnologie}
 
 \subsection{Piattaforma Arduino}\label{arduino}
-
+L'intero progetto si basa su una unità di controllo centrale, è quindi fondamentale implementare un processore con discrete capacità elaborative. Una scelta molto comune è quella di impiegare schede Arduino che, con il vantaggio di essere OpenHardware hanno raggiunto una discreta ubiquità nel settore, anche grazie ad un ambiente di sviluppo completo e ad un sistema di librerie molto supportato dai produttori di componenti. La scheda impiegata è un Arduino UNO con un processore ATmega328P che permette di avere una frequenza di clock di $16MHz$, perfettamente in grado di gestire la rapidità di calcolo richiesta dal progetto. Alla scheda impiegata è stato poi montato uno "shield", un componente che rimappa i pin in modo più conveniente per connettere dispositivi quali servomotori, display LCD, moduli bluetooth e altri oltre che facilitare l'alimentazione esterna tramite appositi morsetti. Nella realizzazione sono stati impiegati diversi pin, tra i quali tutti i pin con capacità PWM per il controllo dei servomotori, rispettivamente in posizione 3, 5, 6, 9, 10, 11 e pin 12, 13 e A0 per il controllo del piano resistivo.
 
 \subsection{Servomotori}\label{servomotori}
-I servomotori sono l'elemento principale nella realizzazione della piattaforma di Stewart.
-
+I servomotori sono l'elemento principale nella realizzazione della piattaforma di Stewart. Questi attuatori sono controllati in modalità PWM dalla scheda Arduino tramite la libreria \emph{Servo.h}. L'interpretazione del segnale in ingresso è gestita da un apposito chip di controllo che lo trasforma e lo invia a un motore DC brushless, che tramite un apposito gearbox ad alta riduzione fa ruotare l'asse. La rotazione dell'asse è inoltre recepita dal controllore interno tramite un potenziometro, dando quindi la possibilità di aumentare la coppia se il setpoint non è raggiunto. L'intero sistema è riassunto in figura \ref{fig:servo}. 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.3]{Schematic-of-an-RC-servo-motor.png}
-\end{figure}
+\scalebox{1}{
+\begin{tikzpicture}[font=\small,thick]
 
-Questi attuatori sono controllati in modalità PWM dalla scheda Arduino tramite un'apposita libreria. Il segnale inviato ai servomotori è periodico, di periodo 20ms e presenta uno stato on/off a livello logico per un tempo prefissato a seconda della posizione richiesta; ad esempio la posizione 0° prevede un livello logico alto di 1ms, 90° di 1,5ms e 180° di 2ms. Il controllo di questi elementi è svolto dal processore tramite uno shield che ne facilita l'installazione. Una nota particolare va fatta in merito alla potenza richiesta dai servomotori, nonostante il loro consumo in stato 'idle' sia di circa 10mW, durante il movimento questo può raggiungere oltre 300mW. É quindi necessaria una alimentazione esterna che sia in grado di fornire almeno 2A a 5V in quanto la scheda alimentata, tramite usb dalla presa del computer, può ricevere al massimo 1A.
+\filldraw  [fill=blue!50](0cm,0cm) rectangle (4cm,3cm);
+\filldraw [fill=white](0.25cm,0.25cm) rectangle (1.5cm,2.25cm)node[xshift=-0.625cm, yshift=-1cm]{DC};
+\filldraw [fill=black] (2.5cm,2cm) rectangle (3cm,3.5cm);
+\filldraw  [fill=white](0.25cm,2.25cm) rectangle (3.75cm,2.75cm)node[xshift=-1.75cm, yshift=-0.25cm]{Gearbox};
+\filldraw [fill=white] (2.25cm,2cm) rectangle (3.25cm,1.5cm)node[xshift=-0.5cm, yshift=0.25cm]{Pot.};
+\filldraw [fill=white] (2cm,0.25cm) rectangle (3.5cm,1.25cm)node[xshift=-0.75cm, yshift=-0.5cm]{Chip};
+\draw [line width=2pt](2,0.5) -- (1.5,0.5);
+\draw [line width=2pt](2,1) -- (1.5,1);
+\draw [line width=2pt](2.5,1.25) -- (2.5,1.5);
+\draw [line width=2pt](2.75,1.25) -- (2.75,1.5);
+\draw [line width=2pt](3,1.25) -- (3,1.5);
+\draw [line width=2pt](3.5,0.5) -- (7,0.5)node[anchor= south]{GND};
+\draw [line width=2pt](3.5,0.75) -- (6,0.75)node[anchor= south]{5V};
+\draw [line width=2pt](3.5,1) -- (5,1)node[anchor= south]{Segnale};
+
+\end{tikzpicture}
+}
+\caption{Componenti del servomotore.} \label{fig:servo}
+\end{figure}
+A causa del loro elevato rapporto di riduzione questi componenti possono produrre una coppia elevata\footnote{I servomotori impiegati possono sollevare una massa di $3,5kg$ con una manovella di lunghezza nominale $1cm$.}, questo aspetto  non va sottovalutato ed è sempre necessario gestire l'evenienza di uno sforzo durante l'operazione della piattaforma.
+Il segnale inviato ai servomotori è periodico, di periodo $20ms$ e presenta uno stato on/off a livello logico per un tempo prefissato a seconda della posizione richiesta. In figura \ref{fig:servocontrol} è descritto il segnale PWM al variare dell'angolo richiesto. 
+\begin{figure}[h!]
+\centering
+\scalebox{1}{
+\begin{tikzpicture}[font=\small,thick]
+ 
+
+\draw [-latex] (0cm,0cm) -- (0cm,1.5cm);
+\draw [-latex] (0cm,0cm) -- (5.5cm,0cm)node[anchor= west]{$t$};
+
+\draw [-latex] (0cm,-2cm) -- (0cm,-0.5cm);
+\draw [-latex] (0cm,-2cm) -- (5.5cm,-2cm)node[anchor= west]{$t$};
+
+\draw [-latex] (0cm,-4cm) -- (0cm,-2.5cm);
+\draw [-latex] (0cm,-4cm) -- (5.5cm,-4cm)node[anchor= west]{$t$};
+
+\draw (0cm,1cm) -- (0.25cm,1cm);
+\draw (0cm,-1cm) -- (0.375cm,-1cm);
+\draw (0cm,-3cm) -- (0.5cm,-3cm);
+
+\draw (0.25cm,0cm) -- (0.25cm,1cm)node[anchor= west]{$1ms$};
+\draw (0.375cm,-2cm) -- (0.375cm,-1cm)node[anchor= west]{$1,5ms$};
+\draw (0.5cm,-4cm) -- (0.5cm,-3cm)node[anchor= west]{$2ms$};
+
+\draw (5cm,0.05cm)node[anchor= north]{$20ms$} -- (5cm,-0.05cm);
+\draw (5cm,-2.05cm)node[anchor= north]{$20ms$} -- (5cm,-1.95cm);
+\draw (5cm,-4.05cm)node[anchor= north]{$20ms$} -- (5cm,-3.95cm);
+
+\filldraw [fill=black] (7,0.75) circle (3pt) node[xshift= -0.75cm] {$0^\circ$};
+\filldraw [fill=black] (7,-1.25) circle (3pt) node[xshift= -0.75cm] {$90^\circ$};
+\filldraw [fill=black] (7,-3.25) circle (3pt) node[xshift= -0.75cm] {$180^\circ$};
+
+\draw [line width=1mm](7,0.75) -- (7cm,1.75cm);
+\draw  [line width=1mm](7,-1.25) -- (8cm,-1.25cm);
+\draw [line width=1mm](7,-3.25) -- (7cm,-4.25cm);
+
+\end{tikzpicture}
+}
+\caption{Angolo servomotore al variare del PWM.} \label{fig:servocontrol}
+\end{figure}
+Il controllo di questi elementi è svolto dal processore tramite uno shield che ne facilita l'installazione. Una nota particolare va fatta in merito alla potenza richiesta dai servomotori, nonostante il loro consumo in stato "idle" sia di circa $10mW$, durante il movimento questo può raggiungere oltre $300mW$. É quindi necessaria una alimentazione esterna che sia in grado di fornire almeno $2A$ a $5V$ in quanto la scheda alimentata, tramite usb dalla presa del computer, può ricevere al massimo $1A$. Una nota particolare va fatta in merito alla scelta di impiegare servomotori rispetto agli stepper, mentre il primo presentano un posizionamento assoluto, determinato dal segnale PWM e un feedback continuo sulla posizione, il secondo si basa su un posizionamento relativo, sarebbe quindi necessaria un'azione di calibrazione ad ogni accensione del dispositivo, che vogliamo evitare.
 
 \subsection{Piano resistivo}\label{pianoresistivo}
 Per attuare correttamente la stabilizzazione del piano è fondamentale l'impiego di un sistema resistente ai disturbi che sia in grado determinare, con la massima precisione possibile, la posizione della sfera da bilanciare. Questo può essere svolto impiegando diverse tecniche come matrici di laser, rilevazione video o per l'appunto tramite l'uso di un piano resistivo.
 É stato scelto di impiegare un digitalizzatore resistivo per il tracking della pallina in quanto è meno soggetto a disturbi ambientali, in particolare da effetti ottici, rispetto alla matrice laser e alla rilevazione video.
 Il tracking video avrebbe inoltre richiesto un notevole incremento della complessità del sistema, necessitando di un SOC completo e di software dedicato come OpenCV.
 \subsubsection{Tipologie e funzionamento di un piano resistivo}\label{tipofunz}
-I piani resistivi sono generalmente caratterizzati dal numero di cavi in uscita, questo può essere generalmente 4, 5 o 8. La versione a 8 cavi è una semplice evoluzione della variante a 4 e non sarà trattata in dettaglio. Questi dispositivi sono costituiti da 2 strati, di vetro o plastica, ricoperti da un sottile strato di ossido di indio-stagno\footnote{Materiale scelto appositamente per le ottime proprietà di trasparenza e conduzione.} e separati da minuscoli spaziatori. 
+I piani resistivi sono generalmente caratterizzati dal numero di cavi in uscita, questo può essere generalmente quattro, cinque o otto. La versione a otto fili è una semplice evoluzione della variante a quattro e non sarà trattata in dettaglio. Questi dispositivi sono costituiti da due strati, di vetro o plastica, ricoperti da un sottile strato di ossido di indio-stagno\footnote{Materiale scelto appositamente per le ottime proprietà di trasparenza e conduzione.} e separati da minuscoli spaziatori, rappresentato in figura \ref{fig:sezione}. 
+\begin{figure}[h!]
+\centering
+\scalebox{0.75}{
+\begin{tikzpicture}[font=\small,thick]
+ 
 
-// Inserire immagine sezione piano resistivo.
+\filldraw [fill=cyan!50](0cm,0cm) rectangle (0.5cm,5cm);
+\draw (0.5cm,0cm) rectangle (0.7cm,5cm);
 
+\draw (1.5cm,0cm) rectangle (1.75cm,5cm);
+\filldraw [fill=cyan!50] (1.75cm,0cm) rectangle (2.25cm,5cm);
+\filldraw [fill=black!50](1.5,4.5) arc (90:270:0.75cm);
+\filldraw [fill=black!50](1.5,2cm) arc (90:270:0.75cm);
+\end{tikzpicture}
+}
+\caption{Sezione del digitalizzatore resistivo.} \label{fig:sezione}
+\end{figure}
 La resistenza del conduttore è uniforme su tutta la superficie e alla pressione si forma un contatto tra i due strati che permette un passaggio di corrente.
-Nella versione a 4 fili su entrambi i piani si forma un gradiente di potenziale nelle direzioni rispettivamente \emph{x} e \emph{y} e ogniuno dei due misura il potenziale dell'altro. Nella versione a 5 invece si ha un piano su cui viene alternata la direzione del gradiente mentre l'altro effettua la misura.
-Nella realizzazione del progetto è stata impiegata la variante a 5 fili.
-
-// inserire immagine piano 4 e 5 fili.
+Nella versione a quattro fili su entrambi i piani si forma un gradiente di potenziale nelle direzioni rispettivamente \emph{x} e \emph{y} e ognuno dei due misura il potenziale dell'altro. Nella versione a cinque invece si ha un piano su cui viene alternata la direzione del gradiente mentre l'altro effettua la misura.
+Nella realizzazione del progetto è stata impiegata la variante a cinque fili.
+\begin{figure}[h!]
+\centering
+\scalebox{0.25}{
+\includegraphics{5wire.png}
+}
+\caption{Schematica circuitale piano resistivo a cinque fili.} \label{fig:controllo}
+\end{figure}
 
 \subsection{Ponte ad H}\label{hbridge}
 
-É emersa la necessità di impiegare un ponte ad H in seguito ad una analisi preliminare delle specifiche del digitalizzatore resistivo. Si è infatti notato in seguito a una misura di resistenza, che questa fosse di soli $100 \Omega$, quindi non compatibile con le periferiche dell'arduino UNO, in quanto, a $5V$ richiama una corrente di $50mA$ mentre la scheda ne supporta solo $20$. L'impiego del ponte ad H evita questo richiamo di corrente eccessivo impiegando dispositivi come BJT o MOSFET ed una sorgente esterna per controllare il piano. Nella scelta della tecnologia da impiegare sono stati scelti i MOSFET in quanto meno sensibili a fattori ambientali e più adatti alla commutazione di segnali digitali rispetto ai BJT. Non disponendo del componente finito si è sceto di realizzarlo a partire dai singoli componenti in seguito ad un'analisi accurata tramite software SPICE e basandosi sul datasheet del chip L298N.
-I MOSFET scelti sono degli AO3400 e A03401, rispettivamente nella configurazione n e p in quanto forniscono ottime prestazioni. Da un analisi del sistema di controllo rischiesto dal piano resistivo si è deciso di rinunciare alla capacità di gestire individualmente i singoli MOSFET favorendo due linee di controllo che possano commutare tra gli stati High/Low. Sono state inoltre impiegate delle porte logiche NAND con lo scopo di migliorare il segnale di ingresso proveniente da Arduino ed evitare eventuali problemi di ritardo di commutazione, questa pratica è comune anche nel caso dell'L298N. Come chip per le porte NAND si è scelto un TC4011BP, questo fornisce in un singolo package quattro porte logiche che sono state configurate come invertenti in cascata, principalmente per una questione di convenienza, nel caso in cui sia necessario impiegare il segnale negato.
- 
+É emersa la necessità di impiegare un ponte ad H in seguito ad una analisi preliminare delle specifiche del digitalizzatore resistivo. Si è infatti notato in seguito a una misura di resistenza, che questa fosse di soli $100 \Omega$, quindi non compatibile con le periferiche dell'Arduino UNO, in quanto, a $5V$ richiama una corrente di $50mA$ mentre la scheda ne supporta solo $20$. L'impiego del ponte ad H evita questo richiamo di corrente eccessivo impiegando dispositivi come BJT o MOSFET ed una sorgente esterna per controllare il piano. Nella scelta della tecnologia da impiegare sono stati scelti i MOSFET in quanto meno sensibili a fattori ambientali e più adatti alla commutazione di segnali digitali rispetto ai BJT. Non disponendo del componente finito si è scelto di realizzarlo a partire dai singoli componenti in seguito ad un'analisi accurata tramite software SPICE (figura \ref{fig:controllo}) e basandosi sul datasheet del chip L298N.
+\begin{figure}[h!]
+\centering
+\scalebox{0.25}{
+\includegraphics{CircuitoControlloNo.png}
+}
+\caption{Schematica circuito di controllo.} \label{fig:controllo}
+\end{figure}
+I MOSFET scelti sono degli AO3400 e A03401, rispettivamente nella configurazione n e p in quanto forniscono ottime prestazioni. Da un'analisi del sistema di controllo richiesto dal piano resistivo si è deciso di rinunciare alla capacità di gestire individualmente i singoli MOSFET favorendo due linee di controllo che possano commutare tra gli stati High/Low. Sono state inoltre impiegate delle porte logiche NAND con lo scopo di migliorare il segnale di ingresso proveniente da Arduino ed evitare eventuali problemi di ritardo di commutazione, questa pratica è comune anche nel caso del L298N. Come chip per le porte NAND si è scelto un TC4011BP, questo fornisce in un singolo package quattro porte logiche che sono state configurate come invertenti in cascata, principalmente per una questione di convenienza, nel caso in cui sia necessario impiegare il segnale negato.
+
 
 \newpage
+
 \section{Piattaforma di Stewart}\label{pianostewart}
 
 
 
 \subsection{Descrizione}\label{piattaformastewart}
-La piattaforma di Stewart è un particolare sistema meccanico, costituito da una base su cui sono posizionati sei attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune sono gli attuatori prismatici: pistoni lineari che presentano un solo grado di libertà. Nel progetto vengono impiegati servomotori che presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è possibile risalire ad un modello equivalente a quello degli attuatori prismatici che garantisce un range di movimento ottimale.
+La piattaforma di Stewart è un particolare sistema meccanico, costituito da una base su cui sono posizionati sei attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune sono gli attuatori prismatici: pistoni lineari che presentano un solo grado di libertà. Nel progetto vengono impiegati servomotori che presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è possibile risalire a un modello equivalente a quello degli attuatori prismatici che garantisce un range di movimento ottimale.
 
 \subsection{Robot seriali e paralleli}\label{robotserialiparalleli}
 È utile enunciare la differenza tra robot di tipo seriale e parallelo per comprendere le successive implicazioni a livello matematico.
@@ -95,7 +181,7 @@ I robot seriali prevedono una serie di giunti snodabili controllati da attuatori
 Questi tipi di robot prendono spesso il nome di braccio meccanico e trovano ampia applicazione nell'industria meccanica.
 Nei robot paralleli invece, gli attuatori agiscono tutti sullo stesso elemento tramite giunti indipendenti. 
 La piattaforma di Stewart ne è il principale esempio e trova applicazione soprattutto nella realizzazione di simulatori avanzati di volo o per testare veicoli nelle case automobilistiche.\footnote{Si nota come i delta-robot siano sostanzialmente delle versioni "limitate" della piattaforma di Stewart a soli 3 gradi di libertà.}
-Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come 6DOF, ma il problema matematico che li caratterizza è fondamentalmente opposto.
+Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come $6DOF$, ma il problema matematico che li caratterizza è fondamentalmente opposto.
 
 
 \begin{figure}[h!]
@@ -143,7 +229,7 @@ Nello svolgimento successivo si è preferito risalire alle equazioni della cinem
 
 \subsection{Analisi piattaforma di Stewart con attuatori rotativi}\label{analisi}
 
-Il problema della piattaforma di Stewart controllata da attuatori rotativi è fondamentalmente costituito da due sottoproblemi.
+Il problema della piattaforma di Stewart controllata da attuatori rotativi è fondamentalmente costituito da due sotto-problemi.
 Il primo relativo alla determinazione delle lunghezze dei vettori che collegano la base alla piattaforma per ogni possibile posizione, trattato nella sezione \ref{platform}. Il secondo tratta invece dell'implementazione stessa dei servomotori, per via della complessità di descrizione del sistema biella manovella impiegato, trattato nella sezione \ref{rotation}. 
 
 \subsection{Analisi problema piattaforma}\label{platform}
@@ -182,7 +268,7 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 
 \newpage
 \subsubsection{Analisi traslazione \boldmath$(x,y,z)$}\label{xyz}
-Le variazioni in $(x,y,z)$ comportano una semplice traslazione dei punti del piano, questa viene indicata con un vettore $\hat T$ che adrà poi a sommarsi alla variazione dovuta a $(\varphi,\vartheta,\psi)$.
+Le variazioni in $(x,y,z)$ comportano una semplice traslazione dei punti del piano, questa viene indicata con un vettore $\hat T$ che andrà poi a sommarsi alla variazione dovuta a $(\varphi,\vartheta,\psi)$.
 
 \subsubsection{Analisi rotazione \boldmath$(\varphi,\vartheta,\psi)$}\label{ftp}
 Per semplificare l'analisi si considerano, separatamente, gli effetti dovuti a queste tre componenti. Si studia il caso di solo rollio $(\varphi,0,0)$ per risalire alle coordinate di un punto $P:(x,y,z)$ rispetto alla base in seguito a una rotazione di $\varphi$ gradi che lo ha traslato nel punto $(x',y',z')$. Per fare ciò, è necessario ottenere un'applicazione lineare che permetta di passare dal sistema di coordinate della piattaforma al sistema di coordinate della base.
@@ -287,7 +373,7 @@ z'
 \end{bmatrix}
 \end{equation}
 
-Le singole matrici possono essere viste come applicazioni lineari, si procede quindi nella moltiplicazione di \eqref{rx}, \eqref{ry} e \eqref{rz} per ottenere una singola applicazione lineare composta. Notare che nel prodotto tra matrici non vale la proprietà commutativa, bisongna quindi valutare attentamente l'ordine di moltiplicazione, altrimenti si otterrà una rotazione erronea. I passaggi intermedi vengono ommessi in quanto ripetono tre volte una semplice operazione di moltiplicazione tra matrici.
+Le singole matrici possono essere viste come applicazioni lineari, si procede quindi nella moltiplicazione di \eqref{rx}, \eqref{ry} e \eqref{rz} per ottenere una singola applicazione lineare composta. Notare che nel prodotto tra matrici non vale la proprietà commutativa, bisogna quindi valutare attentamente l'ordine di moltiplicazione, altrimenti si otterrà una rotazione erronea. I passaggi intermedi vengono omessi in quanto ripetono tre volte una semplice operazione di moltiplicazione tra matrici.
 \begin{align}\label{rg}
     R_g &= R_z(\psi)\cdot R_y(\vartheta)\cdot R_x(\varphi)\\
     		&= \begin{bmatrix}
@@ -313,7 +399,7 @@ Nel caso della piattaforma di Stewart, sei equazioni \eqref{li} permettono di de
 Notare come, nel caso di impiego di attuatori lineari, il problema si risolve assegnando direttamente queste lunghezze per ottenere la posizione desiderata. 
 
 \subsection{Analisi problema attuatori rotativi}\label{rotation}
-L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessario un numero di variabili superiore per descrivere in modo appropriato il sistema. Ogni servomotore controllando un giunto biella manovella collegato alla piattaforma regola la lunghezza del vettore $\hat{l_i}$. Si rende quindi fondamentale trovare una relazione tra l'angolo del servomotore e il vettore $\hat{l_i}$. Anche in questo caso il problema può essere separato in due parti: la determinazione della posizione del giunto biella manovella e la ricerca dell'angolo di rotazione $\alpha$.
+L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessario un numero di variabili superiore per descrivere in modo appropriato il sistema. Ogni servomotore controlla un giunto biella manovella collegato alla piattaforma che regola la lunghezza del vettore $\hat{l_i}$, fondamentale è quindi trovare una relazione tra l'angolo del servomotore e il vettore $\hat{l_i}$. Anche in questo caso la soluzione si ottiene dalla scomposizione del problema in due parti: la determinazione della posizione del giunto biella manovella e la ricerca dell'angolo di rotazione $\alpha$.
 
 \begin{figure}[h!]
 \centering
@@ -424,7 +510,7 @@ Si conclude così la ricerca dell'angolo $\alpha$.
 
 \subsubsection{Controllo servomotori}
 Al fine di controllare i servomotori in modo ottimale è necessario effettuare alcuni accorgimenti.
-É necessario definire un'altezza $h_0$ e un angolo $\alpha_0$ di riposo dei servomotori, questo è scelto in modo che le manovelle dei servomotori siano orizziontali, quindi $\alpha_0=0^\circ$, l'altezza è ricavata sperimentalemente valutando a quale valore di $h$ i servomotori lavorano specularmente rispetto all'asse $x$.
+É necessario definire un'altezza $h_0$ e un angolo $\alpha_0$ di riposo dei servomotori, questo è scelto in modo che le manovelle dei servomotori siano orizzontali, quindi $\alpha_0=0^\circ$, l'altezza è ricavata sperimentalmente valutando a quale valore di $h$ i servomotori lavorano specularmente rispetto all'asse $x$.
 Siccome i servomotori hanno caratteristiche variabili a seconda del produttore bisogna definire una relazione tra la variazione in $\mu s$ del segnale PWM e la variazione dell'angolo $\alpha$ in radianti. Notare inoltre come questa relazione non valga quando il servomotore si trova vicino alla massima escursione, per avere una misura accurata analizziamo quanti $\mu s$ sono necessari per variare $\alpha$ dalla posizione orizzontale a 45°, questo è svolto nel rapporto:
 \begin{align}\label{rel}
 r &=\frac{\Delta t}{\Delta\alpha}\cdot \frac{360^\circ}{2 \pi}\\
@@ -568,7 +654,7 @@ Questa azione di controllo è svolta tramite la combinazione lineare di tre cont
 
 \subsubsection{Equazione del controllore PID}
 
-Segue un analisi delle tre equazioni che permettono il controllo del sistema:
+Segue un'analisi delle tre equazioni che permettono il controllo del sistema:
 
 \begin{itemize}
 \item Il controllore proporzionale ha equazione $u(t)=K_p \cdot e(t)$ e come si può facilmente notare ha lo scopo di rispondere in modo lineare allo scostamento della palla dalla posizione desiderata, lavora al presente.
@@ -674,7 +760,7 @@ e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
 \end{figure}
 
 
-Lavorando con sistemi digitali tempo discreti non è però possibile impiegare la formula \ref{pidtc}, sarà necessario procedere ad una discretizzazione, questa viene in modo intuitivo applicando la nozione di differenze finite e considerando $\Delta t = t_k - t_{k-1}$ come periodo di campionamento. Il risultato è la seguente equazione:
+Lavorando con sistemi digitali tempo discreti non è però possibile impiegare la formula \eqref{pidtc}, sarà necessario procedere ad una discretizzazione, questa viene in modo intuitivo applicando la nozione di differenze finite e considerando $\Delta t = t_k - t_{k-1}$ come periodo di campionamento. Il risultato è la seguente equazione:
 
 \begin{equation}\label{pidtd}
     u(t_k)=K_p \cdot e(t_k) + K_i \cdot \sum_{i=1}^{t_k} e(t_i)\cdot \Delta t + K_d\cdot \frac{e(t_k)-e(t_{k-1})}{\Delta t}
@@ -685,11 +771,11 @@ Lavorando con sistemi digitali tempo discreti non è però possibile impiegare l
 \subsection{Miglioramenti e ottimizzazioni del controllore PID}
 Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono necessari degli accorgimenti per evitare comportamenti erronei che possono compromettere la stabilità del sistema. Segue una lista delle migliorie impiegate.
 \begin{itemize}
-\item Filtraggio del segnale in ingresso: Passo fondamentale per ottenere un sistema di controllo performante, dati rumorosi in ingresso hanno ripercussioni catastrofiche sull'intero controllore.
-\item Filtraggio dell'azione derivativa: La derivata, per sua natura, si comporta come un amplificatore di segnali in alta frequenza. Questo induce un comportamento "nervoso" che va quanto più limitato. 
-\item Derivata sulla misura: Utile per evitare un brusco scatto al cambio del setpoint e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito.
-\item Anti-Windup dell'integrale: Il termine integrale può tendere a infinito nel caso l'errore non si annulli mantenendo sempre lo stesso segno, questo fenomento è noto come Windup e comporta il fallimento del sistema di controllo se prolungato per un tempo sufficientemene grande. Per evitare questo spiacevole effetto è utile limitare la somma del termine integrale in modo che questo si annulli rapidamente al cambio di segno dell'errore.
-\item Limitazione dell'uscita: Il controllore, non conoscendo i limiti fisici del progetto, può assegnare valori inammissibili al sistema da controllare, il che portebbe anche risultare in una rottura. Si devono quindi stabilire dei limiti al range di valori assegnabili dal controllore.
+\item Filtraggio del segnale in ingresso: passo fondamentale per ottenere un sistema di controllo performante, dati rumorosi in ingresso hanno ripercussioni catastrofiche sull'intero controllore.
+\item Filtraggio dell'azione derivativa: la derivata, per sua natura, si comporta come un amplificatore di segnali in alta frequenza. Questo induce un comportamento "nervoso" che va quanto più limitato. 
+\item Derivata sulla misura: utile per evitare un brusco scatto al cambio del setpoint e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito.
+\item Anti-windup dell'integrale: il termine integrale può tendere a infinito nel caso l'errore non si annulli mantenendo sempre lo stesso segno, questo fenomeno è noto come windup e comporta il fallimento del sistema di controllo se prolungato per un tempo sufficientemente grande. Per evitare questo spiacevole effetto è utile limitare la somma del termine integrale in modo che questo si annulli rapidamente al cambio di segno dell'errore.
+\item Limitazione dell'uscita: il controllore, non conoscendo i limiti fisici del progetto, può assegnare valori inammissibili al sistema da controllare, il che potrebbe anche risultare in una rottura. Si devono quindi stabilire dei limiti al range di valori assegnabili dal controllore.
 \end{itemize}
 
 \begin{figure}[h!]

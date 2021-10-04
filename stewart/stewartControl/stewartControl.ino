@@ -86,9 +86,9 @@ float xorig,yorig;
 #define in2 13 
 
 // PARAMETRI PID
-float Kp = 22.5;   //22.5 con foglio carta
-float Ki = 20;
-float Kd = 50; //0.1
+float Kp = 22.5;//22.5;   //22.5 con foglio carta
+float Ki = 0;//10;
+float Kd = 0;//40; //0.1
 double oldTime, newTime, deltaTime;
 double sumErrX, sumErrY;
 double oldDerivataX, oldDerivataY;
@@ -183,6 +183,8 @@ void loop() {
     setX = 0.09;//0.17
     setY = 0.135;
   }
+  Serial.print(100*x);
+  Serial.print(" ");
   
   
   xOld = x;
@@ -192,9 +194,13 @@ void loop() {
   yVelOld = yVel;
   
   getSense();
-  delay(8);
+  delay(8);//8
 
   newTime = millis();
+
+  Serial.print(newTime - oldTime);
+  Serial.print(" ");
+  
   deltaTime = (newTime - oldTime)/1000;
   oldTime = newTime;
 
@@ -209,7 +215,7 @@ void loop() {
 
   // filto spazio 
   // aggiungere eq cinematica calcolo max vel
-  float maxVel = 0.25;//0.5;//0.25
+  float maxVel = 0.22;//0.5;//0.25
   if(abs(xVel) > maxVel){
     if(xVel > 0){
       x = xOld + maxVel*(deltaTime);
@@ -230,7 +236,7 @@ void loop() {
   // filto velocità (derivata)
   // aggiungere eq cinematica calcolo max acc
   
-  float maxAcc = 0.30;//0.45;   // max per 5 gradi
+  float maxAcc = 0.5;//0.45;   // max per 5 gradi
   if(abs(xAcc) > maxAcc){
     if(xAcc > 0){
       xVel = xVelOld + maxAcc*(deltaTime);
@@ -247,7 +253,8 @@ void loop() {
       yVel = yVelOld - maxAcc*(deltaTime);
     }
   }
-
+  
+  Serial.println(100*xVel);
   
 
   
@@ -293,6 +300,17 @@ void loop() {
   float integraleX = Ki * sumErrX;
   float derivativoX = -Kd * xVel; // - per il derivative o measurement
   //float derivativoX = -(2*Kd *(x-xOld)+(2*tau-deltaTime)*oldDerivataX)/(2*tau+deltaTime); // errX-errXold derivata normale x-xOld derivative on measurement
+
+  /*float maxDerivativo = 1;
+  if(abs(derivativoX) > maxDerivativo){
+    if(derivativoX > 0){
+      derivativoX = xoldDerivataX + maxAcc*(deltaTime);
+    }
+    else{
+      xVel = xVelOld - maxAcc*(deltaTime);
+    }
+  }*/
+  
   oldDerivataX = derivativoX;
 
   float proporzionaleY = Kp * errY;
@@ -300,11 +318,12 @@ void loop() {
   float derivativoY = -Kd * yVel;
   //float derivativoY = -(2*Kd *(y-yOld)+(2*tau-deltaTime)*oldDerivataY)/(2*tau+deltaTime);
   oldDerivataY = derivativoY;
+
+  
   
   pidX = proporzionaleX + integraleX + derivativoX;   // errX-errXold derivata normale x-xOld derivative on measurement
   pidY = proporzionaleY + integraleY + derivativoY;
 
-  Serial.println(sumErrX);
 
   float maxangle = 5;
   float tiltX;
@@ -335,9 +354,6 @@ void loop() {
   
   setPosition(0,0,110,radians(tiltX),radians(tiltY),radians(0));
 
-  
-  
-  // AGGIUNGERE ANTI WINDUP
 }
 
 // costruisci matrice rotazione globale
