@@ -87,27 +87,41 @@ int on = 50;//25
 int pause = 50;//10   Non mettere a 0 per nessun motivo
 float sumX5;
 float sumY5;
-int sumcount = 19;
+int sumcount = 19;//19
 float averageX, averageY, averageXOld, averageYOld;
-int count = 1000;
+int count = 10;
 double deltaTimeAv, newTimeAv, oldTimeAv;
+//tempo inizio cerchio
+int circlestart;
+float draw;
+int quadrante = 1;
+bool circle = false;
+bool infinity = false;
+bool switchState = false;
+bool oldclick, newclick;
 #define in1 12  
 #define in2 13 
+#define swi 7
 
 // PARAMETRI PID
-float Kp = 13;//13;//22.5;   //22.5 con foglio carta
-float Ki = 15;//22;//22;
-float Kd = 30;//30;//65;
+float Kp = 25;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
+float Ki = 13;//22;//15;//15;//22;//22;
+float Kd = 25;//25;//35;//30;//30;//65;
 double oldTime, newTime, deltaTime;
 double sumErrX, sumErrY;
-// double oldDerivataX, oldDerivataY;
-float setX = 0.17, setY = 0.135, errX, errY; // setpoint centrato 26.95 21.90
+// double oldDerivataX, oldDerivataY;8
+float setX = 0.173, setY = 0.133, errX, errY; // setpoint centrato 26.95 21.90
 float xVel, yVel, xVelOld, yVelOld, xVelAv, yVelAv, xVelOldAv, yVelOldAv, xAccAv, yAccAv;
 float xAcc, yAcc;
 double pidX, pidY;
 float oldDerivataX, oldDerivataY;
 //bool pause = false;
 char command;
+
+//JOYSTICK
+#define Xin A5
+#define Yin A4
+int joyX, joyY;
 
 void setup() {
   Serial.begin(2000000);      // tenere alto per evitare rallentamento processi
@@ -118,7 +132,9 @@ void setup() {
   // pin output controllo piano
   pinMode(in1,OUTPUT);
   pinMode(in2,OUTPUT);
-  
+  pinMode(swi,INPUT_PULLUP);
+
+  // pin controllo servomotori
   servo[0].attach(3, inf, sup);
   servo[1].attach(5, inf, sup);
   servo[2].attach(6, inf, sup);
@@ -126,7 +142,7 @@ void setup() {
   servo[4].attach(10, inf, sup);
   servo[5].attach(11, inf, sup);
 
-  
+  // inizializza variabili
   getSense();
   oldTime = millis();
   xOld = x;
@@ -174,31 +190,7 @@ void setup() {
 }
 
 void loop() {
-  /*if(Serial.available()){
-    command = Serial.read();
-  }
-  
-  if(command == 'p'){
-    pause = true;
-    while(pause){
-      setPosition(0,0,110,radians(0),radians(0),radians(0));
-      delay(500);
-      if(Serial.read() == 'p'){
-        pause = false;
-      }
-    }
-  }
-  if(command == 'd'){ 
-    setX = 0.26;//0.17
-    setY = 0.135;
-  }
-  if(command == 's'){ 
-    setX = 0.09;//0.17
-    setY = 0.135;
-  }
-  Serial.print(100*x);
-  Serial.print(" ");
-  */
+  // loop esterno ~= 500us = 2kHz
   if(micros() > lastsense + pause){
     xOld = x;
     yOld = y;
@@ -207,30 +199,21 @@ void loop() {
     yVelOld = yVel;
     
     getSense();
-  
+
+    // calcolo tempo ciclo esterno
     newTime = micros();
-  
-    //Serial.print(newTime - oldTime);
-    //Serial.print(" ");
-    
     deltaTime = (newTime - oldTime)/1000000;
     oldTime = newTime;
     
     // velocità pallina in m/s
-    
     xVel = (x - xOld)/deltaTime;
     yVel = (y - yOld)/deltaTime;
     
-    //Serial.print(" ");
-    //Serial.println(xVel);
-    xAcc = (xVel - xVelOld)/(deltaTime);
-    yAcc = (yVel - yVelOld)/(deltaTime);
+    //xAcc = (xVel - xVelOld)/(deltaTime);
+    //yAcc = (yVel - yVelOld)/(deltaTime);
     
-    
-    //Serial.println(xVel*100);
-    // filto spazio 
-    // aggiungere eq cinematica calcolo max vel
-    float maxVel = 0.45;//0.45;
+    // filto rumore posizione 
+    float maxVel = 0.4;//0.45;
     if(abs(xVel) > maxVel){
       if(xVel > 0){
         x = xOld + maxVel*(deltaTime);
@@ -247,75 +230,17 @@ void loop() {
         y = yOld - maxVel*(deltaTime);
       }
     }
-    /*float maxAcc = 0.5;//0.45;   // max per 5 gradi
-    if(abs(xAcc) > maxAcc){
-      if(xAcc > 0){
-        xVel = xVelOld + maxAcc*(deltaTime);
-      }
-      else{
-        xVel = xVelOld - maxAcc*(deltaTime);
-      }
-    }
-    if(abs(yAcc) > maxAcc){
-      if(yAcc > 0){
-        yVel = yVelOld + maxAcc*(deltaTime);
-      }
-      else{
-        yVel = yVelOld - maxAcc*(deltaTime);
-      }
-    }*/
-    //Serial.println(x*1000);
     
     if(sumcount > 0){
       sumX5 += x;
       sumY5 += y;
       sumcount--;
     }
+    // loop interno ~= 10ms = 100Hz
     else{
-
-      if(Serial.available()){
-        command = Serial.read();
-      }
-      
-      if(command == 'p'){
-        pause = true;
-        while(pause){
-          setPosition(0,0,110,radians(0),radians(0),radians(0));
-          delay(500);
-          if(Serial.read() == 'p'){
-            pause = false;
-          }
-        }
-      }
-      if(command == 'a'){ 
-        setX = 0.23;//0.17
-        setY = 0.135;
-      }
-      if(command == 'b'){ 
-        setX = 0.11;//0.17
-        setY = 0.135;
-      }
-      if(command == 'r'){ 
-        setX = 0.17;//0.17
-        setY = 0.135;
-      }
-      if(command == 'c'){ 
-        setX = 0.17;//0.17
-        setY = 0.195;
-      }
-      if(command == 'd'){ 
-        setX = 0.17;//0.17
-        setY = 0.075;
-      }
-      //Serial.print(100*x);
-      //Serial.print(" ");
-
-      
-      sumcount = 19;
+      sumcount = 19; //19
       averageXOld = averageX;
       averageYOld = averageY;
-      //Serial.print("x av old: ");
-      //Serial.println(averageXOld*1000);
       xVelOldAv = xVelAv;
       yVelOldAv = yVelAv;
       averageX = sumX5/sumcount;
@@ -323,27 +248,19 @@ void loop() {
       sumX5 = 0;
       sumY5 = 0;
 
+      // calcola tempo ciclo interno
       newTimeAv = micros();
       deltaTimeAv =(newTimeAv - oldTimeAv)/(1000000);
       oldTimeAv = newTimeAv;
-      //Serial.print(averageX);
-      /*Serial.print(x*1000);
-      Serial.print(" ");
-      Serial.println(averageX*1000);*/
-      //Serial.println((averageX-averageXOld)*1000);
+
       xVelAv = (averageX-averageXOld)/deltaTimeAv;
       yVelAv = (averageY-averageYOld)/deltaTimeAv;
-
-      
-      /*Serial.print("x av: ");
-      Serial.println(averageX*1000);
-      Serial.print("media: ");
-      Serial.println((averageX-averageXOld)*1000);*/
       
       xAccAv = (xVelAv - xVelOldAv)/deltaTimeAv;
       yAccAv = (yVelAv - yVelOldAv)/deltaTimeAv;
 
-      float maxVel = 0.4;//0.4;
+      // filtro posizione
+      float maxVel = 0.4;//0.3;
       if(abs(xVelAv) > maxVel){
         if(xVelAv > 0){
           averageX = averageXOld + maxVel*(deltaTimeAv);
@@ -361,8 +278,8 @@ void loop() {
         }
       }
       
-      
-      float maxAcc = 0.3;//0.45;   // max per 5 gradi
+      // filtro velocità (derivata)
+      float maxAcc = 0.30;//0.20;   // max per 5 gradi
       if(abs(xAccAv) > maxAcc){
         if(xAccAv > 0){
           xVelAv = xVelOldAv + maxAcc*(deltaTimeAv);
@@ -379,215 +296,45 @@ void loop() {
           yVelAv = yVelOldAv - maxAcc*(deltaTimeAv);
         }
       }
-      
-      
-      float errXold = errX;
-      float errYold = errY;
-      errX = setX - averageX;
-      errY = setY - averageY;
-    
-      float antiwindup = 0.07;
-      sumErrX += errX * deltaTimeAv;
-      sumErrY += errY * deltaTimeAv;
-      if(abs(sumErrX) > antiwindup){
-        if(sumErrX > 0){
-          sumErrX = antiwindup;
+
+      runPID();
+
+      joyX = 1023 - analogRead (Xin);
+      joyY = 1023 - analogRead (Yin);
+      newclick = digitalRead (swi);
+      if(oldclick == false && newclick == true){
+        if(switchState == true){
+          switchState = !switchState;
         }
         else{
-          sumErrX = -antiwindup;
+          switchState = !switchState;
         }
       }
-      if(abs(sumErrY) > antiwindup){
-        if(sumErrY > 0){
-          sumErrY = antiwindup;
-        }
-        else{
-          sumErrY = -antiwindup;
-        }
-      }
-
-      //float tau = 5;
-      
-      float proporzionaleX = Kp * errX;
-      float integraleX = Ki * sumErrX;
-      float derivativoX = -Kd * xVelAv; // - per il derivative o measurement
-      //float derivativoX = -(2*Kd *(averageX-averageXOld)+(2*tau-deltaTimeAv)*oldDerivataX)/(2*tau+deltaTimeAv); // errX-errXold derivata normale x-xOld derivative on measurement
-      //Serial.println((derivativoX)*100);
-      //oldDerivataX = derivativoX;
-    
-      float proporzionaleY = Kp * errY;
-      float integraleY = Ki * sumErrY;
-      float derivativoY = -Kd * yVelAv;
-      //float derivativoY = -(2*Kd *(averageY-averageYOld)+(2*tau-deltaTimeAv)*oldDerivataY)/(2*tau+deltaTimeAv);
-      //oldDerivataY = derivativoY;
-    
-      
-      
-      pidX = proporzionaleX + integraleX + derivativoX;   // errX-errXold derivata normale x-xOld derivative on measurement
-      pidY = proporzionaleY + integraleY + derivativoY;
-    
-      // angolo inclinazione massimo
-      float maxangle = 6;
-      float tiltX;
-      float tiltY;
-      if(abs(pidY) > maxangle){
-        if(-pidY > 0){
-          tiltX = maxangle;
-        }
-        if(-pidY < 0){
-          tiltX = -maxangle;
-        }
-      }
-      else{
-        tiltX = -pidY;
-      }
-    
-      if(abs(pidX) > maxangle){
-        if(pidX > 0){
-          tiltY = maxangle;
-        }
-        if(pidX < 0){
-          tiltY = -maxangle;
-        }
-      }
-      else{
-        tiltY = pidX;
-      }
-      setPosition(0,0,108,radians(tiltX),radians(tiltY),radians(0));
+      oldclick = newclick;
 
       
-      // Blocco di stampa
+      
+      if(Serial.available()){
+        command = Serial.read();
+      }
+
+      runCommand();
+      
+      // Blocco di I/O 
+      // (eseguito una volta ogni "count" cicli per non affollare la seriale)
       count = count - 1;
-      
-      if(count <= 0){
-        Serial.print(setX*100);
-        Serial.print(" ");
-        Serial.println(averageX*100);
-        //Serial.println(micros());
-        //Serial.println(xVel);
-        //Serial.print(" ");
-        //Serial.println(100*averageX);
-        //Serial.print(" ");
-        //Serial.println(millis());
-        count = 10;
+      if(count <= 0){    
+        Serial.print(setX*1000);
+        Serial.print(", ");
+        Serial.print(setY*1000);
+        Serial.print(", ");
+        Serial.print(averageX*1000);
+        Serial.print(", ");
+        Serial.println(averageY*1000);
+        count = 0;
       }
     }
-
-    /*
-    // filto velocità (derivata)
-    // aggiungere eq cinematica calcolo max acc
-    
-    float maxAcc = 0.5;//0.45;   // max per 5 gradi
-    if(abs(xAcc) > maxAcc){
-      if(xAcc > 0){
-        xVel = xVelOld + maxAcc*(deltaTime);
-      }
-      else{
-        xVel = xVelOld - maxAcc*(deltaTime);
-      }
-    }
-    if(abs(yAcc) > maxAcc){
-      if(yAcc > 0){
-        yVel = yVelOld + maxAcc*(deltaTime);
-      }
-      else{
-        yVel = yVelOld - maxAcc*(deltaTime);
-      }
-    }
-    */
-    
-    //Serial.println(100*xVel);
-    
-  
-    
-    //Serial.print(10*xVel);
-    //Serial.print(" ");
-    //Serial.println(10*x);
-    //Serial.print(" ");
-    //Serial.print(xVel*100);
-    //Serial.print(y*100);
-
-    // PID QUI SOTTO
-    /*
-    
-    float errXold = errX;
-    float errYold = errY;
-    errX = setX - x;
-    errY = setY - y;
-  
-    float antiwindup = 0.02;
-    sumErrX += errX * deltaTime;
-    sumErrY += errY * deltaTime;
-    if(abs(sumErrX) > antiwindup){
-      if(sumErrX > 0){
-        sumErrX = antiwindup;
-      }
-      else{
-        sumErrX = -antiwindup;
-      }
-    }
-    if(abs(sumErrY) > antiwindup){
-      if(sumErrY > 0){
-        sumErrY = antiwindup;
-      }
-      else{
-        sumErrY = -antiwindup;
-      }
-    }
-  
-    //float tau = 30;
-  
-    float proporzionaleX = Kp * errX;
-    float integraleX = Ki * sumErrX;
-    float derivativoX = -Kd * xVel; // - per il derivative o measurement
-    //float derivativoX = -(2*Kd *(x-xOld)+(2*tau-deltaTime)*oldDerivataX)/(2*tau+deltaTime); // errX-errXold derivata normale x-xOld derivative on measurement
-    
-    //oldDerivataX = derivativoX;
-  
-    float proporzionaleY = Kp * errY;
-    float integraleY = Ki * sumErrY;
-    float derivativoY = -Kd * yVel;
-    //float derivativoY = -(2*Kd *(y-yOld)+(2*tau-deltaTime)*oldDerivataY)/(2*tau+deltaTime);
-    //oldDerivataY = derivativoY;
-  
-    
-    
-    pidX = proporzionaleX + integraleX + derivativoX;   // errX-errXold derivata normale x-xOld derivative on measurement
-    pidY = proporzionaleY + integraleY + derivativoY;
-  
-    // angolo inclinazione massimo
-    float maxangle = 5;
-    float tiltX;
-    float tiltY;
-    if(abs(pidY) > maxangle){
-      if(-pidY > 0){
-        tiltX = maxangle;
-      }
-      if(-pidY < 0){
-        tiltX = -maxangle;
-      }
-    }
-    else{
-      tiltX = -pidY;
-    }
-  
-    if(abs(pidX) > maxangle){
-      if(pidX > 0){
-        tiltY = maxangle;
-      }
-      if(pidX < 0){
-        tiltY = -maxangle;
-      }
-    }
-    else{
-      tiltY = pidX;
-    }
-    setPosition(0,0,110,radians(tiltX),radians(tiltY),radians(0));
-    */
-    
-    
   }
-  
 }
 
 // costruisci matrice rotazione globale
@@ -757,17 +504,169 @@ void fermoEmergenza(){
   }
 }
 
+// ottieni posizione della pallina nel piano in mm
 void getSense(){
   digitalWrite(in1,HIGH);
   digitalWrite(in2,LOW);
-  delayMicroseconds(on);                // RIVEDERE DELAY
+  delayMicroseconds(on);
   x = (analogRead(sensePin)-100)*(0.34/820);
   //Serial.print("x orig: "); //segnale ingresso non filtrato
   //Serial.println(x*100);
 
   digitalWrite(in1,LOW);
   digitalWrite(in2,HIGH);
-  delayMicroseconds(on);               // RIVEDERE DELAY
+  delayMicroseconds(on);
   y = (analogRead(sensePin)-100)*(0.27/820);
   lastsense = micros();
+}
+
+// esegui procedure controllo PID
+void runPID(){
+  // calcolo errore
+  float errXold = errX;
+  float errYold = errY;
+  errX = setX - averageX;
+  errY = setY - averageY;
+
+  // antiwindup
+  float antiwindup = 0.08;
+  sumErrX += errX * deltaTimeAv;
+  sumErrY += errY * deltaTimeAv;
+  if(abs(sumErrX) > antiwindup){
+    if(sumErrX > 0){
+      sumErrX = antiwindup;
+    }
+    else{
+      sumErrX = -antiwindup;
+    }
+  }
+  if(abs(sumErrY) > antiwindup){
+    if(sumErrY > 0){
+      sumErrY = antiwindup;
+    }
+    else{
+      sumErrY = -antiwindup;
+    }
+  }
+
+  //componenti PID per i due assi
+  float proporzionaleX = Kp * errX;
+  float integraleX = Ki * sumErrX;
+  float derivativoX = -Kd * xVelAv; // - per il derivative o measurement
+
+  float proporzionaleY = Kp * errY;
+  float integraleY = Ki * sumErrY;
+  float derivativoY = -Kd * yVelAv;
+
+  pidX = proporzionaleX + integraleX + derivativoX;   // errX-errXold derivata normale x-xOld derivative on measurement
+  pidY = proporzionaleY + integraleY + derivativoY;
+
+  // limitazione uscita PID
+  // angolo inclinazione massimo
+  float maxangle = 6;
+  float tiltX;
+  float tiltY;
+  if(abs(pidY) > maxangle){
+    if(-pidY > 0){
+      tiltX = maxangle;
+    }
+    if(-pidY < 0){
+      tiltX = -maxangle;
+    }
+  }
+  else{
+    tiltX = -pidY;
+  }
+
+  if(abs(pidX) > maxangle){
+    if(pidX > 0){
+      tiltY = maxangle;
+    }
+    if(pidX < 0){
+      tiltY = -maxangle;
+    }
+  }
+  else{
+    tiltY = pidX;
+  }
+  // assegnazione a piattaforma di Stewart
+  setPosition(0,0,108,radians(tiltX),radians(tiltY),radians(0));
+}
+
+// analizza stato joystick e input, cambia il setpoint
+void runCommand(){
+  if(joyX < 300 && joyY < 700 && joyY > 300 && switchState == true){ 
+    setX = 0.233;//0.173
+    setY = 0.133;
+  }
+  if(joyX > 700 && joyY < 700 && joyY > 300 && switchState == true){ 
+    setX = 0.113;//0.17
+    setY = 0.133;
+  }
+  if(joyX > 300 && joyX < 700 &&joyY < 700 && joyY > 300 && switchState == true){ 
+    setX = 0.173;//0.17
+    setY = 0.133;
+  }
+  if(joyX > 300 && joyX < 700 && joyY < 300 && switchState == true){ 
+    setX = 0.173;//0.17
+    setY = 0.193;
+  }
+  if(joyX > 300 && joyX < 700 && joyY > 700 && switchState == true){        
+    setX = 0.173;//0.17
+    setY = 0.073;
+  }
+  
+  if(joyX < 300 && joyY < 700 && joyY > 300 && switchState == false){
+    circle = true;
+    setX=0.173+0.03*cos(pi*(millis()-circlestart)/(3000*2));
+    setY=0.133+0.03*sin(pi*(millis()-circlestart)/(3000*2));
+  }
+  if(joyX > 700 && joyY < 700 && joyY > 300 && switchState == false){ 
+    infinity = true;
+    if(draw < 0.05){
+      draw += 0.0006;//0.007
+    }
+    else{
+      draw = 0;
+      quadrante++;
+      if(quadrante == 5){
+        quadrante = 1;
+      }
+    }
+    if(quadrante == 1){
+      setX = 0.173 + draw;
+      setY = 0.133 + 7*draw*sqrt(0.06-draw);
+    }
+    if(quadrante == 2){
+      setX = 0.173 + (0.06 - draw);
+      setY = 0.133 - 7*(0.06 - draw)*sqrt(0.06-(0.06 - draw));
+    }
+    if(quadrante == 3){
+      setX = 0.173 - draw;
+      setY = 0.133 + 7*draw*sqrt(0.06-draw);
+    }
+    if(quadrante == 4){
+      setX = 0.173 - (0.06 - draw);
+      setY = 0.133 - 7*(0.06 - draw)*sqrt(0.06- (0.06 - draw));
+    }
+    
+  }
+
+  if(joyX > 300 && joyX < 700 &&joyY < 700 && joyY > 300 && switchState == false){ 
+    setX = 0.173;
+    setY = 0.133;
+    circle = false;
+    infinity = false;
+  }
+
+  if(command == 'p'){
+    pause = true;
+    while(pause){
+      setPosition(0,0,110,radians(0),radians(0),radians(0));
+      delay(500);
+      if(Serial.read() == 'p'){
+        pause = false;
+      }
+    }
+  }
 }

@@ -155,7 +155,7 @@ Nella realizzazione del progetto è stata impiegata la variante a cinque fili.
 
 \subsection{Ponte ad H}\label{hbridge}
 
-É emersa la necessità di impiegare un ponte ad H in seguito ad una analisi preliminare delle specifiche del digitalizzatore resistivo. Si è infatti notato in seguito a una misura di resistenza, che questa fosse di soli $100 \Omega$, quindi non compatibile con le periferiche dell'Arduino UNO, in quanto, a $5V$ richiama una corrente di $50mA$ mentre la scheda ne supporta solo $20$. L'impiego del ponte ad H evita questo richiamo di corrente eccessivo impiegando dispositivi come BJT o MOSFET ed una sorgente esterna per controllare il piano. Nella scelta della tecnologia da impiegare sono stati scelti i MOSFET in quanto meno sensibili a fattori ambientali e più adatti alla commutazione di segnali digitali rispetto ai BJT. Non disponendo del componente finito si è scelto di realizzarlo a partire dai singoli componenti in seguito ad un'analisi accurata tramite software SPICE (figura \ref{fig:controllo}) e basandosi sul datasheet del chip L298N.
+É emersa la necessità di impiegare un ponte ad H in seguito ad una analisi preliminare delle specifiche del digitalizzatore resistivo. Si è infatti notato in seguito a una misura di resistenza, che questa fosse di soli $100 \Omega$, quindi non compatibile con le periferiche dell'Arduino UNO, in quanto, a $5V$ richiama una corrente di $50mA$ mentre la scheda ne supporta solo $20$. L'impiego del ponte ad H evita questo richiamo di corrente eccessivo impiegando dispositivi come BJT o MOSFET ed una sorgente esterna per controllare il piano. Nella scelta della tecnologia da impiegare sono stati preferiti i MOSFET per via della caduta di tensione Drain-Source quasi nulla nello stato di conduzione dovuta a una bassissima resistenza interna. Non disponendo del componente finito si è scelto di realizzarlo a partire dai singoli chip in seguito ad un'analisi accurata tramite software SPICE (figura \ref{fig:controllo}) e basandosi sul datasheet del ponte L298N.
 \begin{figure}[h!]
 \centering
 \scalebox{0.25}{
@@ -163,8 +163,10 @@ Nella realizzazione del progetto è stata impiegata la variante a cinque fili.
 }
 \caption{Schematica circuito di controllo.} \label{fig:controllo}
 \end{figure}
-I MOSFET scelti sono degli AO3400 e A03401, rispettivamente nella configurazione n e p in quanto forniscono ottime prestazioni. Da un'analisi del sistema di controllo richiesto dal piano resistivo si è deciso di rinunciare alla capacità di gestire individualmente i singoli MOSFET favorendo due linee di controllo che possano commutare tra gli stati High/Low. Sono state inoltre impiegate delle porte logiche NAND con lo scopo di migliorare il segnale di ingresso proveniente da Arduino ed evitare eventuali problemi di ritardo di commutazione, questa pratica è comune anche nel caso del L298N. Come chip per le porte NAND si è scelto un TC4011BP, questo fornisce in un singolo package quattro porte logiche che sono state configurate come invertenti in cascata, principalmente per una questione di convenienza, nel caso in cui sia necessario impiegare il segnale negato.
+I MOSFET scelti sono degli AO3400 e A03401, rispettivamente nella configurazione n e p in quanto forniscono ottime prestazioni. Da un'analisi del sistema di controllo richiesto dal piano resistivo si è deciso di rinunciare alla capacità di gestire individualmente i singoli MOSFET favorendo due linee di controllo che possano commutare tra gli stati High/Low. Sono state inoltre impiegate delle porte logiche NAND con lo scopo di migliorare il segnale di ingresso proveniente da Arduino, questa pratica è comune anche nel caso del L298N. Come chip per le porte NAND si è scelto un TC4011BP, questo fornisce in un singolo package quattro porte logiche che sono state configurate come invertenti in cascata, principalmente per una questione di convenienza, nel caso in cui sia necessario impiegare il segnale negato.
 
+\subsection{Joystick analogico}\label{joystick}
+Per facilitare e rendere più intuitivo il controllo del sistema è stato impiegato un joystick analogico. Questo presenta 5 cavi per garantire l'alimentazione e la lettura della posizione degli assi $x$, $y$ e di un piccolo switch momentaneo. Tramite questi dati sarà possibile inviare diversi comandi al sistema ed avere una gestione indipendente dal pc, slegandosi dall'assegnazione esclusiva tramite seriale.
 
 \newpage
 
@@ -668,7 +670,14 @@ Questi tre elementi sommati restituiscono l'equazione tempo continua seguente:
 \end{equation}
 
 Si può quindi procedere rappresentando complessivamente il sistema da controllare
-e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
+e il relativo controllore, che risulta essere come in figura \ref{fig:ps}, dove i segnali più importanti sono:
+\begin{itemize}
+\item x(t): il setpoint o obbiettivo da raggiungere, impostato manualmente.
+\item u(t): il segnale d'uscita del sistema, ottenuto dal digitalizzatore resistivo.
+\item e(t): l'errore, ottenuto dalla differenza tra il setpoint e il segnale in uscita.
+\item c(t): variabile di controllo in uscita dal controllore PID che evolve opportunamente lo stato del sistema in modo da soddisfare le richieste del setpoint.
+
+\end{itemize}
 
 \begin{figure}[h!]
 \centering
@@ -707,14 +716,14 @@ e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
     right=of S,
     minimum width=2cm,
     minimum height=1cm,
-    text width=3cm, text centered
+    text width=2cm, text centered
 ] (block3) {Piattaforma Stewart};
 
 \node[draw,
     right=of block3,
     minimum width=2cm,
     minimum height=1cm,
-    text width=3cm, text centered
+    text width=2cm, text centered
 ] (block4) {Piano resistivo};
  
 \node[draw,
@@ -736,6 +745,7 @@ e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
      text centered
 ] (der) {$\frac{d}{dt}$};
 
+
 % Arrows
 \draw [-latex] (-2cm,0cm) -- node[anchor=south]{$x(t)$}(block1)node[xshift=-0.75cm,yshift=-0.25cm]{$+$}node[xshift=0.25cm,yshift=-0.75cm]{$-$};
 \draw [-latex] (block1) edge (block2)node[anchor=south, xshift=1cm]{$e(t)$};
@@ -744,14 +754,14 @@ e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
 \draw [-latex](D) edge (der);
 \draw [-latex](block2) edge (int);
 \draw [-latex](D) edge (der);
-\draw [-latex](int) -- (S);
+\draw [-latex](int) -- (S)node[anchor=south, xshift= 1cm]{$c(t)$};
 \draw [-latex](P) -| (S)node[xshift=0.25cm,yshift=0.75cm]{$+$}node[xshift=-0.75cm,yshift=0.25cm]{$+$}node[xshift=-0.25cm,yshift=-0.75cm]{$+$};
 \draw [-latex]	(der) -| (S);
 \draw [-latex]	(S) edge (block3);	
 \draw [-latex]	(block3) edge (block4);
-\draw [-latex]	(block4) -- (18,0);	
-\draw 	(17,0)node[anchor=south]{$u(t)$} -- (17,-3);		  
-\draw [-latex]	(17,-3) -| (block1);	
+\draw [-latex]	(block4) -- (16,0);	
+\draw 	(15,0)node[anchor=south]{$u(t)$} -- (15,-3);		  
+\draw [-latex]	(15,-3) -| (block1);	
 
 
 \end{tikzpicture}
@@ -760,7 +770,7 @@ e il relativo controllore, che risulta essere come in figura \ref{fig:ps}.
 \end{figure}
 
 
-Lavorando con sistemi digitali tempo discreti non è però possibile impiegare la formula \eqref{pidtc}, sarà necessario procedere ad una discretizzazione, questa viene in modo intuitivo applicando la nozione di differenze finite e considerando $\Delta t = t_k - t_{k-1}$ come periodo di campionamento. Il risultato è la seguente equazione:
+Lavorando con sistemi digitali tempo discreti non è però possibile impiegare la formula \eqref{pidtc}, sarà necessario procedere ad una discretizzazione, questa viene svolta in modo intuitivo applicando la nozione di differenze finite e considerando $\Delta t = t_k - t_{k-1}$ come periodo di campionamento. Il risultato è la seguente equazione:
 
 \begin{equation}\label{pidtd}
     u(t_k)=K_p \cdot e(t_k) + K_i \cdot \sum_{i=1}^{t_k} e(t_i)\cdot \Delta t + K_d\cdot \frac{e(t_k)-e(t_{k-1})}{\Delta t}
@@ -769,14 +779,124 @@ Lavorando con sistemi digitali tempo discreti non è però possibile impiegare l
 
 
 \subsection{Miglioramenti e ottimizzazioni del controllore PID}
-Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono necessari degli accorgimenti per evitare comportamenti erronei che possono compromettere la stabilità del sistema. Segue una lista delle migliorie impiegate.
+Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono necessari degli accorgimenti per evitare comportamenti erronei che possono compromettere la stabilità e l'integrità del sistema. Segue una lista delle migliorie impiegate.
 \begin{itemize}
-\item Filtraggio del segnale in ingresso: passo fondamentale per ottenere un sistema di controllo performante, dati rumorosi in ingresso hanno ripercussioni catastrofiche sull'intero controllore.
+\item Filtraggio del segnale: passo fondamentale per ottenere un sistema di controllo performante, dati rumorosi in ingresso hanno ripercussioni catastrofiche sull'intero controllore.
 \item Filtraggio dell'azione derivativa: la derivata, per sua natura, si comporta come un amplificatore di segnali in alta frequenza. Questo induce un comportamento "nervoso" che va quanto più limitato. 
-\item Derivata sulla misura: utile per evitare un brusco scatto al cambio del setpoint e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito.
+\item Derivata sulla misura: consiste nell'eseguire la derivata sul segnle in uscita $u[k]$ invece che sull'errore $e[k]$, utile per evitare un brusco scatto al cambio del setpoint e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito.
 \item Anti-windup dell'integrale: il termine integrale può tendere a infinito nel caso l'errore non si annulli mantenendo sempre lo stesso segno, questo fenomeno è noto come windup e comporta il fallimento del sistema di controllo se prolungato per un tempo sufficientemente grande. Per evitare questo spiacevole effetto è utile limitare la somma del termine integrale in modo che questo si annulli rapidamente al cambio di segno dell'errore.
 \item Limitazione dell'uscita: il controllore, non conoscendo i limiti fisici del progetto, può assegnare valori inammissibili al sistema da controllare, il che potrebbe anche risultare in una rottura. Si devono quindi stabilire dei limiti al range di valori assegnabili dal controllore.
 \end{itemize}
+\begin{figure}[h!]
+\centering
+\scalebox{0.6}{
+\begin{tikzpicture}[font=\small,thick]
+ 
+% Start block
+\node[draw,
+    circle,
+    minimum width=1cm,
+     text centered] (block1) {$\Sigma$};
+    
+    % Power and voltage variation
+\node[draw,
+    right=of block1,
+    minimum width=1cm,
+    minimum height=1cm, xshift= 1cm
+] (block2) {$K_i$};
+
+\node[draw,
+    right=of block2,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (int) {$\Sigma$};
+
+
+
+\node[draw, right=of int, 
+    circle,
+    minimum width=1cm, xshift=2cm,
+     text centered] (S) {$\Sigma$};
+    
+\node[draw, right=of S,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (filter3) {$\Phi$};
+
+\node[draw,
+    right=of filter3,
+    minimum width=2cm,
+    minimum height=1cm,
+    text width=2cm, text centered
+] (block3) {Piattaforma Stewart};
+
+\node[draw,
+    right=of block3,
+    minimum width=2cm,
+    minimum height=1cm,
+    text width=2cm, text centered
+] (block4) {Piano resistivo};
+ 
+\node[draw,
+    above=of block2,
+    minimum width=1cm,
+    minimum height=1cm,yshift=-0.5cm
+] (P) {$K_p$};
+
+\node[draw,
+    below=of block2,
+    minimum width=1cm,
+    minimum height=1cm,yshift=0.5cm
+] (D) {$K_d$};
+
+\node[draw,
+    right=of D,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (der) {$\Delta$};
+
+\node[draw,
+    right=of der,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (filter1) {$\Phi$};
+
+\node[draw,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered, xshift=19cm, yshift=-1.5cm
+] (filter2) {$\Phi$};
+
+
+
+% Arrows
+\draw [-latex] (-2cm,0cm) -- node[anchor=south]{$x[k]$}(block1)node[xshift=-0.75cm,yshift=-0.25cm]{$+$}node[xshift=0.25cm,yshift=-0.75cm]{$-$};
+\draw [-latex] (block1) edge (block2)node[anchor=south, xshift=1cm]{$e[k]$};
+\draw [-latex](1.5,-3) |- (D);
+\draw [-latex](1.5,0) |- (P);
+\draw [-latex](D) edge (der);
+\draw [-latex](block2) edge (int);
+\draw [-latex](D) edge (der);
+%\draw [-latex](int) -- (S)node[anchor=south, xshift= 1cm]{$c[k]$};
+%\draw [-latex](P) -| (S)node[xshift=0.25cm,yshift=0.75cm]{$+$}node[xshift=-0.75cm,yshift=0.25cm]{$+$}node[xshift=-0.25cm,yshift=-0.75cm]{$+$};
+%\draw [-latex]	(der) -| (S);
+\draw [-latex]	(S) edge (filter3);	
+\draw [-latex]	(filter3) edge (block3);	
+\draw [-latex]	(block3) edge (block4);
+\draw [-latex]	(block4) -- (20,0);	
+\draw 	(19,0)node[anchor=south]{$u[k]$} -- (filter2);
+\draw (filter2) -- (19,-3);		  
+\draw [-latex]	(19,-3) -| (block1);	
+
+
+\end{tikzpicture}
+}
+\caption{Schema logico controllore PID migliorato.} \label{fig:pidmigliorato}
+\end{figure}
 
 \begin{figure}[h!]
 \centering
@@ -863,9 +983,52 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
 
 \end{tikzpicture}
 }
-\caption{Schema logico sistema di stabilizzazione.} \label{fig:ps}
+\caption{Schema logico sistema di stabilizzazione.} \label{fig:stabilizzazione}
 \end{figure}
+\newpage
 
+\newpage
+
+
+
+\section{Realizzazione pratica}
+La realizzazione pratica del progetto è stata un processo discretamente complesso, svolto in modo sequenziale e analizzando costantemente le varie criticità. Questo si è svolto principalmente in 3 fasi: l'assemblaggio, la programmazione e la taratura del sistema, rispettivamente descritte in dettaglio nelle sezioni \ref{assemblaggio}, \ref{programmazione} e \ref{taratura}.
+
+\subsection{Assemblaggio}\label{assemblaggio}
+Sono state fornite la base con i servomotori, la piattaforma ed i relativi braccetti di collegamento, il piano resistivo e la scheda arduino UNO dotata di shield. I primi dubbi si sono verificati durante l'assemblaggio in quanto esistono quattro possibili varianti di piattaforma di Stewart con attuatori rotativi, rispettivamente con le manovelle interne o esterne e con i braccetti collegati alla piattaforma sullo stesso lato o su lati opposti. Analizzando la piattaforma si è preferito optare per una disposizione con manovelle esterne e braccetti su lati opposti. Si nota come queste configurazioni siano completamente equivalenti a livello matematico e necessitano unicamente di un ricalcolo della posizione dei punti di aggancio della piattaforma, il che mostra l'adattabilità del modello stesso. Alcuni dei pezzi necessari al completamento dell'assemblaggio, come gli agganci per la piattaforma e il piano resistivo, erano mancanti e dovevano essere realizzati. Disponendo di una stampante 3D si è optato per stampare i pezzi in modo da permettere una prototipazione rapida. Non disponendo dei file relativi alle dimensioni della base e della piattaforma, di compensato tagliato al laser, è stato fondamentale ricostruire fedelmente il modello in ambiene CAD per poi procedere alla modellazione delle parti mancanti (figura). 
+
+I modelli sono stati realizzati con il software Fusion360 e stampati in materiale plastico PLA con infill a nido d'ape per avere un buon compromesso tra leggerezza e rigidità. Ultimata la costruzione si è rivolta l'attenzione alle componenti elettroniche, innanzitutto è stato realizzato un connettore apposito per permettere un collegamento stabile tra i servomotori e la scheda Arduino. Notando la fragilità delle uscite del digitalizzatore, tramite un flat-cable flessibile, si è preferito realizzare un apposito aggacio che serva innanzitutto da strain-relief e faciliti la connessione dei cavi dupont per interfacciarsi con Arduino. Come precedentemente esposto nella sezione \ref{hbridge}, in seguito ad un analisi tramite multimetro della resistenza del digitalizzatore si è notato che un controllo diretto richiamerebbe solo $2V$, più che dimezzando la risoluzione del piano rispetto ai $5V$ nominali. La realizzazione pratica del driver per il piano resistivo richiede l'impiego di un montaggio apposito su basetta di vetronite per ridurre al minimo le capacità parassite e i falsi contatti rispetto ad una basetta sperimentale. Non essendo certi dell'influenza dello shoot-through\footnote{Conduzione simultanea di entrambi i mosfet su un ramo durante la commutazione.} dei MOSFET è stata prevista una resistenza di $1\Omega$ verso massa, in modo da limitare l'eventuale corrente massima a $5A$, entro il range previsto dal datasheet di $4A$ continui e $27A$ pulsati. Un altra caratteristica è la presenza delle resistenze di Gate, queste sono state previste nel caso in cui si dovesse eseguire un ulteriore pilotaggio tramite componente attivo per evitare lo shoot-through ma in seguito alla prova pratica questo non è stato necessario. É seguita un analisi dei tempi con l'oscilloscopio, importantissima nella successiva parte di programmazione, con la quale si è determinato il periodo minimo di campionamento che risulta essere di soli $50\mu s$. Infine è stato implementato senza particolari accorgimenti il joystick in quanto è bastato collegare i cavi direttamente allo shield per avere delle ottime letture.
+
+\subsection{Programmazione}\label{programmazione}
+La programmazione è senza dubbio la parte principale del progetto e per sa sua versatilità ricopre un ruolo fondamentale. Vista la complessità del sistema, lo sviluppo del software è stato diviso in diversi blocchi operativi, ognuno dei quali svolge un ruolo diverso e indipendente dagli altri, che saranno trattati nelle successive sezioni.
+%\begin{itemize}
+%\item Il controllo della piattaforma di Stewart.
+%\item La lettura e il filtraggio dei dati in ingresso dal piano resistivo.
+%\item L'elaborazione del segnale in ingresso da parte del PID.
+%\item La gestione dei comandi assegnati tramite joystick.
+%\end{itemize}
+%Segue un analisi di queste procedure.
+\subsubsection{Controllo della piattaforma di Stewart}
+\subsubsection{Lettura e filtraggio dati piano resistivo}
+\subsubsection{Controllore PID}
+\subsubsection{Assegnazione dei comandi}
+
+\subsection{Taratura}\label{taratura}
+
+\begin{figure}[h!]
+\centering
+\scalebox{0.8}{
+\includegraphics{circle.png}
+}
+\caption{Tracking del setpoint su una curva circolare.} \label{fig:cerchio}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\scalebox{0.8}{
+\includegraphics{infinity.png}
+}
+\caption{Tracking del setpoint su una curva a forma di infinito.} \label{fig:cerchio}
+\end{figure}
 
 \bibliographystyle{alpha}
 \bibliography{references} % see references.bib for bibliography management

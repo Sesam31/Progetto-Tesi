@@ -15,8 +15,8 @@ void loop ()
 {
  int xVal, yVal, buttonVal;
 
- xVal = analogRead (Xin);
- yVal = analogRead (Yin);
+ xVal = 1023 - analogRead(Xin);
+ yVal = 1023 - analogRead(Yin);
  //buttonVal = digitalRead (KEYin);
 
  Serial.print("X = ");
