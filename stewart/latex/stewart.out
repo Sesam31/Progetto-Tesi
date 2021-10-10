@@ -23,11 +23,16 @@
 \BOOKMARK [2][-]{subsection.4.1}{Controllore PID}{section.4}% 23
 \BOOKMARK [3][-]{subsubsection.4.1.1}{Equazione del controllore PID}{subsection.4.1}% 24
 \BOOKMARK [2][-]{subsection.4.2}{Miglioramenti e ottimizzazioni del controllore PID}{section.4}% 25
-\BOOKMARK [1][-]{section.5}{Realizzazione pratica}{}% 26
-\BOOKMARK [2][-]{subsection.5.1}{Assemblaggio}{section.5}% 27
-\BOOKMARK [2][-]{subsection.5.2}{Programmazione}{section.5}% 28
-\BOOKMARK [3][-]{subsubsection.5.2.1}{Controllo della piattaforma di Stewart}{subsection.5.2}% 29
-\BOOKMARK [3][-]{subsubsection.5.2.2}{Lettura e filtraggio dati piano resistivo}{subsection.5.2}% 30
-\BOOKMARK [3][-]{subsubsection.5.2.3}{Controllore PID}{subsection.5.2}% 31
-\BOOKMARK [3][-]{subsubsection.5.2.4}{Assegnazione dei comandi}{subsection.5.2}% 32
-\BOOKMARK [2][-]{subsection.5.3}{Taratura}{section.5}% 33
+\BOOKMARK [2][-]{subsection.4.3}{Algoritmo di controllo}{section.4}% 26
+\BOOKMARK [1][-]{section.5}{Realizzazione pratica}{}% 27
+\BOOKMARK [2][-]{subsection.5.1}{Assemblaggio}{section.5}% 28
+\BOOKMARK [2][-]{subsection.5.2}{Programmazione}{section.5}% 29
+\BOOKMARK [3][-]{subsubsection.5.2.1}{Controllo della piattaforma di Stewart}{subsection.5.2}% 30
+\BOOKMARK [3][-]{subsubsection.5.2.2}{Lettura e filtraggio dati ottenuti dal piano resistivo}{subsection.5.2}% 31
+\BOOKMARK [3][-]{subsubsection.5.2.3}{Controllore PID}{subsection.5.2}% 32
+\BOOKMARK [3][-]{subsubsection.5.2.4}{Assegnazione dei comandi}{subsection.5.2}% 33
+\BOOKMARK [2][-]{subsection.5.3}{Taratura}{section.5}% 34
+\BOOKMARK [1][-]{section.6}{Risultati}{}% 35
+\BOOKMARK [2][-]{subsection.6.1}{Piattaforma di stewart}{section.6}% 36
+\BOOKMARK [2][-]{subsection.6.2}{Piano stabilizzato}{section.6}% 37
+\BOOKMARK [1][-]{section.7}{Conclusioni}{}% 38

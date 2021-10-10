@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2021.10.9)  9 OCT 2021 18:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2021.10.9)  10 OCT 2021 21:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -8,8 +8,8 @@ LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-01-09> xparse <2020-03-03>
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 )
 \c@part=\count177
 \c@section=\count178
@@ -669,22 +669,46 @@ File: pgflibraryarrows.meta.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 zlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2020/12/27 v3.1.8b (3.1.8b)
 )
-\c@theorem=\count303
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count303
+\lst@gtempboxa=\box80
+\lst@token=\toks41
+\lst@length=\count304
+\lst@currlwidth=\dimen276
+\lst@column=\count305
+\lst@pos=\count306
+\lst@lostspace=\dimen277
+\lst@width=\dimen278
+\lst@newlines=\count307
+\lst@lineno=\count308
+\lst@maxwidth=\dimen279
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+\c@lstnumber=\count309
+\lst@skipnumbers=\count310
+\lst@framebox=\box81
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2020/03/24 1.8d listings configuration
+))
+Package: listings 2020/03/24 1.8d (Carsten Heinz)
+\c@theorem=\count311
 
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2020-01-29 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count304
-\l__pdf_internal_box=\box80
+\l__color_backend_stack_int=\count312
+\l__pdf_internal_box=\box82
 )
 (./stewart.aux
 
 LaTeX Warning: Label `fig:controllo' multiply defined.
 
 
+LaTeX Warning: Label `rg' multiply defined.
+
+
 LaTeX Warning: Label `passaggio' multiply defined.
-
-
-LaTeX Warning: Label `fig:ps' multiply defined.
 
 
 LaTeX Warning: Label `fig:cerchio' multiply defined.
@@ -692,22 +716,22 @@ LaTeX Warning: Label `fig:cerchio' multiply defined.
 )
 \openout1 = `stewart.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 67.
+LaTeX Font Info:    ... okay on input line 67.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -716,8 +740,8 @@ LaTeX Font Info:    ... okay on input line 35.
 * paper: a4paper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: 
-* h-part:(L,W,R)=(89.62709pt, 418.25368pt, 89.6271pt)
+* modes: twoside 
+* h-part:(L,W,R)=(71.70166pt, 418.25368pt, 107.55254pt)
 * v-part:(T,H,B)=(101.40665pt, 591.5302pt, 152.11pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
@@ -728,34 +752,34 @@ LaTeX Font Info:    ... okay on input line 35.
 * \topmargin=-20.0pt
 * \headheight=12.0pt
 * \headsep=10.0pt
-* \topskip=11.0pt
+* \topskip=12.0pt
 * \footskip=30.0pt
 * \marginparwidth=40.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
 * \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
+* \@twosidetrue
+* \@mparswitchtrue
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count305
-\scratchdimen=\dimen276
-\scratchbox=\box81
-\nofMPsegments=\count306
-\nofMParguments=\count307
-\everyMPshowfont=\toks41
-\MPscratchCnt=\count308
-\MPscratchDim=\dimen277
-\MPnumerator=\count309
-\makeMPintoPDFobject=\count310
-\everyMPtoPDFconversion=\toks42
+\scratchcounter=\count313
+\scratchdimen=\dimen280
+\scratchbox=\box83
+\nofMPsegments=\count314
+\nofMParguments=\count315
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count316
+\MPscratchDim=\dimen281
+\MPnumerator=\count317
+\makeMPintoPDFobject=\count318
+\everyMPtoPDFconversion=\toks43
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -765,7 +789,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 35.
+Package hyperref Info: Link coloring OFF on input line 67.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -776,18 +800,18 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count311
+\c@section@level=\count319
 )
-LaTeX Info: Redefining \ref on input line 35.
-LaTeX Info: Redefining \pageref on input line 35.
-LaTeX Info: Redefining \nameref on input line 35.
+LaTeX Info: Redefining \ref on input line 67.
+LaTeX Info: Redefining \pageref on input line 67.
+LaTeX Info: Redefining \nameref on input line 67.
 
 (./stewart.out) (./stewart.out)
 \@outlinefile=\write4
 \openout4 = `stewart.out'.
 
-LaTeX Info: Redefining \it@ocap on input line 35.
-LaTeX Info: Redefining \it@ccap on input line 35.
+LaTeX Info: Redefining \it@ocap on input line 67.
+LaTeX Info: Redefining \it@ccap on input line 67.
 
 
 File italian.ldf warning: 
@@ -795,109 +819,162 @@ italian.ldf    With OT1 encoding guillemets are poorly faked
 italian.ldf    Use T1 encoding
 italian.ldf    or specify a font with command \CaporaliFrom
 italian.ldf    See the documentation concerning the babel-italian typesetting 
-italian.ldf    on input line 35.
+italian.ldf    on input line 67.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
+\c@lstlisting=\count320
+LaTeX Font Info:    Trying to load font information for U+msa on input line 70.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 70.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (./stewart.toc
-[1
+) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./stewart.toc [2])
 \tf@toc=\write5
 \openout5 = `stewart.toc'.
 
- [2] [3]
-<./images//5wire.png, id=206, 874.26625pt x 616.3025pt>
+ [3]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[4] [5]
+<./images//5wire.png, id=239, 874.26625pt x 616.3025pt>
 File: ./images//5wire.png Graphic file (type png)
 <use ./images//5wire.png>
-Package pdftex.def Info: ./images//5wire.png  used on input line 152.
+Package pdftex.def Info: ./images//5wire.png  used on input line 185.
 (pdftex.def)             Requested size: 874.26411pt x 616.301pt.
- [4]
-<./images//CircuitoControlloNo.png, id=215, 1900.09875pt x 631.35875pt>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<./images//CircuitoControlloNo.png, id=242, 1900.09875pt x 631.35875pt>
 File: ./images//CircuitoControlloNo.png Graphic file (type png)
 <use ./images//CircuitoControlloNo.png>
 Package pdftex.def Info: ./images//CircuitoControlloNo.png  used on input line 
-163.
+196.
 (pdftex.def)             Requested size: 1900.09413pt x 631.35721pt.
- [5 <./images//5wire.png>] [6 <./images//CircuitoControlloNo.png>] [7]
+[6] [7 <./images//5wire.png> <./images//CircuitoControlloNo.png>] [8]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[8]
+[9] [10]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 272.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 272.
+(hyperref)                removing `math shift' on input line 305.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 275.
+(hyperref)                removing `math shift' on input line 305.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\varphi' on input line 275.
+(hyperref)                removing `math shift' on input line 308.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\vartheta' on input line 275.
+(hyperref)                removing `\varphi' on input line 308.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\psi' on input line 275.
+(hyperref)                removing `\vartheta' on input line 308.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 275.
+(hyperref)                removing `\psi' on input line 308.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 308.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9] [10] [11]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 458.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\alpha' on input line 458.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 458.
-
-[12] [13]
+[11] [12]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[14] [15] [16]
+[13]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 496.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\alpha' on input line 496.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 496.
+
+[14] [15] [16pdfTeX warning (ext4): destination with the same identifier (name{
+equation.3.16}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.565 \end{equation}
+                    ]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [17] [18]
-<./images//circle.png, id=369, 463.7325pt x 312.41719pt>
+Overfull \hbox (0.76459pt too wide) in paragraph at lines 806--806
+ [][]\OT1/cmr/m/n/10.95 Piattaforma 
+ []
+
+[19]
+Overfull \hbox (0.76459pt too wide) in paragraph at lines 941--941
+ [][]\OT1/cmr/m/n/10.95 Piattaforma 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[20] [21]
+
+LaTeX Warning: Reference `' on page 22 undefined on input line 1046.
+
+[22] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+) [23]
+<./images//segnale.png, id=419, 491.8375pt x 408.52625pt>
+File: ./images//segnale.png Graphic file (type png)
+<use ./images//segnale.png>
+Package pdftex.def Info: ./images//segnale.png  used on input line 1104.
+(pdftex.def)             Requested size: 491.83629pt x 408.52525pt.
+ [24]
+[25 <./images//segnale.png>]
+<./images//filtraggio.png, id=458, 1921.1775pt x 921.4425pt>
+File: ./images//filtraggio.png Graphic file (type png)
+<use ./images//filtraggio.png>
+Package pdftex.def Info: ./images//filtraggio.png  used on input line 1136.
+(pdftex.def)             Requested size: 1921.17284pt x 921.44026pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [26 <./images//filtraggio.png>]
+<./images//circle.png, id=479, 463.7325pt x 312.41719pt>
 File: ./images//circle.png Graphic file (type png)
 <use ./images//circle.png>
-Package pdftex.def Info: ./images//circle.png  used on input line 1022.
+Package pdftex.def Info: ./images//circle.png  used on input line 1156.
 (pdftex.def)             Requested size: 463.73135pt x 312.41641pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<./images//infinity.png, id=370, 421.575pt x 316.18124pt>
+<./images//infinity.png, id=480, 421.575pt x 316.18124pt>
 File: ./images//infinity.png Graphic file (type png)
 <use ./images//infinity.png>
-Package pdftex.def Info: ./images//infinity.png  used on input line 1029.
+Package pdftex.def Info: ./images//infinity.png  used on input line 1163.
 (pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -906,53 +983,48 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) [19] [20 <./images//circle.png (PNG copy)> <./images//infinity.png (PNG copy)
->] [21] (./stewart.aux)
+) [27] [28 <./images//circle.png (PNG copy)> <./images//infinity.png (PNG copy)
+>] (./stewart.aux)
+
+LaTeX Warning: There were undefined references.
+
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `stewart.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `stewart.out':
-(rerunfilecheck)             Before: EEB77B93B5F72DF85B9F708B685C397C;2479
-(rerunfilecheck)             After:  FDE901FAC22100548E432085609ECDEF;2511.
+Package rerunfilecheck Info: File `stewart.out' has not changed.
+(rerunfilecheck)             Checksum: F1FB96D3B1D7378B714AAFBFD187D826;2828.
  ) 
 Here is how much of TeX's memory you used:
- 21163 strings out of 481190
- 412013 string characters out of 5914188
- 753978 words of memory out of 5000000
- 37578 multiletter control sequences out of 15000+600000
- 417880 words of font info for 81 fonts, out of 8000000 for 9000
+ 23015 strings out of 481190
+ 436557 string characters out of 5914188
+ 1040459 words of memory out of 5000000
+ 39358 multiletter control sequences out of 15000+600000
+ 418215 words of font info for 83 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 87i,14n,89p,2173b,831s stack positions out of 5000i,500n,10000p,200000b,200000s
- </home/daniele/.texlive2020/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.6
-00pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive
+ 87i,11n,89p,2173b,1963s stack positions out of 5000i,500n,10000p,200000b,200000s
+ </home/daniele/.texlive2020/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.6
+00pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmti9.pfb>
-Output written on stewart.pdf (21 pages, 362500 bytes).
+dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on stewart.pdf (28 pages, 725736 bytes).
 PDF statistics:
- 487 PDF objects out of 1000 (max. 8388607)
- 430 compressed objects within 5 object streams
- 114 named destinations out of 1000 (max. 500000)
- 297 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 595 PDF objects out of 1000 (max. 8388607)
+ 529 compressed objects within 6 object streams
+ 167 named destinations out of 1000 (max. 500000)
+ 347 words of extra memory for PDF output out of 10000 (max. 10000000)
 

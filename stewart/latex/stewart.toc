@@ -1,35 +1,40 @@
 \babel@toc {italian}{}
 \babel@toc {italian}{}
-\contentsline {section}{\numberline {1}Introduzione}{3}{section.1}%
-\contentsline {section}{\numberline {2}Tecnologie impiegate}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Piattaforma Arduino}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Servomotori}{3}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Piano resistivo}{4}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Tipologie e funzionamento di un piano resistivo}{5}{subsubsection.2.3.1}%
+\contentsline {section}{\numberline {1}Introduzione}{4}{section.1}%
+\contentsline {section}{\numberline {2}Tecnologie impiegate}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Piattaforma Arduino}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Servomotori}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Piano resistivo}{5}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Tipologie e funzionamento di un piano resistivo}{6}{subsubsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.4}Ponte ad H}{6}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Joystick analogico}{6}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Piattaforma di Stewart}{7}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Descrizione}{7}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Robot seriali e paralleli}{7}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Analisi piattaforma di Stewart con attuatori rotativi}{8}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Analisi problema piattaforma}{8}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}Analisi traslazione \boldmath $(x,y,z)$}{9}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}Analisi rotazione \boldmath $(\varphi ,\vartheta ,\psi )$}{9}{subsubsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.3}Conclusione problema piattaforma}{10}{subsubsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.5}Analisi problema attuatori rotativi}{11}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}Posizione del giunto biella manovella}{11}{subsubsection.3.5.1}%
-\contentsline {subsubsection}{\numberline {3.5.2}Determinazione angolo \boldmath $\alpha $}{12}{subsubsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.3}Controllo servomotori}{13}{subsubsection.3.5.3}%
-\contentsline {subsection}{\numberline {3.6}Schema a blocchi}{14}{subsection.3.6}%
-\contentsline {section}{\numberline {4}Controllo della pallina con piano stabilizzato}{15}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Controllore PID}{15}{subsection.4.1}%
-\contentsline {subsubsection}{\numberline {4.1.1}Equazione del controllore PID}{15}{subsubsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.2}Miglioramenti e ottimizzazioni del controllore PID}{17}{subsection.4.2}%
-\contentsline {section}{\numberline {5}Realizzazione pratica}{18}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Assemblaggio}{18}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Programmazione}{19}{subsection.5.2}%
-\contentsline {subsubsection}{\numberline {5.2.1}Controllo della piattaforma di Stewart}{21}{subsubsection.5.2.1}%
-\contentsline {subsubsection}{\numberline {5.2.2}Lettura e filtraggio dati piano resistivo}{21}{subsubsection.5.2.2}%
-\contentsline {subsubsection}{\numberline {5.2.3}Controllore PID}{21}{subsubsection.5.2.3}%
-\contentsline {subsubsection}{\numberline {5.2.4}Assegnazione dei comandi}{21}{subsubsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.3}Taratura}{21}{subsection.5.3}%
+\contentsline {subsection}{\numberline {2.5}Joystick analogico}{8}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Piattaforma di Stewart}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Descrizione}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Robot seriali e paralleli}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Analisi piattaforma di Stewart con attuatori rotativi}{10}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Analisi problema piattaforma}{10}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Analisi traslazione \boldmath $(x,y,z)$}{11}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Analisi rotazione \boldmath $(\varphi ,\vartheta ,\psi )$}{11}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Conclusione problema piattaforma}{13}{subsubsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.5}Analisi problema attuatori rotativi}{13}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Posizione del giunto biella manovella}{14}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Determinazione angolo \boldmath $\alpha $}{15}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Controllo servomotori}{16}{subsubsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.6}Schema a blocchi}{17}{subsection.3.6}%
+\contentsline {section}{\numberline {4}Controllo della pallina con piano stabilizzato}{18}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Controllore PID}{18}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Equazione del controllore PID}{18}{subsubsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.2}Miglioramenti e ottimizzazioni del controllore PID}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Algoritmo di controllo}{21}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Realizzazione pratica}{22}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Assemblaggio}{22}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Programmazione}{23}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Controllo della piattaforma di Stewart}{23}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Lettura e filtraggio dati ottenuti dal piano resistivo}{24}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Controllore PID}{27}{subsubsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.4}Assegnazione dei comandi}{27}{subsubsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.3}Taratura}{27}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Risultati}{27}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Piattaforma di stewart}{27}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Piano stabilizzato}{27}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Conclusioni}{27}{section.7}%

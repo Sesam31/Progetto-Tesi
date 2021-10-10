@@ -1,4 +1,6 @@
-\documentclass[11pt]{article}
+\documentclass[12pt,twoside]{article}
+
+
 \usepackage{amsmath, amssymb, amscd, amsthm, amsfonts}
 \usepackage[a4paper]{geometry}
 \usepackage{graphicx}
@@ -7,6 +9,36 @@
 \usepackage[italian]{babel}
 \usepackage{tikz}
 \usetikzlibrary{shapes, arrows.meta, positioning}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+\definecolor{orange}{rgb}{0.88, 0.55, 0.24}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{orange},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
 
 \oddsidemargin 0pt
 \evensidemargin 0pt
@@ -35,6 +67,7 @@
 \begin{document}
 
 \maketitle
+\newpage
 \tableofcontents
 \newpage
 
@@ -175,7 +208,7 @@ Per facilitare e rendere più intuitivo il controllo del sistema è stato impieg
 
 
 \subsection{Descrizione}\label{piattaformastewart}
-La piattaforma di Stewart è un particolare sistema meccanico, costituito da una base su cui sono posizionati sei attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune sono gli attuatori prismatici: pistoni lineari che presentano un solo grado di libertà. Nel progetto vengono impiegati servomotori che presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è possibile risalire a un modello equivalente a quello degli attuatori prismatici che garantisce un range di movimento ottimale.
+La piattaforma di Gough-Stewart è un particolare sistema meccanico, realizzato per la prima volta nel 1954 dall'ingegnere britannico E. Gough e successivamente portata alla notorietà tramite la pubblicazione di un paper nel 1965 da parte di D. Stewart dal titolo "A Platform with Six Degrees of Freedom". Questo è descritto come un robot esapode, ovvero costituito da una base su cui sono posizionati sei attuatori di vario tipo collegati alla piattaforma superiore mediante giunti snodabili. Un esempio comune di attuatori sono i prismatici: pistoni lineari che presentano un solo grado di libertà e offrono numerose proprietà relative alla precisione a alla stabilità. Nel progetto vengono impiegati servomotori che presentano il vantaggio di essere certamente più economici rispetto agli attuatori prismatici ma il sistema risultante assume un grado di complessità superiore. Tramite opportune osservazioni matematiche è possibile risalire a un modello equivalente a quello degli attuatori prismatici che garantisce un range di movimento ottimale.
 
 \subsection{Robot seriali e paralleli}\label{robotserialiparalleli}
 È utile enunciare la differenza tra robot di tipo seriale e parallelo per comprendere le successive implicazioni a livello matematico.
@@ -268,7 +301,7 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 \caption{Sistemi di rifermento e vettori nel piano di Stewart.} \label{fig:sistema}
 \end{figure}
 
-\newpage
+
 \subsubsection{Analisi traslazione \boldmath$(x,y,z)$}\label{xyz}
 Le variazioni in $(x,y,z)$ comportano una semplice traslazione dei punti del piano, questa viene indicata con un vettore $\hat T$ che andrà poi a sommarsi alla variazione dovuta a $(\varphi,\vartheta,\psi)$.
 
@@ -375,15 +408,20 @@ z'
 \end{bmatrix}
 \end{equation}
 
-Le singole matrici possono essere viste come applicazioni lineari, si procede quindi nella moltiplicazione di \eqref{rx}, \eqref{ry} e \eqref{rz} per ottenere una singola applicazione lineare composta. Notare che nel prodotto tra matrici non vale la proprietà commutativa, bisogna quindi valutare attentamente l'ordine di moltiplicazione, altrimenti si otterrà una rotazione erronea. I passaggi intermedi vengono omessi in quanto ripetono tre volte una semplice operazione di moltiplicazione tra matrici.
-\begin{align}\label{rg}
-    R_g &= R_z(\psi)\cdot R_y(\vartheta)\cdot R_x(\varphi)\\
-    		&= \begin{bmatrix}
+Le singole matrici possono essere viste come applicazioni lineari, si procede quindi nella moltiplicazione di \eqref{rx}, \eqref{ry} e \eqref{rz} per ottenere una singola applicazione lineare composta detta matrice di rotazione globale $R_g$. Notare che nel prodotto tra matrici non vale la proprietà commutativa, bisogna quindi valutare attentamente l'ordine di moltiplicazione, altrimenti si otterrà una rotazione erronea. I passaggi intermedi vengono omessi in quanto ripetono tre volte una semplice operazione di moltiplicazione tra matrici.
+
+\begin{equation}\label{rg}
+    R_g = R_z(\psi)\cdot R_y(\vartheta)\cdot R_x(\varphi)\\
+\end{equation}
+Il cui risultato è quindi:
+\begin{equation}\label{rg}
+\resizebox{0.9\hsize}{!}{$
+\begin{bmatrix}
 			cos(\vartheta)cos(\psi) & -cos(\varphi)sin(\psi)+sin(\varphi)sin(\vartheta)cos(\psi) & sin(\varphi)sin(\psi)+cos(\varphi)sin(\vartheta)cos(\psi)\\
 			cos(\vartheta)sin(\psi) & cos(\varphi)cos(\psi)+sin(\varphi)sin(\vartheta)sin(\psi) & -sin(\varphi)cos(\psi)+cos(\varphi)sin(\vartheta)sin(\psi)\\
 			-sin(\vartheta) & sin(\varphi)cos(\vartheta) & cos(\varphi)cos(\vartheta)
-			\end{bmatrix}
-\end{align}
+			\end{bmatrix}$}
+\end{equation}
 
 Moltiplicando il vettore $\hat{p_i}$ per la matrice di rotazione \eqref{rg} si ottengono le coordinate del punto $P_i$ relative al sistema di riferimento della base. 
 
@@ -460,37 +498,37 @@ Per la determinazione dell'angolo $\alpha$ ottimale esistono due tecniche princi
 
 Per il teorema di Pitagora in tre dimensioni abbiamo che:
 \begin{align}\label{m2}
-    m^2 &= (x_{bm}-x_b)^2+(y_{bm}-y_b)^2+(z_{bm}-z_b)^2\\
+    m^2 &= (x_{bm}-x_b)^2+(y_{bm}-y_b)^2+(z_{bm}-z_b)^2\nonumber\\
     		&= (x_{bm}^2+y_{bm}^2+z_{bm}^2)+(x_{b}^2+y_{b}^2+z_{b}^2)-2(x_{bm}x_b+y_{bm}y_b+z_{bm}z_b)
 \end{align}
 \begin{align}\label{l2}
-    l^2 &= (x_{q}-x_b)^2+(y_{q}-y_b)^2+(z_{q}-z_b)^2\\
+    l^2 &= (x_{q}-x_b)^2+(y_{q}-y_b)^2+(z_{q}-z_b)^2\nonumber\\
     		&= (x_{q}^2+y_{q}^2+z_{q}^2)+(x_{b}^2+y_{b}^2+z_{b}^2)-2(x_{q}x_b+y_{q}y_b+z_{q}z_b)
 \end{align}
 \begin{align}\label{b2}
-    b^2 &= (x_{q}-x_{bm})^2+(y_{q}-y_{bm})^2+(z_{q}-z_{bm})^2\\
+    b^2 &= (x_{q}-x_{bm})^2+(y_{q}-y_{bm})^2+(z_{q}-z_{bm})^2\nonumber\\
     		&= (x_{q}^2+y_{q}^2+z_{q}^2)+(x_{bm}^2+y_{bm}^2+z_{bm}^2)-2(x_{q}x_{bm}+y_{q}y_{bm}+z_{q}z_{bm})
 \end{align}
 
 I valori di $m^2$, $l^2$ e $b^2$ sono noti, si sostituiscono le equazioni \eqref{m2} e \eqref{l2} in \eqref{b2}, si ottiene:
 \begin{align}\label{passaggio}
-    l^2-(b^2-m^2) =& 2(x_{b}^2+y_{b}^2+z_{b}^2)+2x_{bm}(x_q-x_b)+2y_{bm}(y_q-y_b)+2z_{bm}(z_q-z_b)\\ 
+    l^2-(b^2-m^2) =& 2(x_{b}^2+y_{b}^2+z_{b}^2)+2x_{bm}(x_q-x_b)+2y_{bm}(y_q-y_b)+2z_{bm}(z_q-z_b)\nonumber\\ 
     				   & -2(x_qx_b+y_qy_b+z_qz_b)
 \end{align}
 
 Si sostituiscono le equazioni dei valori noti $x_{bm}$, $y_{bm}$ e $z_{bm}$ calcolate in \eqref{bmpari} e si svolgono le dovute semplificazioni.
 \begin{align}\label{passaggio}
-    l^2-(b^2-m^2) =& 2(x_{b}^2+y_{b}^2+z_{b}^2)+2[m \cdot cos(\alpha)cos(\beta)+x_b](x_q-x_b)\\
-    &+2[m \cdot cos(\alpha)sin(\beta)+y_b](y_q-y_b)+2[m \cdot sin(\alpha)+z_b](z_q-z_b)\\ 
-    				   & -2(x_qx_b+y_qy_b+z_qz_b)\\
-    				   =& 2m \cdot cos(\alpha)cos(\beta)(x_q-x_b)+2m \cdot cos(\alpha)sin(\beta)(y_q-y_b)\\
-    				   & +2m \cdot sin(\alpha)(z_q-z_b)\\
+    l^2-(b^2-m^2) =& 2(x_{b}^2+y_{b}^2+z_{b}^2)+2[m \cdot cos(\alpha)cos(\beta)+x_b](x_q-x_b)\nonumber\\
+    &+2[m \cdot cos(\alpha)sin(\beta)+y_b](y_q-y_b)+2[m \cdot sin(\alpha)+z_b](z_q-z_b)\nonumber\\ 
+    				   & -2(x_qx_b+y_qy_b+z_qz_b)\nonumber\\
+    				   =& 2m \cdot cos(\alpha)cos(\beta)(x_q-x_b)+2m \cdot cos(\alpha)sin(\beta)(y_q-y_b)\nonumber\\
+    				   & +2m \cdot sin(\alpha)(z_q-z_b)\nonumber\\
     				   =& 2m \cdot sin(\alpha)(z_q-z_b) +2m \cdot cos(\alpha)[cos(\beta)(x_q-x_b)+sin(\beta)(y_q-y_b)]   
 \end{align}
 
 L'equazione \eqref{passaggio} è nella forma $L=Mcos(\alpha)+Nsin(\alpha)$ e può essere ulteriormente compattata considerando la formula della somma di segnali sinusoidali di diversa ampiezza, secondo la quale un segnale $Acos(\alpha)+Bsin(\alpha)$ può essere riscritto come $Csin(\alpha + \nu)$, infatti:
 \begin{equation}\label{c}
-Csin(\alpha + \nu)=Csin(\alpha)\cdot cos(\nu)+Ccos(\alpha)\cdot sin(\nu)
+Csin(\alpha + \nu)=Csin(\alpha)\cdot cos(\nu)+Ccos(\alpha)\cdot sin(\nu)\nonumber
 \end{equation}
 \begin{equation}\label{tg}
     \begin{cases}
@@ -501,7 +539,7 @@ Csin(\alpha + \nu)=Csin(\alpha)\cdot cos(\nu)+Ccos(\alpha)\cdot sin(\nu)
 
 Applicando il risultato ottenuto in \eqref{tg} possiamo quindi scrivere:
 \begin{align}\label{alfa}
-    L= \sqrt{M^2+N^2}\cdot sin\left(\alpha+arctan\left(\frac{N}{M}\right)\right) \quad  &\Rightarrow\\ sin\left(\alpha+arctan\left(\frac{N}{M}\right)\right)=\frac{L}{\sqrt{M^2+N^2}}  \quad  &\Rightarrow\\
+    L= \sqrt{M^2+N^2}\cdot sin\left(\alpha+arctan\left(\frac{N}{M}\right)\right) \quad  &\Rightarrow\nonumber\\ sin\left(\alpha+arctan\left(\frac{N}{M}\right)\right)=\frac{L}{\sqrt{M^2+N^2}}  \quad  &\Rightarrow\nonumber\\
     \alpha=arsin\left(\frac{L}{\sqrt{M^2+N^2}}\right)-arctan\left(\frac{N}{M}\right)
 \end{align}
 Con rispettivamente:
@@ -515,7 +553,7 @@ Al fine di controllare i servomotori in modo ottimale è necessario effettuare a
 É necessario definire un'altezza $h_0$ e un angolo $\alpha_0$ di riposo dei servomotori, questo è scelto in modo che le manovelle dei servomotori siano orizzontali, quindi $\alpha_0=0^\circ$, l'altezza è ricavata sperimentalmente valutando a quale valore di $h$ i servomotori lavorano specularmente rispetto all'asse $x$.
 Siccome i servomotori hanno caratteristiche variabili a seconda del produttore bisogna definire una relazione tra la variazione in $\mu s$ del segnale PWM e la variazione dell'angolo $\alpha$ in radianti. Notare inoltre come questa relazione non valga quando il servomotore si trova vicino alla massima escursione, per avere una misura accurata analizziamo quanti $\mu s$ sono necessari per variare $\alpha$ dalla posizione orizzontale a 45°, questo è svolto nel rapporto:
 \begin{align}\label{rel}
-r &=\frac{\Delta t}{\Delta\alpha}\cdot \frac{360^\circ}{2 \pi}\\
+r &=\frac{\Delta t}{\Delta\alpha}\cdot \frac{360^\circ}{2 \pi}\nonumber\\
 	&= \frac{375}{45^\circ}\cdot \frac{360^\circ}{2 \pi} \quad [\mu s/rad]
 \end{align}
 Dopo essere risaliti sperimentalmente al valore $\Delta t = 375 \mu s$. In questo modo moltiplicando un angolo $\alpha$ per la \eqref{rel} otteniamo i corrispettivi $\mu s$ da assegnare al servomotore. Si possono quindi scrivere le equazioni di controllo per i servomotori, distinguendo sempre tra pari e dispari.
@@ -527,7 +565,7 @@ Dopo essere risaliti sperimentalmente al valore $\Delta t = 375 \mu s$. In quest
 \end{equation}
 Dove $w_i^0$ indicano le posizioni a riposo dei servomotori in $\mu s$.
 Per migliorare la sicurezza del sistema è stato introdotto un controllo degli angoli assegnati ai servomotori, in modo da evitare possibili sforzi.
-Il sistema di controllo analizza tutti i valori di $w_i$ prima che questi siano assegnati ai servomotori, li confronta con un range di valori accettabili e verifica che non siano valori impossibili (NaN).
+Il sistema di controllo analizza tutti i valori di $w_i$ prima che questi siano assegnati ai servomotori, li confronta con un range di valori accettabili e verifica che non siano valori impossibili (\texttt{NaN}).
 Se le condizioni sono rispettate procede assegnando i valori, altrimenti entra in una routine di allarme e blocca il sistema. Il funzionamento globale del sistema è riassunto nello schema a blocchi presente nella sezione \ref{schemablocchi}.
 
 \subsection{Schema a blocchi}\label{schemablocchi}
@@ -670,7 +708,7 @@ Questi tre elementi sommati restituiscono l'equazione tempo continua seguente:
 \end{equation}
 
 Si può quindi procedere rappresentando complessivamente il sistema da controllare
-e il relativo controllore, che risulta essere come in figura \ref{fig:ps}, dove i segnali più importanti sono:
+e il relativo controllore, che risulta essere come in figura \ref{fig:PIDTC}, dove i segnali più importanti sono:
 \begin{itemize}
 \item x(t): il setpoint o obbiettivo da raggiungere, impostato manualmente.
 \item u(t): il segnale d'uscita del sistema, ottenuto dal digitalizzatore resistivo.
@@ -766,7 +804,7 @@ e il relativo controllore, che risulta essere come in figura \ref{fig:ps}, dove 
 
 \end{tikzpicture}
 }
-\caption{Schema logico controllore PID applicato al problema.} \label{fig:ps}
+\caption{Schema logico controllore PID applicato al problema.} \label{fig:PIDTC}
 \end{figure}
 
 
@@ -789,7 +827,7 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
 \end{itemize}
 \begin{figure}[h!]
 \centering
-\scalebox{0.6}{
+\scalebox{0.75}{
 \begin{tikzpicture}[font=\small,thick]
  
 % Start block
@@ -810,8 +848,13 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
     minimum width=1cm,
     minimum height=1cm,
      text centered
-] (int) {$\Sigma$};
+] (int) {$\Sigma_{t_k}$};
 
+\node[draw, right=of int,
+    minimum width=1cm,
+    minimum height=1cm,
+     text centered
+] (filter4) {$\Lambda$};
 
 
 \node[draw, right=of int, 
@@ -823,7 +866,7 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
     minimum width=1cm,
     minimum height=1cm,
      text centered
-] (filter3) {$\Phi$};
+] (filter3) {$\Lambda$};
 
 \node[draw,
     right=of filter3,
@@ -856,7 +899,7 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
     minimum width=1cm,
     minimum height=1cm,
      text centered
-] (der) {$\Delta$};
+] (der) {$\Delta_{t_k}$};
 
 \node[draw,
     right=of der,
@@ -882,8 +925,11 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
 \draw [-latex](block2) edge (int);
 \draw [-latex](D) edge (der);
 %\draw [-latex](int) -- (S)node[anchor=south, xshift= 1cm]{$c[k]$};
-%\draw [-latex](P) -| (S)node[xshift=0.25cm,yshift=0.75cm]{$+$}node[xshift=-0.75cm,yshift=0.25cm]{$+$}node[xshift=-0.25cm,yshift=-0.75cm]{$+$};
-%\draw [-latex]	(der) -| (S);
+\draw [-latex](P) -| (S)node[xshift=0.25cm,yshift=0.75cm]{$+$}node[xshift=-0.75cm,yshift=0.25cm]{$+$}node[xshift=-0.25cm,yshift=-0.75cm]{$+$};
+\draw [-latex]	(filter1) -| (S);
+\draw [-latex]	(filter4) -- (S);
+\draw [-latex]	(int) -- (filter4);
+\draw [-latex]	(der) -- (filter1);
 \draw [-latex]	(S) edge (filter3);	
 \draw [-latex]	(filter3) edge (block3);	
 \draw [-latex]	(block3) edge (block4);
@@ -891,12 +937,14 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
 \draw 	(19,0)node[anchor=south]{$u[k]$} -- (filter2);
 \draw (filter2) -- (19,-3);		  
 \draw [-latex]	(19,-3) -| (block1);	
-
-
 \end{tikzpicture}
 }
 \caption{Schema logico controllore PID migliorato.} \label{fig:pidmigliorato}
 \end{figure}
+Questi miglioramenti operativi sono mostrati in figura \ref{fig:pidmigliorato}, dove $\Sigma{t_k}$ indica l'integrale discretizzato e $\Delta{t_k}$ la derivata alle differenze finite. I filtri e i limitatori sono poi indicati rispettivamente con le lettere greche $\Phi$ e $\Lambda$.
+
+\subsection{Algoritmo di controllo}
+Vista la versatilità di applicazione del controllore PID, l'intero problema di controllo si traduce nella determinazione della posizione della pallina sul piano e lo svolgimento di opportune equazioni per ottenere i parametri richiesti come la velocità e l'accelerazione. Il comportamento del sistema di controllo si può quindi riassumere nello schema a blocchi di figura \ref{fig:stabilizzazione}, dove il blocco di assegnazione dei valori alla piattaforma richiama quello di figura \ref{fig:ps}.
 
 \begin{figure}[h!]
 \centering
@@ -963,9 +1011,9 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
 
 \node[draw,
     right=of acc,
-    minimum width=3.5cm,
+    minimum width=3cm,
     minimum height=1cm,
-    text width=3cm, text centered, xshift= 1.2cm
+    text width=2.5cm, text centered, xshift= 1.2cm
 ] (max) { Usa valore massimo};
  
 
@@ -995,7 +1043,7 @@ Nonostante il PID sia di per sé un ottimo contro teorico, nella realtà sono ne
 La realizzazione pratica del progetto è stata un processo discretamente complesso, svolto in modo sequenziale e analizzando costantemente le varie criticità. Questo si è svolto principalmente in 3 fasi: l'assemblaggio, la programmazione e la taratura del sistema, rispettivamente descritte in dettaglio nelle sezioni \ref{assemblaggio}, \ref{programmazione} e \ref{taratura}.
 
 \subsection{Assemblaggio}\label{assemblaggio}
-Sono state fornite la base con i servomotori, la piattaforma ed i relativi braccetti di collegamento, il piano resistivo e la scheda arduino UNO dotata di shield. I primi dubbi si sono verificati durante l'assemblaggio in quanto esistono quattro possibili varianti di piattaforma di Stewart con attuatori rotativi, rispettivamente con le manovelle interne o esterne e con i braccetti collegati alla piattaforma sullo stesso lato o su lati opposti. Analizzando la piattaforma si è preferito optare per una disposizione con manovelle esterne e braccetti su lati opposti. Si nota come queste configurazioni siano completamente equivalenti a livello matematico e necessitano unicamente di un ricalcolo della posizione dei punti di aggancio della piattaforma, il che mostra l'adattabilità del modello stesso. Alcuni dei pezzi necessari al completamento dell'assemblaggio, come gli agganci per la piattaforma e il piano resistivo, erano mancanti e dovevano essere realizzati. Disponendo di una stampante 3D si è optato per stampare i pezzi in modo da permettere una prototipazione rapida. Non disponendo dei file relativi alle dimensioni della base e della piattaforma, di compensato tagliato al laser, è stato fondamentale ricostruire fedelmente il modello in ambiene CAD per poi procedere alla modellazione delle parti mancanti (figura). 
+Sono state fornite la base con i servomotori, la piattaforma ed i relativi braccetti di collegamento, il piano resistivo e la scheda arduino UNO dotata di shield. I primi dubbi si sono verificati durante l'assemblaggio in quanto esistono quattro possibili varianti di piattaforma di Stewart con attuatori rotativi, rispettivamente con le manovelle interne o esterne e con i braccetti collegati alla piattaforma sullo stesso lato o su lati opposti. Analizzando la piattaforma si è preferito optare per una disposizione con manovelle esterne e braccetti su lati opposti. Si nota come queste configurazioni siano completamente equivalenti a livello matematico e necessitano unicamente di un ricalcolo della posizione dei punti di aggancio della piattaforma, il che mostra l'adattabilità del modello stesso. Alcuni dei pezzi necessari al completamento dell'assemblaggio, come gli agganci per la piattaforma e il piano resistivo, erano mancanti e dovevano essere realizzati. Disponendo di una stampante 3D si è optato per stampare i pezzi in modo da permettere una prototipazione rapida. Non disponendo dei file relativi alle dimensioni della base e della piattaforma, di compensato tagliato al laser, è stato fondamentale ricostruire fedelmente il modello in ambiene CAD per poi procedere alla modellazione delle parti mancanti (figura \ref{}). 
 
 I modelli sono stati realizzati con il software Fusion360 e stampati in materiale plastico PLA con infill a nido d'ape per avere un buon compromesso tra leggerezza e rigidità. Ultimata la costruzione si è rivolta l'attenzione alle componenti elettroniche, innanzitutto è stato realizzato un connettore apposito per permettere un collegamento stabile tra i servomotori e la scheda Arduino. Notando la fragilità delle uscite del digitalizzatore, tramite un flat-cable flessibile, si è preferito realizzare un apposito aggacio che serva innanzitutto da strain-relief e faciliti la connessione dei cavi dupont per interfacciarsi con Arduino. Come precedentemente esposto nella sezione \ref{hbridge}, in seguito ad un analisi tramite multimetro della resistenza del digitalizzatore si è notato che un controllo diretto richiamerebbe solo $2V$, più che dimezzando la risoluzione del piano rispetto ai $5V$ nominali. La realizzazione pratica del driver per il piano resistivo richiede l'impiego di un montaggio apposito su basetta di vetronite per ridurre al minimo le capacità parassite e i falsi contatti rispetto ad una basetta sperimentale. Non essendo certi dell'influenza dello shoot-through\footnote{Conduzione simultanea di entrambi i mosfet su un ramo durante la commutazione.} dei MOSFET è stata prevista una resistenza di $1\Omega$ verso massa, in modo da limitare l'eventuale corrente massima a $5A$, entro il range previsto dal datasheet di $4A$ continui e $27A$ pulsati. Un altra caratteristica è la presenza delle resistenze di Gate, queste sono state previste nel caso in cui si dovesse eseguire un ulteriore pilotaggio tramite componente attivo per evitare lo shoot-through ma in seguito alla prova pratica questo non è stato necessario. É seguita un analisi dei tempi con l'oscilloscopio, importantissima nella successiva parte di programmazione, con la quale si è determinato il periodo minimo di campionamento che risulta essere di soli $50\mu s$. Infine è stato implementato senza particolari accorgimenti il joystick in quanto è bastato collegare i cavi direttamente allo shield per avere delle ottime letture.
 
@@ -1009,11 +1057,97 @@ La programmazione è senza dubbio la parte principale del progetto e per sa sua 
 %\end{itemize}
 %Segue un analisi di queste procedure.
 \subsubsection{Controllo della piattaforma di Stewart}
-\subsubsection{Lettura e filtraggio dati piano resistivo}
+Il controllo della piattaforma di Stewart è stato trattato in modo estensivo dal punto di vista matematico nella sezione \ref{pianostewart}, la programmazione in questo caso si occupa quindi di riproporre fedelmente queste equazioni in linguaggio \texttt{C}, con alcuni accorgimenti specifici relativi all'implementazione del software stesso. Come struttura dati, visto il numero elevato di variabli, si è scelto di impiegare le matrici, vista anche la facilità di implementazione di algoritmi per eseguire le varie operazioni richieste. Una nota particolare va fatta in merito all'algoritmo di controllo delle posizioni irraggiungibili presente nel seguente listato.
+\begin{lstlisting}[language=C]
+int emergenza = 0;
+  for(int i = 0; i < 6; i++){
+    if(constrain(getAmpImp(alfa[i],i),inf,sup) == sup ||
+       constrain(getAmpImp(alfa[i],i),inf,sup) == inf ||
+       isnan(constrain(getAmpImp(alfa[i],i),inf,sup))){     
+      emergenza++;
+    }
+  }
+  if(emergenza == 0){
+    for(int i = 0; i < 6; i++){
+        servo[i].writeMicroseconds(constrain(getAmpImp(alfa[i],i),inf,sup));
+    }
+  }
+  else{
+    Serial.println("Limite raggiunto, arresto motori.");
+    fermoEmergenza();
+  }
+\end{lstlisting}
+Ogni computazione della posizione richiesta comporta la generazione di sei valori che saranno poi assegnati come angoli ai servomotori. Prima che questo avvenga, un ciclo \texttt{for} si occupa di controllare tutti i valori generati per verificare che questi siano compresi in un limite inferiore o superiore, ma soprattutto verifica che il valore sia effettivamente computabile. Nella formula \eqref{alfa}, nel caso si assegni un valore impossibile la funzione $arcsin$ diventa indefinita, espressa in \texttt{C} con il simbolo \texttt{NaN}, è per questo fondamentale l'impiego della funzione \texttt{isnan} per verificare se questo è il caso. Se una delle tre condizioni non è rispettata il contatore \texttt{emergenza} viene incrementato, utile per capire quanti servomotori abbiano ricevuto un valore errato. A questo punto, se non si sono verificati disguidi, si può procedere con l'assegnazione dei valori impiegando \texttt{writeMicroseconds}, che assegna l'angolo ai sevomotori dopo che è stato opportunamente convertito in microsecondi dalla funzione \texttt{getAmpImp}.
+Se uno degli angoli non rispetta i vincoli l'assegnazione viene saltata e si passa direttamente alla routine di blocco \texttt{fermoEmergenza} che blocca il sistema e accende un LED lampeggiante di segnalazione.
+
+\subsubsection{Lettura e filtraggio dati ottenuti dal piano resistivo}
+La lettura dei segnali provenienti dal piano resistivo è svolta leggendo sequenzialmente lo stato dei pin analogici di Arduino con la seguente funzione.
+\begin{lstlisting}[language=C]
+void getSense(){
+  digitalWrite(in1,HIGH);
+  digitalWrite(in2,LOW);
+  delayMicroseconds(on);
+  x = (analogRead(sensePin)-100)*(0.34/820);
+
+  digitalWrite(in1,LOW);
+  digitalWrite(in2,HIGH);
+  delayMicroseconds(on);
+  y = (analogRead(sensePin)-100)*(0.27/820);
+  lastsense = micros();
+}
+\end{lstlisting}
+Questa prevede la creazione di un gradiente lungo l'asse $x$, per la durata espressa dalla variabile \texttt{on} che permette la stabilizzazione del segnale, la cui durata è ricavata sperimentalmente osservando il tempo di salita all'oscilloscopio come riportato in figura \ref{fig:temposalita}. 
+\begin{figure}[h!]
+\centering
+\scalebox{0.5}{
+\includegraphics{segnale.png}
+}
+\caption{Misura del tempo di salita del segnale.} \label{fig:temposalita}
+\end{figure}
+In seguito alla stabilizzazione si procede con campionamento. Lo stesso si ripete in modo del tutto analogo per l'asse $y$. Viene inoltre effettuata una semplice conversione della posizione da step a metri prima di assegnarlo alla variabile. L'elemento chiave per un buon funzionamento del controllore è l'impiego di dati liberi da rumore e impulsi esterni, i dati provenienti dal piano resistivo però si sono subito mostrati non ideali, presentando un rumore impulsivo estremamente elevato, di ampiezza pari al 50\% della massima escursione del segnale utile. Questi impulsi sono principalmente dovuti alla presenza di una lieve zigrinatura sul digitalizzatore resistivo, probabilmente dovuta ai distanziatori tra i due strati conduttivi, che dà alla pallina un moto non del tutto uniforme ma con dei piccoli sobbalzi che ne fanno perdere il contatto. Per evitare questo effetto si è provato a sovrapporre al piano uno strato di materiale liscio, che colmasse le asperità, ma questo si è rivelato di scarso successo. Visto l'obbiligo di inserire un filtraggio si è preferito un implementazione software rispetto a hardware per una maggiore flessibilità. Il filtraggio scelto non può comportare un ritardo nel tempo di risposta, si è quindi optato per un filtro che lavora in modo diretto limitando la derivata della variabile da filtrare. Nel seguente listato viene svolto il filtraggio della posizione della pallina nel piano.
+
+\begin{lstlisting}[language=C]
+xVel = (x - xOld)/deltaTime;
+yVel = (y - yOld)/deltaTime;
+
+float maxVel = 0.4;
+if(abs(xVel) > maxVel){
+  if(xVel > 0){
+    x = xOld + maxVel*(deltaTime);
+  }
+  else{
+    x = xOld - maxVel*(deltaTime);
+  }
+}
+if(abs(yVel) > maxVel){
+  if(yVel > 0){
+    y = yOld + maxVel*(deltaTime);
+  }
+  else{
+    y = yOld - maxVel*(deltaTime);
+  }
+}
+\end{lstlisting}
+In questo caso la derivata della posizione è la velocità, calcolata rispetto alla posizione precedente e al tempo di ciclo. Si è quindi imposta una velocità massima, che limita la pendenza del grafico della posizione, eliminando così in modo efficace gli impulsi più sostanziali come visibile in figura \ref{fig:filtraggioposizione}, dove la linea verde indica il segnale originale e la rossa dopo il filtraggio.
+\begin{figure}[h!]
+\centering
+\scalebox{0.2}{
+\includegraphics{filtraggio.png}
+}
+\caption{Confronto diretto tra segnale in ingresso e filtrato.} \label{fig:filtraggioposizione}
+\end{figure}
+Si nota poi come svolgendo la derivata del segnale filtrato, questa tenderà ad amplificare il piccolo rumore residuo, si è quindi deciso di ripetere un operazione di filtraggio analoga per la velocità limitando questa volta l'accelerazione massima.
+
 \subsubsection{Controllore PID}
 \subsubsection{Assegnazione dei comandi}
+L'assegnazione dei comandi è svolta tramite l'ausilio di un joystick analogico, la presenza di uno switch interno ha inoltre permesso di disporre i comandi su diversi livelli. Nel livello base sono programmate delle analisi statiche, ovvero con un setpoint fisso, il joystick centrato imposta il setpoint al centro del piano, le altre 4 direzioni (joystick in alto, basso, sinistra, destra) hanno lo scopo di spostare il setpoint nella rispettiva direzione di $6cm$. Questi setpoint sono ottimi per valutare la risposta al gradino del sistema che sarà poi fondamentale nella sezione relativa alla taratura. Il secondo livello, raggiungibile premendo l'interruttore, offre la possibilità di eseguire delle analisi dinamiche, in queste il setpoint è in costante movimento e sono utili per mostrare la responsività e la precisione del sistema. Queste analisi dinamiche si incentrano sulla realizzazione di figure di vario tipo da parte della pallina, i due esempi realizzati sono un cerchio e il simbolo di infinito. Il simbolo di infito in particolare è un ottimo circuito di prova per testare la qualità del controllo in quanto prevede tratti ad alta e bassa velocità in rettilineo e in curva.
 
 \subsection{Taratura}\label{taratura}
+
+\section{Risultati}
+\subsection{Piattaforma di stewart}
+\subsection{Piano stabilizzato}
+\section{Conclusioni}
 
 \begin{figure}[h!]
 \centering
