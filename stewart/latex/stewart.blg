@@ -1,53 +1,15 @@
-This is BibTeX, Version 0.99d (TeX Live 2020' - Flatpak')
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: stewart.aux
-The style file: alpha.bst
-I couldn't open database file references.bib
----line 102 of file stewart.aux
- : \bibdata{references
- :                    }
-I'm skipping whatever remains of this command
-I found no \citation commands---while reading file stewart.aux
-I found no database files---while reading file stewart.aux
-You've used 0 entries,
-            2543 wiz_defined-function locations,
-            558 strings with 4443 characters,
-and the built_in function-call counts, 24 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 2
-:= -- 10
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
-chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 2
-int.to.chr$ -- 1
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 3
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 2
-stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 2
-(There were 3 error messages)
+[0] Config.pm:311> INFO - This is Biber 2.16
+[0] Config.pm:314> INFO - Logfile is 'stewart.blg'
+[92] biber:340> INFO - === ven ott 15, 2021, 18:41:14
+[110] Biber.pm:415> INFO - Reading 'stewart.bcf'
+[193] Biber.pm:952> INFO - Found 8 citekeys in bib section 0
+[208] Biber.pm:4340> INFO - Processing section 0
+[221] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
+[222] bibtex.pm:1689> INFO - LaTeX decoding ...
+[236] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
+[303] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[303] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[304] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[304] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
+[309] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
+[313] bbl.pm:757> INFO - Output to stewart.bbl

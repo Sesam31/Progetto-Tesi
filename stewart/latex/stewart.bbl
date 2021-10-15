@@ -1,3 +1,186 @@
-\begin{thebibliography}{}
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
 
-\end{thebibliography}
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{pianoresistivo}{article}{}
+      \name{author}{1}{}{%
+        {{hash=31b91f5bfe2970a0978b5c6068893e75}{%
+           family={Downs},
+           familyi={D\bibinitperiod},
+           given={Rick},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{31b91f5bfe2970a0978b5c6068893e75}
+      \strng{fullhash}{31b91f5bfe2970a0978b5c6068893e75}
+      \strng{bibnamehash}{31b91f5bfe2970a0978b5c6068893e75}
+      \strng{authorbibnamehash}{31b91f5bfe2970a0978b5c6068893e75}
+      \strng{authornamehash}{31b91f5bfe2970a0978b5c6068893e75}
+      \strng{authorfullhash}{31b91f5bfe2970a0978b5c6068893e75}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Analog Applications Journal Q}
+      \field{title}{Using resistive touch screens for human/machine interface}
+      \field{volume}{3}
+      \field{year}{2005}
+      \field{pages}{5\bibrangedash 10}
+      \range{pages}{6}
+    \endentry
+    \entry{l298n}{manual}{}
+      \list{organization}{1}{%
+        {STMicroelectronics}%
+      }
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labeltitlesource}{title}
+      \field{number}{L298N}
+      \field{title}{Dual Full-Bridge Driver}
+    \endentry
+    \entry{ao3400}{manual}{}
+      \list{organization}{1}{%
+        {Alpha \& Omega Semiconductors}%
+      }
+      \field{sortinit}{3}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{labeltitlesource}{title}
+      \field{number}{AO3400}
+      \field{title}{N-Channel Enhancement Mode Field Effect Transistor}
+    \endentry
+    \entry{ao3401}{manual}{}
+      \list{organization}{1}{%
+        {Alpha \&	 Omega Semiconductors}%
+      }
+      \field{sortinit}{4}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{labeltitlesource}{title}
+      \field{number}{AO3401}
+      \field{title}{P-Channel Enhancement Mode Field Effect Transistor}
+    \endentry
+    \entry{TC4011BP}{manual}{}
+      \list{organization}{1}{%
+        {Toshiba Semiconductor}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{labeltitlesource}{title}
+      \field{number}{TC4011BP}
+      \field{title}{Toshiba CMOS digital integrated circuit silicon monolithic}
+    \endentry
+    \entry{cinematicadiretta2}{article}{}
+      \name{author}{2}{}{%
+        {{hash=f6955e713de6c446858c0d2c728bf36e}{%
+           family={Dasgupta},
+           familyi={D\bibinitperiod},
+           given={Bhaskar},
+           giveni={B\bibinitperiod}}}%
+        {{hash=66492bbce1b64c0452f365e3c4e3dbff}{%
+           family={Mruthyunjaya},
+           familyi={M\bibinitperiod},
+           given={TS1739334},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{52dd8567dda75bcb16d79c8c63e97086}
+      \strng{fullhash}{52dd8567dda75bcb16d79c8c63e97086}
+      \strng{bibnamehash}{52dd8567dda75bcb16d79c8c63e97086}
+      \strng{authorbibnamehash}{52dd8567dda75bcb16d79c8c63e97086}
+      \strng{authornamehash}{52dd8567dda75bcb16d79c8c63e97086}
+      \strng{authorfullhash}{52dd8567dda75bcb16d79c8c63e97086}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Mechanism and machine theory}
+      \field{number}{1}
+      \field{title}{The Stewart platform manipulator: a review}
+      \field{volume}{35}
+      \field{year}{2000}
+      \field{pages}{15\bibrangedash 40}
+      \range{pages}{26}
+    \endentry
+    \entry{calcolostewart1}{misc}{}
+      \name{author}{2}{}{%
+        {{hash=8a01fccdafb4da729e5284e0bf94fa7a}{%
+           family={Leniowska},
+           familyi={L\bibinitperiod},
+           given={Lucyna},
+           giveni={L\bibinitperiod}}}%
+        {{hash=b807bde99b10e380e5aaccd75d4b6a6d}{%
+           family={Nawrat},
+           familyi={N\bibinitperiod},
+           given={Zbigniew},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Uniwersytet Rzeszowski}%
+      }
+      \strng{namehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
+      \strng{fullhash}{c13bbc6aa43579e19c1b836e0b2f31e3}
+      \strng{bibnamehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
+      \strng{authorbibnamehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
+      \strng{authornamehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
+      \strng{authorfullhash}{c13bbc6aa43579e19c1b836e0b2f31e3}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Postepy inżynierii biomedycznej}
+      \field{year}{2013}
+    \endentry
+    \entry{calcolostewart2}{article}{}
+      \name{author}{2}{}{%
+        {{hash=4022a74d3390870d4cf7d8bcff21e3db}{%
+           family={Bang},
+           familyi={B\bibinitperiod},
+           given={Heeseung},
+           giveni={H\bibinitperiod}}}%
+        {{hash=f1cdaa47b675586e9b6f0467e8f281b8}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Young\bibnamedelima Sam},
+           giveni={Y\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{fe396224b019e30a1bda61cc427d002e}
+      \strng{fullhash}{fe396224b019e30a1bda61cc427d002e}
+      \strng{bibnamehash}{fe396224b019e30a1bda61cc427d002e}
+      \strng{authorbibnamehash}{fe396224b019e30a1bda61cc427d002e}
+      \strng{authornamehash}{fe396224b019e30a1bda61cc427d002e}
+      \strng{authorfullhash}{fe396224b019e30a1bda61cc427d002e}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Access}
+      \field{title}{Implementation of a ball and plate control system using sliding mode control}
+      \field{volume}{6}
+      \field{year}{2018}
+      \field{pages}{32401\bibrangedash 32408}
+      \range{pages}{8}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

@@ -1,0 +1,5 @@
+[0] Config.pm:311> INFO - This is Biber 2.16
+[0] Config.pm:314> INFO - Logfile is 'stewart-frn.blg'
+[93] biber:340> INFO - === mer ott 13, 2021, 20:38:46
+[128] Utils.pm:400> ERROR - Cannot find 'stewart-frn.bcf'!
+[128] Biber.pm:132> INFO - ERRORS: 1
