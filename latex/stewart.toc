@@ -50,32 +50,32 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{\numberline {4.1.1}Equazione del controllore PID}{19}{subsubsection.4.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Miglioramenti e ottimizzazioni del controllore PID}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.2}Miglioramenti e ottimizzazioni del controllore PID}{21}{subsection.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3}Algoritmo di controllo}{21}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.3}Algoritmo di controllo}{22}{subsection.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Realizzazione pratica}{22}{section.5}%
+\contentsline {section}{\numberline {5}Realizzazione pratica}{23}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1}Assemblaggio}{22}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.1}Assemblaggio}{23}{subsection.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2}Programmazione}{23}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.2}Programmazione}{24}{subsection.5.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.1}Controllo della piattaforma di Stewart}{24}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.1}Controllo della piattaforma di Stewart}{25}{subsubsection.5.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.2}Lettura e filtraggio dati ottenuti dal piano resistivo}{25}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.2}Lettura e filtraggio dati ottenuti dal piano resistivo}{26}{subsubsection.5.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.3}Controllore PID}{27}{subsubsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.3}Controllore PID}{28}{subsubsection.5.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.4}Assegnazione dei comandi}{27}{subsubsection.5.2.4}%
+\contentsline {subsubsection}{\numberline {5.2.4}Assegnazione dei comandi}{28}{subsubsection.5.2.4}%
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {5.3}Taratura}{28}{subsection.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Risultati}{28}{section.6}%
+\contentsline {section}{\numberline {6}Risultati}{29}{section.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.1}Piattaforma di stewart}{28}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.1}Piattaforma di stewart}{29}{subsection.6.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2}Piano stabilizzato}{28}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.2}Piano stabilizzato}{29}{subsection.6.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Conclusioni}{28}{section.7}%
+\contentsline {section}{\numberline {7}Conclusioni}{29}{section.7}%
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Riferimenti bibliografici}{28}{figure.18}%
+\contentsline {section}{Riferimenti bibliografici}{30}{figure.18}%

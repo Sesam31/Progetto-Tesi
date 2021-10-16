@@ -1,6 +1,0 @@
-Note su piano resistivo:
-- resistenza 100 ohm
-- richiama 50 mV a 5 V
-- alimentazione diretta da arduino causa perdita voltaggio di 1.2 V (da 5 a 3.8 volt)
-- per controllo sono migliori i mosfet rispetto ai bjt (dipendono meno dalla temperatura)
-- L298N è un controllore per motori, non specifico per controllare un piano resistivo, ce lo facciamo bastare

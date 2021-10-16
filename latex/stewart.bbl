@@ -34,7 +34,7 @@
       \strng{authornamehash}{31b91f5bfe2970a0978b5c6068893e75}
       \strng{authorfullhash}{31b91f5bfe2970a0978b5c6068893e75}
       \field{sortinit}{1}
-      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Analog Applications Journal Q}
@@ -49,7 +49,7 @@
         {STMicroelectronics}%
       }
       \field{sortinit}{2}
-      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labeltitlesource}{title}
       \field{number}{L298N}
       \field{title}{Dual Full-Bridge Driver}
@@ -59,7 +59,7 @@
         {Alpha \& Omega Semiconductors}%
       }
       \field{sortinit}{3}
-      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labeltitlesource}{title}
       \field{number}{AO3400}
       \field{title}{N-Channel Enhancement Mode Field Effect Transistor}
@@ -69,7 +69,7 @@
         {Alpha \&	 Omega Semiconductors}%
       }
       \field{sortinit}{4}
-      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labeltitlesource}{title}
       \field{number}{AO3401}
       \field{title}{P-Channel Enhancement Mode Field Effect Transistor}
@@ -79,7 +79,7 @@
         {Toshiba Semiconductor}%
       }
       \field{sortinit}{5}
-      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labeltitlesource}{title}
       \field{number}{TC4011BP}
       \field{title}{Toshiba CMOS digital integrated circuit silicon monolithic}
@@ -107,7 +107,7 @@
       \strng{authornamehash}{52dd8567dda75bcb16d79c8c63e97086}
       \strng{authorfullhash}{52dd8567dda75bcb16d79c8c63e97086}
       \field{sortinit}{6}
-      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Mechanism and machine theory}
@@ -141,7 +141,7 @@
       \strng{authornamehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
       \strng{authorfullhash}{c13bbc6aa43579e19c1b836e0b2f31e3}
       \field{sortinit}{7}
-      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Postepy inżynierii biomedycznej}
@@ -170,7 +170,7 @@
       \strng{authornamehash}{fe396224b019e30a1bda61cc427d002e}
       \strng{authorfullhash}{fe396224b019e30a1bda61cc427d002e}
       \field{sortinit}{8}
-      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Access}

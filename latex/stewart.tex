@@ -137,40 +137,50 @@ Il controllo di questi elementi è svolto dal processore tramite uno shield che 
 \centering
 \scalebox{1.1}{
 \begin{tikzpicture}[font=\small,thick]
+
+\draw [dashed, gray] (2.375cm,-4.05cm) -- (2.375cm,1.5cm)node[anchor= south]{$20ms$};
+\draw [dashed, gray] (4.75cm,-4.05cm) -- (4.75cm,1.5cm)node[anchor= south]{$40ms$};
+\draw [dashed, gray] (7.125cm,-4.05cm) -- (7.125cm,1.5cm)node[anchor= south]{$60ms$};
  
+\filldraw [fill=green!50] (0,0) rectangle (0.11875,1)node[anchor=west, gray]{$1ms$};
+\filldraw [fill=green!50] (2.375,0) rectangle (2.375+0.11875,1);
+\filldraw [fill=green!50] (4.75,0) rectangle (4.75+0.11875,1);
+\filldraw [fill=green!50] (7.125,0) rectangle (7.125+0.11875,1)node[anchor=west, gray , xshift= 1.5cm, yshift= -0.5cm]{$...$};
+
+\filldraw [fill=yellow!50] (0,-2) rectangle (0.1781,1-2)node[anchor=west, gray]{$1.5ms$};
+\filldraw [fill=yellow!50] (2.375,-2) rectangle (2.375+0.1781,1-2);
+\filldraw [fill=yellow!50] (4.75,0-2) rectangle (4.75+0.1781,1-2);
+\filldraw [fill=yellow!50] (7.125,0-2) rectangle (7.125+0.1781,1-2)node[anchor=west, gray , xshift= 1.5cm, yshift= -0.5cm]{$...$};
+
+\filldraw [fill=red!50] (0,-4) rectangle (0.2375,1-4)node[anchor=west, gray]{$2ms$};
+\filldraw [fill=red!50] (2.375,0-4) rectangle (2.375+0.2375,1-4);
+\filldraw [fill=red!50] (4.75,0-4) rectangle (4.75+0.2375,1-4);
+\filldraw [fill=red!50] (7.125,0-4) rectangle (7.125+0.2375,1-4)node[anchor=west, gray , xshift= 1.5cm, yshift= -0.5cm]{$...$};
 
 \draw [-latex] (0cm,0cm) -- (0cm,1.5cm);
-\draw [-latex] (0cm,0cm) -- (5.5cm,0cm)node[anchor= west]{$t$};
+\draw [-latex] (0cm,0cm) -- (9.5cm,0cm)node[anchor= west]{$t$};
 
 \draw [-latex] (0cm,-2cm) -- (0cm,-0.5cm);
-\draw [-latex] (0cm,-2cm) -- (5.5cm,-2cm)node[anchor= west]{$t$};
+\draw [-latex] (0cm,-2cm) -- (9.5cm,-2cm)node[anchor= west]{$t$};
 
 \draw [-latex] (0cm,-4cm) -- (0cm,-2.5cm);
-\draw [-latex] (0cm,-4cm) -- (5.5cm,-4cm)node[anchor= west]{$t$};
+\draw [-latex] (0cm,-4cm) -- (9.5cm,-4cm)node[anchor= west]{$t$};
 
-\draw (0cm,1cm) -- (0.25cm,1cm);
-\draw (0cm,-1cm) -- (0.375cm,-1cm);
-\draw (0cm,-3cm) -- (0.5cm,-3cm);
+\filldraw [fill=black] (12,0.75) circle (3pt) node[xshift= -1cm] {$0^\circ$};
+\filldraw [fill=black] (12,-1.25) circle (3pt) node[xshift= -1cm] {$90^\circ$};
+\filldraw [fill=black] (12,-3.25) circle (3pt) node[xshift= -1cm] {$180^\circ$};
 
-\draw (0.25cm,0cm) -- (0.25cm,1cm)node[anchor= west]{$1ms$};
-\draw (0.375cm,-2cm) -- (0.375cm,-1cm)node[anchor= west]{$1,5ms$};
-\draw (0.5cm,-4cm) -- (0.5cm,-3cm)node[anchor= west]{$2ms$};
+\draw [line width=1mm](12,0.75) -- (12cm,1.75cm);
+\draw  [line width=1mm](12,-1.25) -- (13cm,-1.25cm);
+\draw [line width=1mm](12,-3.25) -- (12cm,-4.25cm);
 
-\draw (5cm,0.05cm)node[anchor= north]{$20ms$} -- (5cm,-0.05cm);
-\draw (5cm,-2.05cm)node[anchor= north]{$20ms$} -- (5cm,-1.95cm);
-\draw (5cm,-4.05cm)node[anchor= north]{$20ms$} -- (5cm,-3.95cm);
-
-\filldraw [fill=black] (7,0.75) circle (3pt) node[xshift= -0.75cm] {$0^\circ$};
-\filldraw [fill=black] (7,-1.25) circle (3pt) node[xshift= -0.75cm] {$90^\circ$};
-\filldraw [fill=black] (7,-3.25) circle (3pt) node[xshift= -0.75cm] {$180^\circ$};
-
-\draw [line width=1mm](7,0.75) -- (7cm,1.75cm);
-\draw  [line width=1mm](7,-1.25) -- (8cm,-1.25cm);
-\draw [line width=1mm](7,-3.25) -- (7cm,-4.25cm);
+\draw (12,0.75) circle (7pt);
+\draw (12,-1.25) circle (7pt);
+\draw (12,-3.25) circle (7pt);
 
 \end{tikzpicture}
 }
-\caption{Angolo del servomotore al variare del PWM.} \label{fig:servocontrol}
+\caption{Angolo del servomotore al variare del segnale PWM.} \label{fig:servocontrol}
 \end{figure}
 
 \subsection{Piano resistivo}\label{pianoresistivo}
@@ -185,7 +195,7 @@ Il tracking video avrebbe inoltre richiesto un notevole incremento della comples
 
 \filldraw [fill=cyan!50](0cm,0cm) rectangle (0.5cm,5cm);
 \draw (0.5cm,0cm) rectangle (0.7cm,5cm);
-\filldraw[ draw = red!50, very thick, -{Triangle[width=2cm, length= 1cm]}, line width = 1cm] (-4.0,2.5)node[xshift= 1.8cm]{$Pressione$} -- (0.0,2.5);
+\filldraw[ draw = red!50, very thick, -{Triangle[width=2cm, length= 1cm]}, line width = 1cm] (-4.0,2.5)node[xshift= 1.8cm]{\resizebox{!}{0.35cm}{$Pressione$}} -- (0.0,2.5);
 %\node[single arrow, draw=blue, fill=green, minimum width = 10pt, single arrow head extend=3pt, minimum height=10mm] {}(-4.0cm,2.5cm) to (0.0cm,2.5cm); % length of arrow
 \draw (1.5cm,0cm) rectangle (1.75cm,5cm);
 \filldraw [fill=cyan!50] (1.75cm,0cm) rectangle (2.25cm,5cm);
@@ -198,7 +208,7 @@ Il tracking video avrebbe inoltre richiesto un notevole incremento della comples
 \subsubsection{Tipologie e funzionamento di un piano resistivo}\label{tipofunz}
 I piani resistivi sono generalmente identificati dal numero di connessioni in uscita, questo può generalmente essere quattro, cinque o otto. La versione a otto fili è una semplice evoluzione della variante a quattro e non sarà trattata in dettaglio. Questi dispositivi sono costituiti da due strati, di vetro o plastica, ricoperti da un sottile strato di ossido di indio-stagno\footnote{Materiale scelto appositamente per le ottime proprietà di trasparenza e conduzione.} e separati da minuscoli spaziatori, come rappresentato in figura \ref{fig:sezione}. 
 La resistenza del conduttore è uniforme su tutta la superficie e alla pressione si forma un contatto tra i due strati che permette un passaggio di corrente. A seconda del punto di pressione si formerà un rapporto di partizione diverso, indicativo della posizione.
-Nella versione a quattro fili su entrambi i piani si forma un gradiente di potenziale nelle direzioni rispettivamente \emph{x} e \emph{y} e ognuno dei due misura il potenziale dell'altro. Nella versione a cinque invece si ha un piano su cui viene alternata la direzione del gradiente mentre l'altro effettua la misura.\cite{pianoresistivo} Il valore di tensione letto sarà quindi inviato all'ADC della scheda Arduino, che effettuerà una quantizzazione a $10bit$, restituendo un valore da $0$ a $1023$, poi convertito in una posizione effettiva.
+Nella versione a quattro fili su entrambi i piani si forma un gradiente di potenziale nelle direzioni rispettivamente \emph{x} e \emph{y} e ognuno dei due misura il potenziale dell'altro. Nella versione a cinque invece si ha un piano su cui viene alternata la direzione del gradiente mentre l'altro effettua la misura.\cite{pianoresistivo} La schematica del piano resistivo è rappresentata in figura \ref{fig:pianoresistivo}, dove le resistenze rosse indicano la posizione letta dall'uscita analogica. Il valore di tensione letto sarà quindi inviato all'ADC della scheda Arduino, che effettuerà una quantizzazione a $10bit$, restituendo un valore da $0$ a $1023$, poi convertito in una posizione effettiva.
 Nella realizzazione del progetto è stata impiegata la variante di piano resistivo a cinque cavi.
 \begin{figure}[h!]
 \centering
@@ -209,15 +219,16 @@ Nella realizzazione del progetto è stata impiegata la variante di piano resisti
  %\draw[red,ultra thick,rounded corners] (7.5,5.3) rectangle (9.4,6.2);
 
 \scalebox{2}{
+\filldraw [fill=red] (9.5,3) circle (5pt);
 \draw [red, line width=2pt]
 	(9.5,3) to[R,color=red] (11,4.5)
 	(11,4.5) to[R,color=red] (12.5,6)
-	(12.5,6) -- (14,6)
+	(12.5,6) -- (14,6)node[anchor=west]{\large\textbf{Analog Out}};
 ;
 }
 \end{circuitikz}
 }
-\caption{Schematica circuitale piano resistivo a cinque fili.} \label{fig:controllo}
+\caption{Schema circuitale piano resistivo a cinque fili.} \label{fig:pianoresistivo}
 \end{figure}
 
 \subsection{Ponte ad H}\label{hbridge}
@@ -227,7 +238,7 @@ La necessità di impiegare un ponte ad H come circuito di driver è emersa in se
 \scalebox{0.30}{
 \includegraphics{circuito.png}
 }
-\caption{Schematica circuito di controllo.} \label{fig:controllo}
+\caption{Schema elettrico circuito di controllo.} \label{fig:controllo}
 \end{figure}
 I MOSFET scelti sono degli AO3400 e A03401, rispettivamente nella configurazione n e p in quanto offrono ottime prestazioni relativamente alla $I_D$ e alla $R_{DS}$.\cite{ao3400}\cite{ao3401} Da un'analisi del sistema di controllo richiesto dal piano resistivo si è deciso di rinunciare alla capacità di gestire individualmente i singoli MOSFET favorendo due linee di controllo che possano commutare tra gli stati High/Low. Sono state inoltre impiegate delle porte logiche NAND con lo scopo di migliorare il pilotaggio dei MOSFET da parte di Arduino oltre che per disaccoppiare la logica di controllo dallo stadio di potenza, pratica comune anche nel caso del L298N. Come chip per le porte NAND si è scelto un TC4011BP, questo fornisce in un singolo package quattro porte logiche che sono state configurate come invertenti in cascata, principalmente per una questione di convenienza, nel caso in cui si fosse reso necessario impiegare il segnale negato.\cite{TC4011BP} É stata poi inserita una resistenza di $1\Omega$ verso ground per limitare la corrente di shoot-through durante la commutazione. Da una successiva analisi all'oscilloscopio si è constatato che questi impulsi di corrente, estremamente brevi, rientravano perfettamente nelle specifiche dei MOSFET impiegati.
 
@@ -273,7 +284,7 @@ Entrambi i sistemi presentano 6 gradi di libertà, indicati anche come $6DOF$, m
 \caption{Problemi diretti e inversi.} \label{fig:direttoinverso}
 \end{figure}
 Lo schema logico dei problemi diretti e inversi è indicato in figura \ref{fig:direttoinverso}, dove $(\vartheta_1,\vartheta_2,...,\vartheta_n)$ indicano gli angoli dei servomotori e $(x,y,z,\varphi,\vartheta,\psi)$ la posizione dell'end-effector.
-Se nei robot seriali, noto l'orientamento degli attuatori, è facile risalire alla posizione dell'end effector; lo stesso non si può dire del problema inverso. Nota la posizione dell'end effector è infatti estremamente difficile risalire all'orientamento degli attuatori che permette raggiungere quella determinata locazione. Il problema della piattaforma di Stewart è esattamente l'opposto, è molto difficile ottenere equazioni che ci permettano di descrivere le coordinate e la rotazione del piano al variare dell'angolo dell'attuatore rotativo, è invece molto facile risalire all'angolo dei servomotori a partire dalla posizione nota della piattaforma nello spazio impiegando semplici nozioni di trigonometria. Basti pensare che la soluzione diretta del problema prevede la risoluzione di un sistema di 30 equazioni nonlineari risolvibili in forma chiusa che possono arrivare ad avere fino a un massimo di 40 possibili soluzioni.\cite{cinematicadiretta2} Queste nozioni di cinematica sono riassunte nella tabella \ref{fig:tabella}.
+Se nei robot seriali, noto l'orientamento degli attuatori, è facile risalire alla posizione dell'end effector; lo stesso non si può dire del problema inverso. Nota la posizione dell'end effector è infatti estremamente difficile risalire all'orientamento degli attuatori che permette raggiungere quella determinata locazione. Il problema della piattaforma di Stewart è esattamente l'opposto, è infatti complesso ottenere equazioni che ci permettano di descrivere le coordinate e la rotazione del piano al variare dell'angolo dell'attuatore rotativo mentre è più agevole risalire all'angolo dei servomotori a partire dalla posizione nota della piattaforma nello spazio impiegando semplici nozioni di trigonometria. Basti pensare che la soluzione diretta del problema prevede la risoluzione di un sistema di 30 equazioni nonlineari risolvibili in forma chiusa che possono arrivare ad avere fino a un massimo di 40 possibili soluzioni.\cite{cinematicadiretta2} Queste nozioni di cinematica sono riassunte nella tabella \ref{fig:tabella}.
 \begin{table}[h!]
 \centering
 \begin{tabular}{c|cc}
@@ -291,7 +302,7 @@ Nello svolgimento successivo si è preferito risalire alle equazioni della cinem
 \subsection{Analisi piattaforma di Stewart con attuatori rotativi}\label{analisi}
 
 Il problema della piattaforma di Stewart controllata da attuatori rotativi è fondamentalmente costituito da due sotto-problemi.
-Il primo relativo alla determinazione delle lunghezze dei vettori che collegano la base alla piattaforma per ogni possibile posizione, trattato nella sezione \ref{platform}. Il secondo si occupa invece dell'implementazione stessa dei servomotori, per via della complessità di descrizione del sistema biella manovella impiegato, trattato nella sezione \ref{rotation}. 
+Il primo relativo alla determinazione delle lunghezze dei vettori che collegano la base alla piattaforma per ogni possibile posizione di quest'ultima, trattato nella sezione \ref{platform}. Il secondo si occupa invece dell'implementazione stessa dei servomotori, per via della complessità di descrizione del sistema biella manovella impiegato, trattato nella sezione \ref{rotation}. 
 
 \subsection{Analisi problema piattaforma}\label{platform}
 
@@ -324,7 +335,7 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 
 \end{tikzpicture}
 }
-\caption{Sistemi di rifermento e vettori nel piano di Stewart.} \label{fig:sistema}
+\caption{Sistemi di rifermento e vettori nella piattaforma di Stewart.} \label{fig:sistema}
 \end{figure}
 
 
@@ -332,38 +343,38 @@ Si definiscono due sistemi di riferimento cartesiani che caratterizzano il siste
 Le variazioni in $(x,y,z)$ comportano una semplice traslazione dei punti della piattaforma, questa viene indicata con un vettore $\hat T$ che andrà poi a sommarsi alla variazione dovuta a $(\varphi,\vartheta,\psi)$.
 
 \subsubsection{Analisi rotazione \boldmath$(\varphi,\vartheta,\psi)$}\label{ftp}
-Per semplificare l'analisi si considerano, separatamente, gli effetti dovuti a queste tre componenti. Si studia il caso di solo rollio $(\varphi,0,0)$ per risalire alle coordinate di un punto $P:(x,y,z)$ rispetto alla base in seguito a una rotazione di $\varphi$ gradi che lo ha traslato nel punto $(x',y',z')$, come rappresentato in figura \ref{fig:rot}. Per fare ciò, è necessario ottenere un'applicazione lineare che permetta di passare dal sistema di coordinate della piattaforma al sistema di coordinate della base.
-
+Per semplificare l'analisi si considerano, separatamente, gli effetti dovuti a queste tre componenti. Si studia il caso di solo rollio $(\varphi,0,0)$ per risalire alle coordinate di un punto $P:(x,y,z)$ rispetto alla base in seguito a una rotazione di $\varphi$ gradi che lo ha traslato nel punto $P':(x',y',z')$. Questo è rappresentato in figura \ref{fig:rot}, dove i sistemi cartesiani sovrapposti permettono di ricavare facilmente la relazione che lega le coordinate della piattaforma a quelle della base. 
+Questo risultato è esprimibile matematicamente tramite l'applicazione lineare indicata in \eqref{sistema1}.
+%Per fare ciò, è necessario ottenere un'applicazione lineare che permetta di passare dal sistema di coordinate della piattaforma al sistema di coordinate della base.
 \begin{figure}
 \centering
 \scalebox{1.2}{
 \begin{tikzpicture}
+\draw [dashed,gray](1.5cm,0cm)node[anchor=north]{$y$} -- (1.5cm,2.6cm);
+\draw [dashed,gray](0cm,2.6cm)node[anchor=east]{$z$} -- (1.5cm,2.6cm);
+\draw [dashed,gray,rotate around={30:(0,0cm)}](2.6cm,0cm)node[anchor=north]{$y'$} -- (2.6cm,1.5cm);
+\draw [dashed,gray,rotate around={30:(0,0cm)}](0cm,1.5cm)node[anchor=east]{$z'$} -- (2.6cm,1.5cm);
+
 \draw [-latex](0,0) -- (4cm,0)node[anchor=north]{$\hat{j}$};
 \draw [-latex](0,0) -- (0,4cm)node[anchor=east]{$\hat{k}$};
 
-\draw [-latex,rotate around={30:(0,0cm)}](0,0) -- (4cm,0)node[anchor=south]{$\hat{j'}$};
+\draw [-latex,rotate around={30:(0,0cm)}](0,0) -- (4cm,0)node[anchor=north,xshift=0.25cm]{$\hat{j'}$};
 \draw [-latex,rotate around={30:(0,0cm)}](0,0) -- (0,4cm)node[anchor=east]{$\hat{k'}$};
 
-\draw [rotate around={60:(0,0cm)}](0,0) -- (3cm,0)node[anchor=south]{$\hat{P}$};
+\draw[-latex,red,thick] (2.6,1.5) arc (30:59:3cm)node[anchor=west, xshift=0.3cm]{$Rotazione$};
 
+\draw [rotate around={60:(0,0cm)}](0,0) -- (3cm,0)node[anchor=south]{$P'$};
 \draw (0,0)node[xshift= 1.25cm,yshift= 0.25cm]{$\varphi$} -- (10mm,0mm) arc  (0:30:10mm)-- cycle;
 \filldraw [-latex,fill=black] (0cm,0cm) circle (2pt) node[xshift=-0.25cm,yshift=-0.25cm]{$\hat{i}$};
 \filldraw [-latex,fill=black] (1.5cm,2.6cm) circle (2pt);
-\draw [dashed,rotate around={30:(0,0cm)}](2.6cm,0cm) -- (2.6cm,1.5cm);
-\draw [dashed,rotate around={30:(0,0cm)}](0cm,1.5cm) -- (2.6cm,1.5cm);
+\filldraw [-latex,fill=black] (2.6cm,1.5cm) circle (2pt)node[anchor=north,xshift=0.25cm]{$P$};
 
-\draw (1.5cm,2.6cm)node[xshift= 0.5cm,yshift= -0.3cm]{$\varphi$} -- (1.5cm,2.1cm) arc  (270: 300:5mm)-- cycle;
-
-\draw [dashed](1.5cm,0cm) -- (1.5cm,2.6cm);
-\draw [dashed](0cm,2.6cm) -- (1.5cm,2.6cm);
-
+\draw (1.5cm,2.6cm)node[xshift= 0.2cm,yshift= -0.8cm]{$\varphi$} -- (1.5cm,2.1cm) arc  (270: 300:5mm)-- cycle;
 \end{tikzpicture}
 }
-\caption{Vettore $\hat{P}$ ruotato di $\varphi$ gradi rispetto alla base.} \label{fig:rot}
+\caption{Punto $P$ ruotato di $\varphi$ gradi rispetto alla base.} \label{fig:rot}
 \end{figure}
-
-Dallo studio della rotazione troviamo che:
-
+%Dallo studio della rotazione troviamo che:
 \begin{equation}\label{sistema1}
 \begin{cases} 
 x=x' \\ 
@@ -371,10 +382,7 @@ y=y'cos(\varphi)-z'sin(\varphi) \\
 z=y'sin(\varphi)-z'cos(\varphi)
 \end{cases} 
 \end{equation}
-
-
 Per comodità di calcolo nei successivi passaggi il sistema \eqref{sistema1} viene riscritto in forma matriciale.
-
 \begin{equation}\label{rx}
 R_x(\varphi)=
 \begin{bmatrix}
@@ -465,7 +473,7 @@ Nel caso della piattaforma di Stewart, sei equazioni \eqref{li} permettono di de
 Notare come, nel caso di impiego di attuatori lineari, il problema si risolve assegnando direttamente queste lunghezze per ottenere la posizione desiderata. 
 
 \subsection{Analisi problema attuatori rotativi}\label{rotation}
-L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessario un numero di variabili superiore per descrivere in modo appropriato il sistema. Ogni servomotore controlla un giunto biella manovella collegato alla piattaforma che regola la lunghezza del vettore $\hat{l_i}$, fondamentale è quindi trovare una relazione tra l'angolo del servomotore e il vettore $\hat{l_i}$. Anche in questo caso la soluzione si ottiene dalla scomposizione del problema in due parti: la determinazione della posizione del giunto biella manovella e la ricerca dell'angolo di rotazione $\alpha$ svolta rispettivamente nelle sezioni \ref{biellamanovella} e \ref{determinazionealfa}.
+L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessario un numero di variabili superiore per descrivere in modo appropriato il sistema. Ogni servomotore controlla un giunto biella manovella collegato alla piattaforma che regola la lunghezza del vettore $\hat{l_i}$, fondamentale è quindi trovare una relazione tra l'angolo del servomotore e il vettore $\hat{l_i}$. Anche in questo caso la soluzione si ottiene dalla scomposizione del problema in due parti: la determinazione della posizione del giunto biella manovella e la ricerca dell'angolo di rotazione $\alpha$ svolta rispettivamente nelle sezioni \ref{biellamanovella} e \ref{determinazionealfa}. A livello di notazione, nella successiva trattazione sono indicati con i pedici $bm$, $b$ e $q$ rispettivamente il punto del giunto biella-manovella, il punto di aggancio asse-manovella e il giunto sulla piattaforma, come in figura \ref{fig:rv}.
 
 \begin{figure}[h!]
 \centering
@@ -486,13 +494,14 @@ L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessa
 %\filldraw [fill=black] (3cm,2cm) circle (3pt);
 %\filldraw [fill=black] (2cm,9cm) circle (3pt);
 %\draw [line width=2pt] (3cm,2cm) -- node[anchor=west]{$b$}(2cm,9cm);
+\draw [-latex] (-1cm,3cm)node[anchor=south]{\resizebox{!}{0.25cm}{$(x_{b},y_{b},z_{b})$}} -- (-1.4cm,1.6cm);
 \draw [dashed] (1.5cm,1.5cm) -- node[anchor=east]{$l$}(4cm,7cm);
 \draw [dashed] (-1.5cm,1.5cm) -- (-4cm,7cm);
 %\draw [<->] (3.5cm,2.2cm) arc (150:125:33.7pt);
-\filldraw [fill=black] (-3cm,0.75cm) circle (1.5pt);
+\filldraw [fill=black] (-3cm,0.75cm) circle (1.5pt)node[anchor=east]{\resizebox{!}{0.25cm}{$(x_{bm},y_{bm},z_{bm})$}};;
 \filldraw [fill=black] (3cm,0.75cm) circle (1.5pt);
 \filldraw [fill=black] (-4cm,7cm) circle (1.5pt);
-\filldraw [fill=black] (4cm,7cm) circle (1.5pt);
+\filldraw [fill=black] (4cm,7cm) circle (1.5pt)node[anchor=west]{\resizebox{!}{0.25cm}{$(x_{q},y_{q},z_{q})$}};;
 \draw (-2.5cm,1.5cm) arc (-180:-158:1.2cm)node[anchor=east, yshift=0.2cm, xshift=-0.1cm]{$\alpha$};
 \draw [dashed] (-1.5cm,1.5cm) -- (-2.5cm,1.5cm);
 \end{tikzpicture}
@@ -501,7 +510,8 @@ L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessa
 \end{figure}
 
 \subsubsection{Posizione del giunto biella manovella}\label{biellamanovella}
-Note le lunghezze della biella $b$ e della manovella $m$, si valuta l'angolo di inclinazione dei servomotori rispetto all'asse $x$ e si indica con $\beta$, come in figura \ref{fig:proiezioneverticale}, notando come i servomotori siano a due a due specchiati. Due set di equazioni saranno quindi necessarie per descrivere i motori pari e dispari al variare di $\alpha$.
+Note le lunghezze della biella $b$ e della manovella $m$, si valutano gli angoli di inclinazione $\alpha$ e $\beta$ dei servomotori rispettivamente rispetto all'orizzonte e all'asse $x$, come rappresentato nelle figure \ref{fig:rv} e \ref{fig:proiezioneverticale}, notando come i servomotori siano a due a due specchiati. É così possibile risalire ai  sistemi \eqref{bmpari} e \eqref{bmdispari}, necessari per descrivere nello spazio tridimensionale la posizione del giunto biella manovella di ogni motore.
+
 \begin{equation}\label{bmpari}
     \begin{cases}
       x_{bm}=m \cdot cos(\alpha)cos(\beta)+x_b\\
@@ -536,7 +546,7 @@ ai sistemi \eqref{bmpari} e \eqref{bmdispari} risulta evidente che questi due so
 \caption{Proiezione verticale della base con i servomotori.} \label{fig:proiezioneverticale}
 \end{figure}
 \subsubsection{Determinazione angolo \boldmath$\alpha$}\label{determinazionealfa}
-Per la determinazione dell'angolo $\alpha$ ottimale esistono due tecniche principali. La prima consiste in una ricerca binaria (o dicotomica) del valore che meglio soddisfa le equazioni della posizione. La seconda prevede un approccio matematico più estensivo per determinare il valore \textbf{esatto} di $\alpha$ in base ad una $l$ fornita.\cite{calcolostewart1}\cite{calcolostewart2} Il primo approccio risulta più semplice dal punto di vista realizzativo ma a suo discapito è poco efficiente, in quanto richiede un numero arbitrario di iterazioni per raggiungere una determinata precisione di $\alpha$.\footnote{Mediamente un algoritmo di ricerca binaria assume una complessità \emph{O(log n)}, dove \emph{n} è direttamente correlato alla precisione del valore ottenuto.} Il secondo è invece più difficile da ottenere a causa dei calcoli non del tutto intuitivi ma garantisce di raggiungere la soluzione ottimale con una sola computazione. Per lo svolgimento del progetto è stata impiegata la seconda opzione, che prevede da ricerca di un valore di $\alpha$ che soddisfi le equazioni \eqref{m2}, \eqref{l2} e \eqref{b2} ottenute dal teorema di Pitagora in tre dimensioni.
+Per la determinazione dell'angolo $\alpha$ ottimale esistono due tecniche principali. La prima consiste in una ricerca binaria (o dicotomica) del valore che meglio soddisfa le equazioni della posizione. La seconda prevede un approccio matematico più estensivo per determinare il valore \textbf{esatto} di $\alpha$ in base ad una $l$ fornita.\cite{calcolostewart1}\cite{calcolostewart2} Il primo approccio risulta più semplice dal punto di vista realizzativo ma a suo discapito è poco efficiente, in quanto richiede un numero arbitrario di iterazioni per raggiungere una determinata precisione di $\alpha$.\footnote{Mediamente un algoritmo di ricerca binaria assume una complessità \emph{O(log n)}, dove \emph{n} è direttamente correlato alla precisione del valore ottenuto.} Il secondo è invece più difficile da ottenere a causa dei calcoli non del tutto intuitivi ma garantisce di raggiungere la soluzione ottimale con una sola computazione. Per lo svolgimento del progetto è stata impiegata la seconda opzione, che prevede da ricerca di un valore di $\alpha$ che soddisfi le equazioni \eqref{m2}, \eqref{l2}, \eqref{b2} delle lunghezze, ottenute dall'impiego del teorema di Pitagora in tre dimensioni.
 \begin{align}\label{m2}
     m^2 &= (x_{bm}-x_b)^2+(y_{bm}-y_b)^2+(z_{bm}-z_b)^2\nonumber\\
     		&= (x_{bm}^2+y_{bm}^2+z_{bm}^2)+(x_{b}^2+y_{b}^2+z_{b}^2)-2(x_{bm}x_b+y_{bm}y_b+z_{bm}z_b)
@@ -857,8 +867,8 @@ Lavorando con sistemi digitali tempo discreti non è però possibile impiegare l
 Nonostante il PID sia di per sé un ottimo controllore teorico, nella realtà sono necessari degli accorgimenti per evitare comportamenti erronei che possono compromettere la stabilità e l'integrità del sistema. Segue una lista delle migliorie impiegate.
 \begin{itemize}
 \item Filtraggio del segnale: passo fondamentale per ottenere un sistema di controllo performante, dati rumorosi in ingresso rendono il sistema "nervoso" con scatti improvvisi che ne compromettono la stabilità.
-\item Filtraggio dell'azione derivativa: la derivata, per sua natura, si comporta come un amplificatore di segnali in alta frequenza. Va quindi previsto un filtraggio che corregga questo effetto rendendo il segnale quanto più regolare.
-\item Derivata sulla misura: consiste nell'eseguire la derivata sul segnle in uscita $u[k]$ invece che sull'errore $e[k]$, utile per evitare un brusco scatto al cambio del setpoint\footnote{Viene visto come uno spostamento molto veloce dalla componente derivativa.} e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito.
+\item Filtraggio dell'azione derivativa: la derivata, per sua natura, si comporta come un amplificatore di segnali in alta frequenza. Va quindi previsto un filtraggio che corregga questo effetto rendendo il segnale quanto più regolare. Si nota come questo differisca dal filtraggio sul segnale in quanto corregge unicamente una proprietà interna della derivata mentre il filtraggio del segnale in uscita influenza tutte e tre le componenti del PID. % tramite un operazione di equalizzazione\footnote{Livellamento dello spettro, nel caso considerato della componente HF.}.
+\item Derivata sulla misura: consiste nell'eseguire la derivata sul segnle in uscita $u[k]$ invece che sull'errore $e[k]$, utile per evitare un brusco scatto al cambio del setpoint\footnote{Viene visto come uno spostamento molto veloce dalla componente derivativa.} e del tutto analoga alla derivata sull'errore con la sola differenza del segno invertito. Si nota come una derivata sulla misura di questo tipo corrisponde effettivamente alla velocità della palla, in quanto ottenuta dalla derivata prima dello spazio.
 \item Anti-windup dell'integrale: il termine integrale può tendere a infinito nel caso l'errore non si annulli mantenendo sempre lo stesso segno, questo fenomeno è noto come windup e comporta il fallimento del sistema di controllo se prolungato per un tempo sufficientemente grande. Per evitare questo spiacevole effetto è utile limitare la somma del termine integrale in modo che questo si annulli rapidamente al cambio di segno dell'errore.
 \item Limitazione dell'uscita: il controllore, non conoscendo i limiti fisici del progetto, può assegnare valori inammissibili al sistema da controllare, il che potrebbe anche risultare in una rottura. Si devono quindi stabilire dei limiti al range di valori assegnabili dal controllore.
 \end{itemize}
@@ -978,7 +988,10 @@ Nonostante il PID sia di per sé un ottimo controllore teorico, nella realtà so
 }
 \caption{Schema logico controllore PID migliorato.} \label{fig:pidmigliorato}
 \end{figure}
-Questi miglioramenti operativi sono mostrati in figura \ref{fig:pidmigliorato}, dove $\Sigma{t_k}$ indica l'integrale discretizzato e $\Delta{t_k}$ la derivata alle differenze finite. I filtri e i limitatori sono poi indicati rispettivamente con le lettere greche $\Phi$ e $\Lambda$.
+Questi miglioramenti operativi sono mostrati in figura \ref{fig:pidmigliorato}, dove $\Sigma{t_k}$ indica l'integrale discretizzato e $\Delta{t_k}$ la derivata alle differenze finite. I filtri e i limitatori sono poi indicati rispettivamente con le lettere greche $\Phi$ e $\Lambda$. L'equazione del PID migliorato, trascurando limitatori e filtri risulta quindi essere come indicato nell'equazione \eqref{pidtdmigliorato}.
+\begin{equation}\label{pidtdmigliorato}
+    u(t_k)=K_p \cdot e(t_k) + K_i \cdot \sum_{i=1}^{t_k} e(t_i)\cdot \Delta t + K_d\cdot \frac{u(t_k)-u(t_{k-1})}{\Delta t}
+\end{equation}
 
 \subsection{Algoritmo di controllo}
 Vista la versatilità di applicazione del controllore PID, l'intero problema di controllo si traduce nella determinazione della posizione della pallina sul piano e lo svolgimento di opportune equazioni per ottenere i parametri richiesti come la velocità e l'accelerazione. Il comportamento del sistema di controllo si può quindi riassumere nello schema a blocchi di figura \ref{fig:stabilizzazione}, dove il blocco di assegnazione dei valori alla piattaforma richiama quello di figura \ref{fig:ps}.
@@ -1203,7 +1216,8 @@ L'assegnazione dei comandi è svolta tramite l'ausilio di un joystick analogico,
 %AGGIUNGERE BIBLIOGRAFIA
 %\bibliographystyle{alpha}
 %\bibliography{references} % see references.bib for bibliography management
-\addcontentsline{toc}{chapter}{\refname}
+\newpage
+\addcontentsline{toc}{section}{\refname}
 %\nocite{*}
 \printbibliography
 \end{document}
