@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{void} \PYG{n+nf}{getSense}\PYG{p}{()\PYGZob{}}
+  \PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{in1}\PYG{p}{,}\PYG{n}{HIGH}\PYG{p}{);}
+  \PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{in2}\PYG{p}{,}\PYG{n}{LOW}\PYG{p}{);}
+  \PYG{n}{delayMicroseconds}\PYG{p}{(}\PYG{n}{on}\PYG{p}{);}
+  \PYG{n}{x} \PYG{o}{=} \PYG{p}{(}\PYG{n}{analogRead}\PYG{p}{(}\PYG{n}{sensePin}\PYG{p}{)}\PYG{l+m+mi}{\PYGZhy{}100}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mf}{0.34}\PYG{o}{/}\PYG{l+m+mi}{820}\PYG{p}{);}
+
+  \PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{in1}\PYG{p}{,}\PYG{n}{LOW}\PYG{p}{);}
+  \PYG{n}{digitalWrite}\PYG{p}{(}\PYG{n}{in2}\PYG{p}{,}\PYG{n}{HIGH}\PYG{p}{);}
+  \PYG{n}{delayMicroseconds}\PYG{p}{(}\PYG{n}{on}\PYG{p}{);}
+  \PYG{n}{y} \PYG{o}{=} \PYG{p}{(}\PYG{n}{analogRead}\PYG{p}{(}\PYG{n}{sensePin}\PYG{p}{)}\PYG{l+m+mi}{\PYGZhy{}100}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mf}{0.27}\PYG{o}{/}\PYG{l+m+mi}{820}\PYG{p}{);}
+  \PYG{n}{lastsense} \PYG{o}{=} \PYG{n}{micros}\PYG{p}{();}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

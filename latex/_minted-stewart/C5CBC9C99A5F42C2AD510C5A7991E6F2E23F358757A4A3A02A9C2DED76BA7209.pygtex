@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{int} \PYG{n}{emergenza} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+  \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{6}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{if}\PYG{p}{(}\PYG{n}{constrain}\PYG{p}{(}\PYG{n}{getAmpImp}\PYG{p}{(}\PYG{n}{alfa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{i}\PYG{p}{),}\PYG{n}{inf}\PYG{p}{,}\PYG{n}{sup}\PYG{p}{)} \PYG{o}{==} \PYG{n}{sup} \PYG{o}{||}
+       \PYG{n}{constrain}\PYG{p}{(}\PYG{n}{getAmpImp}\PYG{p}{(}\PYG{n}{alfa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{i}\PYG{p}{),}\PYG{n}{inf}\PYG{p}{,}\PYG{n}{sup}\PYG{p}{)} \PYG{o}{==} \PYG{n}{inf} \PYG{o}{||}
+       \PYG{n}{isnan}\PYG{p}{(}\PYG{n}{constrain}\PYG{p}{(}\PYG{n}{getAmpImp}\PYG{p}{(}\PYG{n}{alfa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{i}\PYG{p}{),}\PYG{n}{inf}\PYG{p}{,}\PYG{n}{sup}\PYG{p}{)))\PYGZob{}}
+      \PYG{n}{emergenza}\PYG{o}{++}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{k}{if}\PYG{p}{(}\PYG{n}{emergenza} \PYG{o}{==} \PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{for}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{l+m+mi}{6}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)\PYGZob{}}
+        \PYG{n}{servo}\PYG{p}{[}\PYG{n}{i}\PYG{p}{].}\PYG{n}{writeMicroseconds}\PYG{p}{(}\PYG{n}{constrain}\PYG{p}{(}\PYG{n}{getAmpImp}\PYG{p}{(}\PYG{n}{alfa}\PYG{p}{[}\PYG{n}{i}\PYG{p}{],}\PYG{n}{i}\PYG{p}{),}\PYG{n}{inf}\PYG{p}{,}\PYG{n}{sup}\PYG{p}{));}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{k}{else}\PYG{p}{\PYGZob{}}
+    \PYG{n}{Serial}\PYG{p}{.}\PYG{n}{println}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Limite raggiunto, arresto motori.\PYGZdq{}}\PYG{p}{);}
+    \PYG{n}{fermoEmergenza}\PYG{p}{();}
+  \PYG{p}{\PYGZcb{}}
+\end{Verbatim}

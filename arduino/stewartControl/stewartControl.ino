@@ -618,8 +618,25 @@ void runCommand(){
   
   if(joyX < 300 && joyY < 700 && joyY > 300 && switchState == false){
     circle = true;
-    setX=0.173+0.03*cos(pi*(millis()-circlestart)/(3000*2));
-    setY=0.133+0.03*sin(pi*(millis()-circlestart)/(3000*2));
+    float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
+    float Ki = 0;//25;//22;//15;//15;//22;//22;
+    float Kd = 0;//10;
+    setX=0.173+0.05*cos(pi*(millis()-circlestart)/(1500*2));
+    setY=0.133+0.04*sin(pi*(millis()-circlestart)/(1500*2));
+  }
+  if(joyX > 300 && joyX < 700 && joyY < 300 && switchState == false){ //verificare che funzioni disegno retta 45°
+    float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
+    float Ki = 0;//25;//22;//15;//15;//22;//22;
+    float Kd = 0;//10;
+    setX=0.173+0.05*cos(pi*(millis()-circlestart)/(1500*2));
+    setY=0.133+0.04*cos(pi*(millis()-circlestart)/(1500*2));
+  }
+  if(joyX > 300 && joyX < 700 && joyY > 700 && switchState == false){ //verificare che funzioni disegno u
+    float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
+    float Ki = 0;//25;//22;//15;//15;//22;//22;
+    float Kd = 0;//10;
+    setX=0.173+0.05*cos(pi*(millis()-circlestart)/(1500*2));
+    setY=0.133+0.04*cos(2*pi*(millis()-circlestart)/(1500*2));
   }
   if(joyX > 700 && joyY < 700 && joyY > 300 && switchState == false){ 
     infinity = true;
@@ -657,6 +674,11 @@ void runCommand(){
     setY = 0.133;
     circle = false;
     infinity = false;
+    draw = 0;
+    quadrante = 1;
+    float Kp = 25;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
+    float Ki = 13;//22;//15;//15;//22;//22;
+    float Kd = 25;//25;//35;//30;//30;//65;
   }
 
   if(command == 'p'){

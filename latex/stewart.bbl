@@ -34,7 +34,7 @@
       \strng{authornamehash}{31b91f5bfe2970a0978b5c6068893e75}
       \strng{authorfullhash}{31b91f5bfe2970a0978b5c6068893e75}
       \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Analog Applications Journal Q}
@@ -49,7 +49,7 @@
         {STMicroelectronics}%
       }
       \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
       \field{labeltitlesource}{title}
       \field{number}{L298N}
       \field{title}{Dual Full-Bridge Driver}
@@ -59,7 +59,7 @@
         {Alpha \& Omega Semiconductors}%
       }
       \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinithash}{a37a8ef248a93c322189792c34fc68c9}
       \field{labeltitlesource}{title}
       \field{number}{AO3400}
       \field{title}{N-Channel Enhancement Mode Field Effect Transistor}
@@ -69,7 +69,7 @@
         {Alpha \&	 Omega Semiconductors}%
       }
       \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinithash}{e071e0bcb44634fab398d68ad04e69f4}
       \field{labeltitlesource}{title}
       \field{number}{AO3401}
       \field{title}{P-Channel Enhancement Mode Field Effect Transistor}
@@ -79,10 +79,61 @@
         {Toshiba Semiconductor}%
       }
       \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinithash}{5dd416adbafacc8226114bc0202d5fdd}
       \field{labeltitlesource}{title}
       \field{number}{TC4011BP}
       \field{title}{Toshiba CMOS digital integrated circuit silicon monolithic}
+    \endentry
+    \entry{stewart1965platform}{article}{}
+      \name{author}{1}{}{%
+        {{hash=0e7e6e2c666950fd5f8d7d9d9cb71462}{%
+           family={Stewart},
+           familyi={S\bibinitperiod},
+           given={Doug},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {SAGE Publications Sage UK: London, England}%
+      }
+      \strng{namehash}{0e7e6e2c666950fd5f8d7d9d9cb71462}
+      \strng{fullhash}{0e7e6e2c666950fd5f8d7d9d9cb71462}
+      \strng{bibnamehash}{0e7e6e2c666950fd5f8d7d9d9cb71462}
+      \strng{authorbibnamehash}{0e7e6e2c666950fd5f8d7d9d9cb71462}
+      \strng{authornamehash}{0e7e6e2c666950fd5f8d7d9d9cb71462}
+      \strng{authorfullhash}{0e7e6e2c666950fd5f8d7d9d9cb71462}
+      \field{sortinit}{6}
+      \field{sortinithash}{7851c86048328b027313775d8fbd2131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the institution of mechanical engineers}
+      \field{number}{1}
+      \field{title}{A platform with six degrees of freedom}
+      \field{volume}{180}
+      \field{year}{1965}
+      \field{pages}{371\bibrangedash 386}
+      \range{pages}{16}
+    \endentry
+    \entry{bonev2001delta}{article}{}
+      \name{author}{1}{}{%
+        {{hash=c7032cac6f721f28d0a620af7c4c0981}{%
+           family={Bonev},
+           familyi={B\bibinitperiod},
+           given={Ilian},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{c7032cac6f721f28d0a620af7c4c0981}
+      \strng{fullhash}{c7032cac6f721f28d0a620af7c4c0981}
+      \strng{bibnamehash}{c7032cac6f721f28d0a620af7c4c0981}
+      \strng{authorbibnamehash}{c7032cac6f721f28d0a620af7c4c0981}
+      \strng{authornamehash}{c7032cac6f721f28d0a620af7c4c0981}
+      \strng{authorfullhash}{c7032cac6f721f28d0a620af7c4c0981}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Newsletter, available at http://www. parallelmic. org}
+      \field{title}{Delta parallel robot-the story of success}
+      \field{year}{2001}
     \endentry
     \entry{cinematicadiretta2}{article}{}
       \name{author}{2}{}{%
@@ -106,8 +157,8 @@
       \strng{authorbibnamehash}{52dd8567dda75bcb16d79c8c63e97086}
       \strng{authornamehash}{52dd8567dda75bcb16d79c8c63e97086}
       \strng{authorfullhash}{52dd8567dda75bcb16d79c8c63e97086}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{8}
+      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Mechanism and machine theory}
@@ -117,6 +168,28 @@
       \field{year}{2000}
       \field{pages}{15\bibrangedash 40}
       \range{pages}{26}
+    \endentry
+    \entry{matricerotazione}{article}{}
+      \name{author}{1}{}{%
+        {{hash=e082ff94720eff98805e9e08ca921bcc}{%
+           family={Solà},
+           familyi={S\bibinitperiod},
+           given={Joan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{e082ff94720eff98805e9e08ca921bcc}
+      \strng{fullhash}{e082ff94720eff98805e9e08ca921bcc}
+      \strng{bibnamehash}{e082ff94720eff98805e9e08ca921bcc}
+      \strng{authorbibnamehash}{e082ff94720eff98805e9e08ca921bcc}
+      \strng{authornamehash}{e082ff94720eff98805e9e08ca921bcc}
+      \strng{authorfullhash}{e082ff94720eff98805e9e08ca921bcc}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{02}
+      \field{title}{Towards Visual Localization, Mapping and Moving Objects Tracking by a Mobile Robot: a Geometric and Probabilistic Approach}
+      \field{year}{2007}
     \endentry
     \entry{calcolostewart1}{misc}{}
       \name{author}{2}{}{%
@@ -140,8 +213,8 @@
       \strng{authorbibnamehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
       \strng{authornamehash}{c13bbc6aa43579e19c1b836e0b2f31e3}
       \strng{authorfullhash}{c13bbc6aa43579e19c1b836e0b2f31e3}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Postepy inżynierii biomedycznej}
@@ -169,8 +242,8 @@
       \strng{authorbibnamehash}{fe396224b019e30a1bda61cc427d002e}
       \strng{authornamehash}{fe396224b019e30a1bda61cc427d002e}
       \strng{authorfullhash}{fe396224b019e30a1bda61cc427d002e}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Access}
@@ -179,6 +252,69 @@
       \field{year}{2018}
       \field{pages}{32401\bibrangedash 32408}
       \range{pages}{8}
+    \endentry
+    \entry{zieglernichols}{article}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{2}{}{%
+        {{hash=cf238d2b9d2c93a20357e23767089925}{%
+           family={Ziegler},
+           familyi={Z\bibinitperiod},
+           given={John\bibnamedelima G},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=05777d60947dbcd14d97168d6549fd76}{%
+           family={Nichols},
+           familyi={N\bibinitperiod},
+           given={Nathaniel\bibnamedelima B},
+           giveni={N\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{a04c08b86ee8f63baa4b8569fbff24d2}
+      \strng{fullhash}{a04c08b86ee8f63baa4b8569fbff24d2}
+      \strng{bibnamehash}{a04c08b86ee8f63baa4b8569fbff24d2}
+      \strng{authorbibnamehash}{a04c08b86ee8f63baa4b8569fbff24d2}
+      \strng{authornamehash}{a04c08b86ee8f63baa4b8569fbff24d2}
+      \strng{authorfullhash}{a04c08b86ee8f63baa4b8569fbff24d2}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{trans. ASME}
+      \field{number}{11}
+      \field{title}{Optimum settings for automatic controllers}
+      \field{volume}{64}
+      \field{year}{1942}
+    \endentry
+    \entry{PIDtuningball}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=b28e83f1207a4b73bf047368e59e0676}{%
+           family={Aphiratsakun},
+           familyi={A\bibinitperiod},
+           given={Narong},
+           giveni={N\bibinitperiod}}}%
+        {{hash=85fb809573077cf525b4ac23a1b8ac9e}{%
+           family={Otaryan},
+           familyi={O\bibinitperiod},
+           given={Nane},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{84b196f0a02634da964c67642dd32801}
+      \strng{fullhash}{84b196f0a02634da964c67642dd32801}
+      \strng{bibnamehash}{84b196f0a02634da964c67642dd32801}
+      \strng{authorbibnamehash}{84b196f0a02634da964c67642dd32801}
+      \strng{authornamehash}{84b196f0a02634da964c67642dd32801}
+      \strng{authorfullhash}{84b196f0a02634da964c67642dd32801}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2016 13th International Conference on Electrical Engineering/Electronics, Computer, Telecommunications and Information Technology (ECTI-CON)}
+      \field{title}{Ball on the plate Model based on PID tuning methods}
+      \field{year}{2016}
+      \field{pages}{1\bibrangedash 4}
+      \range{pages}{4}
     \endentry
   \enddatalist
 \endrefsection

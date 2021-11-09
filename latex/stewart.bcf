@@ -2349,9 +2349,14 @@
     <bcf:citekey order="3">ao3400</bcf:citekey>
     <bcf:citekey order="4">ao3401</bcf:citekey>
     <bcf:citekey order="5">TC4011BP</bcf:citekey>
-    <bcf:citekey order="6">cinematicadiretta2</bcf:citekey>
-    <bcf:citekey order="7">calcolostewart1</bcf:citekey>
-    <bcf:citekey order="8">calcolostewart2</bcf:citekey>
+    <bcf:citekey order="6">stewart1965platform</bcf:citekey>
+    <bcf:citekey order="7">bonev2001delta</bcf:citekey>
+    <bcf:citekey order="8">cinematicadiretta2</bcf:citekey>
+    <bcf:citekey order="9">matricerotazione</bcf:citekey>
+    <bcf:citekey order="10">calcolostewart1</bcf:citekey>
+    <bcf:citekey order="11">calcolostewart2</bcf:citekey>
+    <bcf:citekey order="12">zieglernichols</bcf:citekey>
+    <bcf:citekey order="13">PIDtuningball</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

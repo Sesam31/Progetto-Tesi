@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{xVel} \PYG{o}{=} \PYG{p}{(}\PYG{n}{x} \PYG{o}{\PYGZhy{}} \PYG{n}{xOld}\PYG{p}{)}\PYG{o}{/}\PYG{n}{deltaTime}\PYG{p}{;}
+\PYG{n}{yVel} \PYG{o}{=} \PYG{p}{(}\PYG{n}{y} \PYG{o}{\PYGZhy{}} \PYG{n}{yOld}\PYG{p}{)}\PYG{o}{/}\PYG{n}{deltaTime}\PYG{p}{;}
+
+\PYG{k+kt}{float} \PYG{n}{maxVel} \PYG{o}{=} \PYG{l+m+mf}{0.4}\PYG{p}{;}
+\PYG{k}{if}\PYG{p}{(}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{xVel}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{maxVel}\PYG{p}{)\PYGZob{}}
+  \PYG{k}{if}\PYG{p}{(}\PYG{n}{xVel} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{x} \PYG{o}{=} \PYG{n}{xOld} \PYG{o}{+} \PYG{n}{maxVel}\PYG{o}{*}\PYG{p}{(}\PYG{n}{deltaTime}\PYG{p}{);}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{k}{else}\PYG{p}{\PYGZob{}}
+    \PYG{n}{x} \PYG{o}{=} \PYG{n}{xOld} \PYG{o}{\PYGZhy{}} \PYG{n}{maxVel}\PYG{o}{*}\PYG{p}{(}\PYG{n}{deltaTime}\PYG{p}{);}
+  \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{if}\PYG{p}{(}\PYG{n}{abs}\PYG{p}{(}\PYG{n}{yVel}\PYG{p}{)} \PYG{o}{\PYGZgt{}} \PYG{n}{maxVel}\PYG{p}{)\PYGZob{}}
+  \PYG{k}{if}\PYG{p}{(}\PYG{n}{yVel} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)\PYGZob{}}
+    \PYG{n}{y} \PYG{o}{=} \PYG{n}{yOld} \PYG{o}{+} \PYG{n}{maxVel}\PYG{o}{*}\PYG{p}{(}\PYG{n}{deltaTime}\PYG{p}{);}
+  \PYG{p}{\PYGZcb{}}
+  \PYG{k}{else}\PYG{p}{\PYGZob{}}
+    \PYG{n}{y} \PYG{o}{=} \PYG{n}{yOld} \PYG{o}{\PYGZhy{}} \PYG{n}{maxVel}\PYG{o}{*}\PYG{p}{(}\PYG{n}{deltaTime}\PYG{p}{);}
+  \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

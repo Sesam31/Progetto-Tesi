@@ -1,15 +1,15 @@
-[0] Config.pm:312> INFO - This is Biber 2.15
-[0] Config.pm:315> INFO - Logfile is 'stewart.blg'
-[64] biber:330> INFO - === sab ott 16, 2021, 14:50:56
-[76] Biber.pm:415> INFO - Reading 'stewart.bcf'
-[132] Biber.pm:952> INFO - Found 8 citekeys in bib section 0
-[143] Biber.pm:4334> INFO - Processing section 0
-[152] Biber.pm:4523> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
-[153] bibtex.pm:1682> INFO - LaTeX decoding ...
-[162] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
-[208] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[208] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[209] Biber.pm:4162> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
-[209] Biber.pm:4168> INFO - No sort tailoring available for locale 'it-IT'
-[212] bbl.pm:651> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
-[214] bbl.pm:754> INFO - Output to stewart.bbl
+[0] Config.pm:311> INFO - This is Biber 2.16
+[0] Config.pm:314> INFO - Logfile is 'stewart.blg'
+[94] biber:340> INFO - === mar nov  9, 2021, 20:44:19
+[111] Biber.pm:415> INFO - Reading 'stewart.bcf'
+[194] Biber.pm:952> INFO - Found 13 citekeys in bib section 0
+[209] Biber.pm:4340> INFO - Processing section 0
+[222] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
+[223] bibtex.pm:1689> INFO - LaTeX decoding ...
+[242] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
+[335] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[335] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[335] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[335] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
+[343] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
+[349] bbl.pm:757> INFO - Output to stewart.bbl

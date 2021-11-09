@@ -1,81 +1,83 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\babel@toc {italian}{}
-\babel@toc {italian}{}
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Introduzione}{4}{section.1}%
+\contentsline {section}{\numberline {1}Introduzione}{5}{section.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Tecnologie impiegate}{4}{section.2}%
+\contentsline {section}{\numberline {2}Tecnologie impiegate}{5}{section.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1}Piattaforma Arduino}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.1}Piattaforma Arduino}{5}{subsection.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.2}Servomotori}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.2}Servomotori}{5}{subsection.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3}Piano resistivo}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.3}Piano resistivo}{7}{subsection.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {2.3.1}Tipologie e funzionamento di un piano resistivo}{6}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.1}Tipologie e funzionamento di un piano resistivo}{7}{subsubsection.2.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4}Ponte ad H}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.4}Ponte ad H}{8}{subsection.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.5}Joystick analogico}{8}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.5}Joystick analogico}{10}{subsection.2.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Piattaforma di Gough-Stewart}{9}{section.3}%
+\contentsline {section}{\numberline {3}Piattaforma di Gough-Stewart}{11}{section.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.1}Descrizione}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.1}Descrizione}{11}{subsection.3.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2}Robot seriali e paralleli}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Robot seriali e paralleli}{11}{subsection.3.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3}Analisi piattaforma di Stewart con attuatori rotativi}{10}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.3}Analisi piattaforma di Stewart con attuatori rotativi}{12}{subsection.3.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.4}Analisi problema piattaforma}{10}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.4}Analisi problema piattaforma}{12}{subsection.3.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.4.1}Analisi traslazione \boldmath $(x,y,z)$}{11}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.1}Analisi traslazione \boldmath $(x,y,z)$}{13}{subsubsection.3.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.4.2}Analisi rotazione \boldmath $(\varphi ,\vartheta ,\psi )$}{12}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2}Analisi rotazione \boldmath $(\varphi ,\vartheta ,\psi )$}{14}{subsubsection.3.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.4.3}Conclusione problema piattaforma}{13}{subsubsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.3}Conclusione problema piattaforma}{15}{subsubsection.3.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.5}Analisi problema attuatori rotativi}{14}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.5}Analisi problema attuatori rotativi}{16}{subsection.3.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.5.1}Posizione del giunto biella manovella}{14}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.1}Posizione del giunto biella manovella}{16}{subsubsection.3.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.5.2}Determinazione angolo \boldmath $\alpha $}{15}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2}Determinazione angolo \boldmath $\alpha $}{17}{subsubsection.3.5.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {3.5.3}Controllo servomotori}{17}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.3}Controllo servomotori}{19}{subsubsection.3.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.6}Schema a blocchi}{18}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.6}Schema a blocchi}{20}{subsection.3.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Controllo della pallina con piano stabilizzato}{19}{section.4}%
+\contentsline {section}{\numberline {4}Controllo della palla con piano stabilizzato}{22}{section.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.1}Controllore PID}{19}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.1}Controllore PID}{22}{subsection.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {4.1.1}Equazione del controllore PID}{19}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Equazione del controllore PID}{22}{subsubsection.4.1.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2}Miglioramenti e ottimizzazioni del controllore PID}{21}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.2}Miglioramenti e ottimizzazioni del controllore PID}{23}{subsection.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3}Algoritmo di controllo}{22}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.3}Sistemi di riferimento}{25}{subsection.4.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Realizzazione pratica}{23}{section.5}%
+\contentsline {subsection}{\numberline {4.4}Algoritmo di controllo}{26}{subsection.4.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.1}Assemblaggio}{23}{subsection.5.1}%
+\contentsline {section}{\numberline {5}Realizzazione pratica}{27}{section.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.2}Programmazione}{24}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.1}Assemblaggio}{27}{subsection.5.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.1}Controllo della piattaforma di Stewart}{25}{subsubsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2}Programmazione}{28}{subsection.5.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.2}Lettura e filtraggio dati ottenuti dal piano resistivo}{26}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Controllo della piattaforma di Stewart}{28}{subsubsection.5.2.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.3}Controllore PID}{28}{subsubsection.5.2.3}%
+\contentsline {subsubsection}{\numberline {5.2.2}Lettura e filtraggio dati ottenuti dal piano resistivo}{29}{subsubsection.5.2.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{\numberline {5.2.4}Assegnazione dei comandi}{28}{subsubsection.5.2.4}%
+\contentsline {subsubsection}{\numberline {5.2.3}Controllore PID}{32}{subsubsection.5.2.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {5.3}Taratura}{28}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.2.4}Assegnazione dei comandi}{32}{subsubsection.5.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Risultati}{29}{section.6}%
+\contentsline {subsection}{\numberline {5.3}Taratura}{34}{subsection.5.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.1}Piattaforma di stewart}{29}{subsection.6.1}%
+\contentsline {section}{\numberline {6}Risultati}{36}{section.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {6.2}Piano stabilizzato}{29}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.1}Piattaforma di Stewart}{36}{subsection.6.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7}Conclusioni}{29}{section.7}%
+\contentsline {subsection}{\numberline {6.2}Piano stabilizzato}{37}{subsection.6.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{Riferimenti bibliografici}{30}{figure.18}%
+\contentsline {section}{\numberline {7}Conclusioni}{38}{section.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{Riferimenti bibliografici}{39}{section.7}%

@@ -1,5 +1,5 @@
 clear;
-Array = csvread('~/traiettoria3.csv');
+Array = csvread('~/circle3.csv');
 col1=Array(:,1);
 col2=Array(:,2);
 col3=Array(:,3);
