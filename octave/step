@@ -1,0 +1,13 @@
+clear all
+C = csvread( '~/Documents/Progetto-Tesi/csv/step.csv' )
+col2=C(:,2);
+col3=C(:,3);
+xlabel('Posizione X [mm]')
+ylabel('Posizione Y [mm]')
+hold on 
+t=0:100:100*length(col3);
+plot(col3,col2,'k','LineWidth',2)
+plot(col1,col3,'r*','LineWidth',2)
+fontsize=25;
+set([gca; findall(gca, 'Type','text')], 'FontSize', fontsize);
+grid on

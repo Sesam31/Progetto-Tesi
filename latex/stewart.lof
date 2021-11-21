@@ -1,0 +1,51 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {1}{\ignorespaces Componenti del servomotore.\relax }}{8}{figure.caption.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {2}{\ignorespaces Angolo del servomotore al variare del segnale PWM.\relax }}{8}{figure.caption.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3}{\ignorespaces Sezione del digitalizzatore resistivo.\relax }}{9}{figure.caption.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4}{\ignorespaces Schema circuitale piano resistivo a cinque fili.\relax }}{10}{figure.caption.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {5}{\ignorespaces Schema elettrico del circuito di controllo.\relax }}{11}{figure.caption.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6}{\ignorespaces La "universal rig" di Gough per testare pneumatici\cite {gough}.\relax }}{13}{figure.caption.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {7}{\ignorespaces Problemi diretti e inversi.\relax }}{14}{figure.caption.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {8}{\ignorespaces Sistemi di rifermento e vettori nella piattaforma di Stewart.\relax }}{15}{figure.caption.11}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {9}{\ignorespaces Punto $P$ ruotato di $\varphi $ gradi rispetto al sistema di riferimento della base.\relax }}{17}{figure.caption.12}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {10}{\ignorespaces Sistema biella manovella con servomotori in proiezione frontale.\relax }}{19}{figure.caption.13}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {11}{\ignorespaces Proiezione verticale della base con i servomotori.\relax }}{20}{figure.caption.14}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {12}{\ignorespaces Schema logico controllo della piattaforma di Stewart.\relax }}{23}{figure.caption.15}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {13}{\ignorespaces Schema logico controllore PID applicato al problema.\relax }}{25}{figure.caption.16}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {14}{\ignorespaces Schema logico controllore PID migliorato.\relax }}{26}{figure.caption.17}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {15}{\ignorespaces Sistemi di riferimeto cartesiano e polare.\relax }}{27}{figure.caption.18}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {16}{\ignorespaces Schema logico sistema di stabilizzazione.\relax }}{28}{figure.caption.19}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {17}{\ignorespaces Misura del tempo di salita del segnale.\relax }}{32}{figure.caption.20}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {18}{\ignorespaces Confronto diretto tra segnale in ingresso e filtrato.\relax }}{34}{figure.caption.21}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {19}{\ignorespaces Figure di Lissajous impiegate.\relax }}{36}{figure.caption.22}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {20}{\ignorespaces Risposta allo scalino del sistema lungo l'asse $x$.\relax }}{38}{figure.caption.24}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {21}{\ignorespaces Tracking del setpoint sul cerchio.\relax }}{41}{figure.caption.25}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {22}{\ignorespaces Tracking del setpoint sulla retta.\relax }}{41}{figure.caption.26}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {23}{\ignorespaces Tracking del setpoint sulla parabola.\relax }}{42}{figure.caption.27}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {24}{\ignorespaces Tracking del setpoint sull'infito.\relax }}{42}{figure.caption.28}%

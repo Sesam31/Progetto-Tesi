@@ -117,6 +117,7 @@ double pidX, pidY;
 float oldDerivataX, oldDerivataY;
 //bool pause = false;
 char command;
+float mx, my;
 
 //JOYSTICK
 #define Xin A5
@@ -213,7 +214,7 @@ void loop() {
     //yAcc = (yVel - yVelOld)/(deltaTime);
     
     // filto rumore posizione 
-    float maxVel = 0.4;//0.45;
+    float maxVel = 0.4;//0.4;
     if(abs(xVel) > maxVel){
       if(xVel > 0){
         x = xOld + maxVel*(deltaTime);
@@ -238,6 +239,7 @@ void loop() {
     }
     // loop interno ~= 10ms = 100Hz
     else{
+      //Serial.println(micros());
       sumcount = 19; //19
       averageXOld = averageX;
       averageYOld = averageY;
@@ -324,14 +326,16 @@ void loop() {
       // (eseguito una volta ogni "count" cicli per non affollare la seriale)
       count = count - 1;
       if(count <= 0){    
-        Serial.print(setX*1000);
+        //Serial.print(millis());
+        //Serial.print(", ");
+        Serial.print(mx*1000);
         Serial.print(", ");
-        Serial.print(setY*1000);
+        Serial.print(my*1000);
         Serial.print(", ");
         Serial.print(averageX*1000);
         Serial.print(", ");
         Serial.println(averageY*1000);
-        count = 0;
+        count = 5;
       }
     }
   }
@@ -509,14 +513,15 @@ void getSense(){
   digitalWrite(in1,HIGH);
   digitalWrite(in2,LOW);
   delayMicroseconds(on);
-  x = (analogRead(sensePin)-100)*(0.34/820);
+  x = (analogRead(sensePin)-110)*(0.34/810);// 920 110
   //Serial.print("x orig: "); //segnale ingresso non filtrato
-  //Serial.println(x*100);
-
+  //Serial.print(x*1000);
+  //Serial.print(", ");
+  
   digitalWrite(in1,LOW);
   digitalWrite(in2,HIGH);
   delayMicroseconds(on);
-  y = (analogRead(sensePin)-100)*(0.27/820);
+  y = (analogRead(sensePin)-110)*(0.27/810);// 920 110
   lastsense = micros();
 }
 
@@ -596,52 +601,70 @@ void runPID(){
 // analizza stato joystick e input, cambia il setpoint
 void runCommand(){
   if(joyX < 300 && joyY < 700 && joyY > 300 && switchState == true){ 
-    setX = 0.233;//0.173
+    setX = 0.168+0.06;//0.17
     setY = 0.133;
   }
   if(joyX > 700 && joyY < 700 && joyY > 300 && switchState == true){ 
-    setX = 0.113;//0.17
+    setX = 0.168-0.06;//0.17
     setY = 0.133;
   }
   if(joyX > 300 && joyX < 700 &&joyY < 700 && joyY > 300 && switchState == true){ 
-    setX = 0.173;//0.17
+    setX = 0.168;//0.17
     setY = 0.133;
   }
   if(joyX > 300 && joyX < 700 && joyY < 300 && switchState == true){ 
-    setX = 0.173;//0.17
-    setY = 0.193;
+    setX = 0.168;//0.17
+    setY = 0.133+0.06;
   }
   if(joyX > 300 && joyX < 700 && joyY > 700 && switchState == true){        
-    setX = 0.173;//0.17
-    setY = 0.073;
+    setX = 0.168;//0.17
+    setY = 0.133-0.06;
   }
+  
+  int speed = 1500;
+  int phase = 0;
   
   if(joyX < 300 && joyY < 700 && joyY > 300 && switchState == false){
     circle = true;
     float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
-    float Ki = 0;//25;//22;//15;//15;//22;//22;
-    float Kd = 0;//10;
-    setX=0.173+0.05*cos(pi*(millis()-circlestart)/(1500*2));
-    setY=0.133+0.04*sin(pi*(millis()-circlestart)/(1500*2));
+    float Ki = 0;//25;//22;//15;//15;//22;//22;*/
+    float Kd = 10;
+    mx=0.168+0.05*cos(pi*(millis()-circlestart)/(speed*2));
+    my=0.133+0.05*sin(pi*(millis()-circlestart)/(speed*2));
+    setX=0.168+0.05*cos(pi*(millis()-circlestart)/(speed*2));
+    setY=0.133+0.05*sin(pi*(millis()-circlestart)/(speed*2)+radians(phase));
   }
-  if(joyX > 300 && joyX < 700 && joyY < 300 && switchState == false){ //verificare che funzioni disegno retta 45°
+  if(joyX > 700 && joyY < 700 && joyY > 300 && switchState == false){ //verificare che funzioni disegno retta 45°
     float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
     float Ki = 0;//25;//22;//15;//15;//22;//22;
-    float Kd = 0;//10;
-    setX=0.173+0.05*cos(pi*(millis()-circlestart)/(1500*2));
-    setY=0.133+0.04*cos(pi*(millis()-circlestart)/(1500*2));
+    float Kd = 10;//10;
+    mx=0.168+0.05*cos(pi*(millis()-circlestart)/(speed*2));
+    my=0.133+0.05*cos(pi*(millis()-circlestart)/(speed*2));
+    setX=0.168+0.05*cos(pi*(millis()-circlestart)/(speed*2));
+    setY=0.133+0.05*cos(pi*(millis()-circlestart)/(speed*2)+radians(phase));
   }
   if(joyX > 300 && joyX < 700 && joyY > 700 && switchState == false){ //verificare che funzioni disegno u
     float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
     float Ki = 0;//25;//22;//15;//15;//22;//22;
-    float Kd = 0;//10;
-    setX=0.173+0.05*cos(pi*(millis()-circlestart)/(1500*2));
-    setY=0.133+0.04*cos(2*pi*(millis()-circlestart)/(1500*2));
+    float Kd = 10;//10;
+    mx=0.168+0.05*cos(pi*(millis()-circlestart)/(2500*2));
+    my=0.133+0.05*cos(2*pi*(millis()-circlestart)/(2500*2));
+    setX=0.168+0.05*cos(pi*(millis()-circlestart)/(2500*2));
+    setY=0.133+0.05*cos(2*pi*(millis()-circlestart)/(2500*2)+radians(phase));
   }
-  if(joyX > 700 && joyY < 700 && joyY > 300 && switchState == false){ 
+  if(joyX > 300 && joyX < 700 && joyY < 300 && switchState == false){ //verificare che funzioni disegno infinito
+    float Kp = 120;//25;//30;//13;//13;//22.5;   //22.5 con foglio carta
+    float Ki = 0;//25;//22;//15;//15;//22;//22;
+    float Kd = 10;//10;
+    mx=0.168+0.05*cos(pi*(millis()-circlestart)/(speed*4));
+    my=0.133+0.03*sin(2*pi*(millis()-circlestart)/(speed*4));
+    setX=0.168+0.05*cos(pi*(millis()-circlestart)/(speed*4));
+    setY=0.133+0.03*sin(2*pi*(millis()-circlestart)/(speed*4)+radians(phase));
+  }
+  /*if(joyX > 300 && joyX < 700 && joyY < 300 && switchState == false){ 
     infinity = true;
     if(draw < 0.05){
-      draw += 0.0006;//0.007
+      draw += 0.0004;//0.0006;
     }
     else{
       draw = 0;
@@ -652,25 +675,25 @@ void runCommand(){
     }
     if(quadrante == 1){
       setX = 0.173 + draw;
-      setY = 0.133 + 7*draw*sqrt(0.06-draw);
+      setY = 0.133 + 4*draw*sqrt(0.06-draw);
     }
     if(quadrante == 2){
       setX = 0.173 + (0.06 - draw);
-      setY = 0.133 - 7*(0.06 - draw)*sqrt(0.06-(0.06 - draw));
+      setY = 0.133 - 4*(0.06 - draw)*sqrt(0.06-(0.06 - draw));
     }
     if(quadrante == 3){
       setX = 0.173 - draw;
-      setY = 0.133 + 7*draw*sqrt(0.06-draw);
+      setY = 0.133 + 4*draw*sqrt(0.06-draw);
     }
     if(quadrante == 4){
       setX = 0.173 - (0.06 - draw);
-      setY = 0.133 - 7*(0.06 - draw)*sqrt(0.06- (0.06 - draw));
+      setY = 0.133 - 4*(0.06 - draw)*sqrt(0.06- (0.06 - draw));
     }
     
-  }
+  }*/
 
   if(joyX > 300 && joyX < 700 &&joyY < 700 && joyY > 300 && switchState == false){ 
-    setX = 0.173;
+    setX = 0.168;
     setY = 0.133;
     circle = false;
     infinity = false;

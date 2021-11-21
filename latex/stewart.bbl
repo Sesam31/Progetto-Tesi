@@ -113,6 +113,28 @@
       \field{pages}{371\bibrangedash 386}
       \range{pages}{16}
     \endentry
+    \entry{gough}{article}{}
+      \name{author}{1}{}{%
+        {{hash=9d71929c89662ba5704a720b6b3050b6}{%
+           family={Hayes},
+           familyi={H\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{9d71929c89662ba5704a720b6b3050b6}
+      \strng{fullhash}{9d71929c89662ba5704a720b6b3050b6}
+      \strng{bibnamehash}{9d71929c89662ba5704a720b6b3050b6}
+      \strng{authorbibnamehash}{9d71929c89662ba5704a720b6b3050b6}
+      \strng{authornamehash}{9d71929c89662ba5704a720b6b3050b6}
+      \strng{authorfullhash}{9d71929c89662ba5704a720b6b3050b6}
+      \field{sortinit}{7}
+      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{Kinematics of general planar Stewart-Gough platforms}
+      \field{year}{2021}
+    \endentry
     \entry{bonev2001delta}{article}{}
       \name{author}{1}{}{%
         {{hash=c7032cac6f721f28d0a620af7c4c0981}{%
@@ -127,8 +149,8 @@
       \strng{authorbibnamehash}{c7032cac6f721f28d0a620af7c4c0981}
       \strng{authornamehash}{c7032cac6f721f28d0a620af7c4c0981}
       \strng{authorfullhash}{c7032cac6f721f28d0a620af7c4c0981}
-      \field{sortinit}{7}
-      \field{sortinithash}{f615fb9c6fba11c6f962fb3fd599810e}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Newsletter, available at http://www. parallelmic. org}
@@ -157,8 +179,8 @@
       \strng{authorbibnamehash}{52dd8567dda75bcb16d79c8c63e97086}
       \strng{authornamehash}{52dd8567dda75bcb16d79c8c63e97086}
       \strng{authorfullhash}{52dd8567dda75bcb16d79c8c63e97086}
-      \field{sortinit}{8}
-      \field{sortinithash}{1b24cab5087933ef0826a7cd3b99e994}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Mechanism and machine theory}
@@ -183,8 +205,8 @@
       \strng{authorbibnamehash}{e082ff94720eff98805e9e08ca921bcc}
       \strng{authornamehash}{e082ff94720eff98805e9e08ca921bcc}
       \strng{authorfullhash}{e082ff94720eff98805e9e08ca921bcc}
-      \field{sortinit}{9}
-      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{02}

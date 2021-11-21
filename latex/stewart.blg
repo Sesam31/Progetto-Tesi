@@ -1,15 +1,15 @@
 [0] Config.pm:311> INFO - This is Biber 2.16
 [0] Config.pm:314> INFO - Logfile is 'stewart.blg'
-[94] biber:340> INFO - === mar nov  9, 2021, 20:44:19
-[111] Biber.pm:415> INFO - Reading 'stewart.bcf'
-[194] Biber.pm:952> INFO - Found 13 citekeys in bib section 0
+[93] biber:340> INFO - === dom nov 21, 2021, 21:09:34
+[110] Biber.pm:415> INFO - Reading 'stewart.bcf'
+[193] Biber.pm:952> INFO - Found 14 citekeys in bib section 0
 [209] Biber.pm:4340> INFO - Processing section 0
 [222] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
 [223] bibtex.pm:1689> INFO - LaTeX decoding ...
-[242] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
-[335] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[335] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[335] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
-[335] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
-[343] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
-[349] bbl.pm:757> INFO - Output to stewart.bbl
+[243] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
+[343] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[343] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[343] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[343] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
+[352] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
+[358] bbl.pm:757> INFO - Output to stewart.bbl
