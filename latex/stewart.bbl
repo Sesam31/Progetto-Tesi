@@ -275,6 +275,43 @@
       \field{pages}{32401\bibrangedash 32408}
       \range{pages}{8}
     \endentry
+    \entry{eqazionipiano}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=7bec03b4df3b36edbcf01387aaf0e7bf}{%
+           family={Dušek},
+           familyi={D\bibinitperiod},
+           given={František},
+           giveni={F\bibinitperiod}}}%
+        {{hash=8f38c79d6796d1eb89011ac899669209}{%
+           family={Honc},
+           familyi={H\bibinitperiod},
+           given={Daniel},
+           giveni={D\bibinitperiod}}}%
+        {{hash=4073def77462a9d42f7f85f947685738}{%
+           family={Sharma},
+           familyi={S\bibinitperiod},
+           given={K\bibnamedelima Rahul},
+           giveni={K\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{aebac5f3be048dde88da9ea9f0bb0af8}
+      \strng{fullhash}{aebac5f3be048dde88da9ea9f0bb0af8}
+      \strng{bibnamehash}{aebac5f3be048dde88da9ea9f0bb0af8}
+      \strng{authorbibnamehash}{aebac5f3be048dde88da9ea9f0bb0af8}
+      \strng{authornamehash}{aebac5f3be048dde88da9ea9f0bb0af8}
+      \strng{authorfullhash}{aebac5f3be048dde88da9ea9f0bb0af8}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2017 21st International Conference on Process Control (PC)}
+      \field{title}{Modelling of ball and plate system based on first principle model and optimal control}
+      \field{year}{2017}
+      \field{pages}{216\bibrangedash 221}
+      \range{pages}{6}
+    \endentry
     \entry{zieglernichols}{article}{}
       \true{moreauthor}
       \true{morelabelname}
@@ -337,6 +374,43 @@
       \field{year}{2016}
       \field{pages}{1\bibrangedash 4}
       \range{pages}{4}
+    \endentry
+    \entry{tecnichecontrollo}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=4f0b8b30c2b5ce5fb615070d94eabce6}{%
+           family={KÖSE},
+           familyi={K\bibinitperiod},
+           given={Fatih},
+           giveni={F\bibinitperiod}}}%
+        {{hash=61936544e93abb57fc49a7f1e8d80323}{%
+           family={KAPLAN},
+           familyi={K\bibinitperiod},
+           given={Kaplan},
+           giveni={K\bibinitperiod}}}%
+        {{hash=7d1cd6239ec42b0465c995f7cd598bf4}{%
+           family={ERTUNÇ},
+           familyi={E\bibinitperiod},
+           given={H.\bibnamedelimi Metin},
+           giveni={H\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{be71b1fa93b412a52efa52034277eb1b}
+      \strng{fullhash}{be71b1fa93b412a52efa52034277eb1b}
+      \strng{bibnamehash}{be71b1fa93b412a52efa52034277eb1b}
+      \strng{authorbibnamehash}{be71b1fa93b412a52efa52034277eb1b}
+      \strng{authornamehash}{be71b1fa93b412a52efa52034277eb1b}
+      \strng{authorfullhash}{be71b1fa93b412a52efa52034277eb1b}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2018 6th International Conference on Control Engineering Information Technology (CEIT)}
+      \field{title}{Real Time Position and Trajectory Control of Ball and Plate System Using Different Control Techniques}
+      \field{year}{2018}
+      \field{pages}{1\bibrangedash 7}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1109/CEIT.2018.8751946
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

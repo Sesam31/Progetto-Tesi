@@ -530,10 +530,10 @@ L'impiego di servomotori complica ulteriormente le equazioni, è infatti necessa
 \filldraw [fill=black] (-1.5cm,1.5cm) circle (3pt);
 \filldraw  [fill=black!50](-3cm,0cm) rectangle (3cm,-0.25cm);
 \filldraw  [fill=black!50](-3cm,2cm) rectangle (3cm,2.25cm);
-\draw  (1.5cm,1.5cm) -- node[anchor=south, xshift= 0cm,yshift=-0.45cm]{$m$}(3cm,0.75cm);
-\draw  (3cm,0.75cm) -- node[anchor=west]{$b$}(4cm,7cm);
-\draw  (-1.5cm,1.5cm) -- (-3cm,0.75cm);
-\draw  (-3cm,0.75cm) -- (-4cm,7cm);
+\draw  [line width=0.5mm](1.5cm,1.5cm) -- node[anchor=south, xshift= 0.05cm,yshift=-0.55cm]{$m$}(3cm,0.75cm);
+\draw  [line width=0.5mm](3cm,0.75cm) -- node[anchor=west]{$b$}(4cm,7cm);
+\draw  [line width=0.5mm](-1.5cm,1.5cm) -- (-3cm,0.75cm);
+\draw  [line width=0.5mm](-3cm,0.75cm) -- (-4cm,7cm);
 \filldraw  [fill=black!50]  (-4cm,7cm) rectangle (4cm,7.25cm);
 %\draw [line width=2pt] (1cm,3cm) -- node[anchor=east, xshift= 0.6cm,yshift=-0.45cm]{$m$}(3cm,2cm);
 %\filldraw [fill=black] (3cm,2cm) circle (3pt);
@@ -785,7 +785,7 @@ Il problema del controllo della palla racchiude diversi aspetti elementari che s
 
 \section{Modello del problema}\label{ballandplatemodel}
 Una prima analisi del problema consiste nella descrizione e nella ricerca della sua funzione di trasferimento, che sarà poi utile per determinare l'effetto del sistema di controllo.
-Il modello del problema studiato, valutando un solo asse alla volta per simmetria risulta essere un "Ball and Beam Problem"(figura \ref{fig:pianoinclinato}), molto più semplice del più complesso "Ball and Plate Problem" che considera separatamente il moto sugli assi $x$ e $y$. 
+Il modello del problema studiato\cite{eqazionipiano}, valutando un solo asse alla volta per simmetria risulta essere un "Ball and Beam Problem"(figura \ref{fig:pianoinclinato}), molto più semplice del più complesso "Ball and Plate Problem" che considera separatamente il moto sugli assi $x$ e $y$. 
 \begin{figure}[h!]
 \centering
 \scalebox{1.3}{
@@ -1149,11 +1149,13 @@ Dove per semplificare la notazione è stato impiegato $\Gamma=\frac{5g}{7}\appro
 Risulta evidente che l'equazione trovata presenta tre poli che possono essere opportunamente scelti agendo sulle variabili $K_p$, $K_i$ e $K_d$ del controllore in modo da garantire la stabilità del sistema. 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=\textwidth]{nyquist.png}
-\caption{Diagramma di Nyquist per opportune variabili del PID.} \label{fig:nyquist}
+\includegraphics[width=\textwidth]{step3.jpg}
+\caption{Diagramma di Nyquist e risposta allo scalino per opportune variabili del controllore PID.} \label{fig:nyquist}
 \end{figure}
-Una possibile scelta di queste variabili è ad esempio $K_p=25$, $K_i=13$ e $K_d=25$ che da come risultato tre poli a parte reale negativa, il cui diagramma di Nyquist è rappresentato in figura \ref{fig:nyquist}.
-Si nota come come il punto $-1+0\cdot j$ (indicato da un punto rosso) non venga circondato dal grafico, il sistema ha quindi modulo minore di uno a una fase di 180° e risulta essere stabile.
+Una possibile scelta di queste variabili è ad esempio $K_p=3$, $K_i=1$ e $K_d=5$ che dà come risultato i grafici di figura \ref{fig:nyquist}. Si nota come in questo caso la funzione di trasferimento presenti tre poli a parte reale negativa e che il diagramma di Nyquist non circonda il punto $-1+0\cdot j$ (indicato da un punto rosso), nella figura a destra è poi indicata la risposta allo scalino del sistema, che dimostra ulteriormente le proprietà di stabilizzazione e di non polarizzazione del controllore.
+
+% tre poli a parte reale negativa, il cui diagramma di Nyquist è rappresentato a sinistra in figura \ref{fig:nyquist}.
+%Si nota come come il punto $-1+0\cdot j$ (indicato da un punto rosso) non venga circondato dal grafico, il sistema ha quindi modulo minore di uno a una fase di 180° e risulta essere stabile.
 
 \section{Sistemi di riferimento}\label{sistemidiriferimento}
 A livello di implementazione si nota come sia possibile descrivere la posizione della pallina nel piano secondo due sistemi di riferimento, il cartesiano e il polare. Questi due sono totalmente equivalenti a livello descrittivo e richiedono un controllo di due variabili tramite due PID separati rispettivamente per le variabili $(x,y)$ e $(r,\varphi)$, come descritto in figura \ref{fig:sistemiriferimento}.
@@ -1594,9 +1596,18 @@ Analizzando i tracciati, si può notare una dispersione sulle ripetizioni, comun
 
 
 \chapter{Conclusioni}
-L'obbiettivo prefissato era di realizzare una piattaforma di Gough-Stewart con attuatori rotativi ed un relativo sistema di controllo in grado di stabilizzare una pallina sul piano e valutarne il comportamento dinamico. Questo obbiettivo è stato raggiunto, come provato nelle sezioni \ref{resultstewart} e \ref{resultpiano}, che dimostrano le ottime capacità di controllo e ripetibilità, ottenute nei vari casi di studio. 
+L'obiettivo prefissato era di realizzare una piattaforma di Gough-Stewart con attuatori rotativi ed un relativo sistema di controllo in grado di stabilizzare una pallina sul piano e valutarne il comportamento dinamico. %Questo obbiettivo è stato raggiunto, come provato nelle sezioni \ref{resultstewart} e \ref{resultpiano}, che dimostrano le ottime capacità di controllo e ripetibilità, ottenute nei vari casi di studio. 
 
-Miglioramenti possono essere apportati per incrementare le prestazioni del sistema, questi riguradano principalmente l'hardware ed in particolare il piano resistivo. Tramite l'impiego di un digitalizzatore capacitivo sarebbe possibile passare da un'attuazione meccanica ad una elettromagnetica, rimuovendo le irregolarità nel piano dovute ai separatori, le quali sono correlate ai disturbi nel segnale relativo alla posizione (figura \ref{fig:filtraggioposizione}), permettendo una migliore precisione e stabilità. 
+Il raggiungimento di questo risultato si è ottenuto gradualmente, studiando, analizzando e testando ogni aspetto del progetto; partendo dai singoli componenti elettronici e arrivando infine ad un risultato concreto.
+La prima fase è stata attuata studiando le tecnologie impiegate, i loro vantaggi, svantaggi e la loro compatibilità, che ha portato alla realizzazione di un opportuno chip di controllo per il pilotaggio del piano resistivo. Successivamente si è proceduto allo studio della piattaforma di Gough-Stewart, analizzandola dal punto di vista matematico, costruendo un modello che ne permettesse una rappresentazione opportuna e un idoneo algoritmo che ne risolvesse il problema cinematico inverso. Una volta conclusa questa fase di studio preliminare si è potuto procedere all'assemblaggio della piattaforma e all'implementazione degli algoritmi in linguaggio \texttt{C} che ha da subito riportato ottimi risultati, come indicato nella sezione \ref{resultstewart}. Basandosi su questo risultato è stato possibile procedere al montaggio del piano resistivo alla piattaforma, tramite agganci opportunamente realizzati. Per risolvere il problema di stabilizzazione è stato necessario un attento studio del modello del piano e del controllore PID, valutando opportune modifiche per ottenere un controllo ottimale.  Il passo successivo è stata la programmazione della logica di controllo, il filtraggio dei dati in ingresso dal digitalizzatore resistivo e un algoritmo di assegnazione del setpoint che permettesse di valutare le prestazioni del sistema. Si è dato poi seguito ad una opportuna operazione di tartatura euristica del controllore, tramite la valutazione della risposta allo scalino, presente in figura \ref{fig:step}. Unendo tutti questi aspetti progettuali si è giunti allo studio dell'analisi dinamica, esposto in dettaglio nella sezione \ref{resultpiano}, dove si è notato e corretto uno sfasamento della risposta in frequenza lungo gli assi. 
+
+Gli obiettivi posti sono quindi stati rispettati e il sistema ha dimostrato ottime capacità di controllo e ripetibilità nei vari casi di studio. 
+
+Ulteriori miglioramenti delle prestazioni del sistema si potrebbero ottenere impiegando tecnologie più sofisticate e controllori più avanzati.
+In particolare, l'impiego di un piano capacitivo al posto del resistivo offrirebbe degli indubbi vantaggi, passando da un'attuazione di tipo meccanico ad una elettromagnetica, la quale avrebbe un impatto drastico sui disturbi e sulla precisione di rilevazione della posizione. Questo inoltre non andrebbe ad alterare in alcun modo la traiettoria della pallina, in quanto presenterebbe una superficie totalmente liscia, a differenza del piano resistivo che è caratterizzato alcune irregolarità a causa dei separatori tra i due strati conduttivi. A livello di controllo si nota come sia preferibile impiegare tecniche fuzzy\cite{tecnichecontrollo} che permettono di avere risposte più rapide e un minore overshoot rispetto a un controllore PID tradizionale.
+
+
+%Miglioramenti possono essere apportati per incrementare le prestazioni del sistema, questi riguradano principalmente l'hardware ed in particolare il piano resistivo. Tramite l'impiego di un digitalizzatore capacitivo sarebbe possibile passare da un'attuazione meccanica ad una elettromagnetica, rimuovendo le irregolarità nel piano dovute ai separatori, le quali sono correlate ai disturbi nel segnale relativo alla posizione (figura \ref{fig:filtraggioposizione}), permettendo una migliore precisione e stabilità. 
 
 
 
