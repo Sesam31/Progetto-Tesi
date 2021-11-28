@@ -1,15 +1,15 @@
 [0] Config.pm:311> INFO - This is Biber 2.16
 [0] Config.pm:314> INFO - Logfile is 'stewart.blg'
-[93] biber:340> INFO - === mar nov 23, 2021, 15:39:10
+[92] biber:340> INFO - === dom nov 28, 2021, 20:53:10
 [110] Biber.pm:415> INFO - Reading 'stewart.bcf'
-[196] Biber.pm:952> INFO - Found 16 citekeys in bib section 0
-[212] Biber.pm:4340> INFO - Processing section 0
-[225] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
-[226] bibtex.pm:1689> INFO - LaTeX decoding ...
-[250] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
-[367] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[368] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[368] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
-[368] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
-[378] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
-[385] bbl.pm:757> INFO - Output to stewart.bbl
+[193] Biber.pm:952> INFO - Found 16 citekeys in bib section 0
+[210] Biber.pm:4340> INFO - Processing section 0
+[226] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
+[228] bibtex.pm:1689> INFO - LaTeX decoding ...
+[252] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
+[369] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[369] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[369] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[369] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
+[379] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
+[386] bbl.pm:757> INFO - Output to stewart.bbl
