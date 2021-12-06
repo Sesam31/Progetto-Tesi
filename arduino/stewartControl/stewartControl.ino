@@ -152,9 +152,9 @@ void setup() {
   // ROUTINE PER ESEGUIRE DIRETTAMENTE ASSEGNAZIONI POSIZIONE ALLA PIATTAFORMA
   // test x y z rol pit yaw
   float timeshow = 0.1;
-  while(true){
-    delay(10000);
-    for(float t = 0; t < 18; t+=timeshow){
+  //while(true){
+  delay(5000);
+  for(float t = 0; t < 18; t+=timeshow){
       setPosition(t,0,110,radians(0),radians(0),radians(0)); 
   }
   for(float t = 18; t > -18; t-=timeshow){
@@ -213,7 +213,7 @@ void setup() {
   for(float t = -12; t < 0; t+=timeshow){
       setPosition(0,0,110,radians(0),radians(0),radians(t)); 
   }
-  }
+  //}
   
   /*while(true){
     setPosition(0,0,110,radians(0),radians(-5),radians(0)); 
