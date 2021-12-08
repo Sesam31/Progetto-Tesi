@@ -30,11 +30,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.4}Analisi problema piattaforma}{15}{section.2.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Analisi traslazione \boldmath $(x,y,z)$}{16}{section*.12}%
+\contentsline {subsection}{\numberline {2.4.1}Analisi traslazione \boldmath $(x,y,z)$}{16}{subsection.2.4.1}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.1}Analisi rotazione \boldmath $(\varphi ,\vartheta ,\psi )$}{17}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Analisi rotazione \boldmath $(\varphi ,\vartheta ,\psi )$}{17}{subsection.2.4.2}%
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.2}Conclusione problema piattaforma}{18}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Conclusione problema piattaforma}{18}{subsection.2.4.3}%
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.5}Analisi problema attuatori rotativi}{19}{section.2.5}%
 \defcounter {refsection}{0}\relax 

@@ -1,15 +1,15 @@
 [0] Config.pm:311> INFO - This is Biber 2.16
 [0] Config.pm:314> INFO - Logfile is 'stewart.blg'
-[83] biber:340> INFO - === lun dic  6, 2021, 09:43:15
-[99] Biber.pm:415> INFO - Reading 'stewart.bcf'
-[168] Biber.pm:952> INFO - Found 16 citekeys in bib section 0
-[181] Biber.pm:4340> INFO - Processing section 0
-[194] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
-[195] bibtex.pm:1689> INFO - LaTeX decoding ...
-[214] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
-[314] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
-[314] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[314] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
-[314] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
-[323] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
-[329] bbl.pm:757> INFO - Output to stewart.bbl
+[92] biber:340> INFO - === mer dic  8, 2021, 17:43:26
+[109] Biber.pm:415> INFO - Reading 'stewart.bcf'
+[192] Biber.pm:952> INFO - Found 16 citekeys in bib section 0
+[208] Biber.pm:4340> INFO - Processing section 0
+[221] Biber.pm:4531> INFO - Looking for bibtex format file './bibliografia.bib' for section 0
+[223] bibtex.pm:1689> INFO - LaTeX decoding ...
+[246] bibtex.pm:1494> INFO - Found BibTeX data source './bibliografia.bib'
+[362] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[362] UCollate.pm:68> INFO - Overriding locale 'it-IT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[364] Biber.pm:4168> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'it-IT'
+[365] Biber.pm:4174> INFO - No sort tailoring available for locale 'it-IT'
+[375] bbl.pm:654> INFO - Writing 'stewart.bbl' with encoding 'UTF-8'
+[382] bbl.pm:757> INFO - Output to stewart.bbl
